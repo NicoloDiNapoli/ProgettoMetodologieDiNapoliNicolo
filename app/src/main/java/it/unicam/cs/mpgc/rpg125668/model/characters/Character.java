@@ -16,8 +16,8 @@ public abstract class Character {
         setLife(getLife() + heal);
     }
 
-    public void attack(int damage){
-        setLife(getLife() - damage);
+    public void attack(Character target, int damage){
+        target.setLife(target.getLife() - damage);
     }
 
     //Getter
