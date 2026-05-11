@@ -1,6 +1,9 @@
 package it.unicam.cs.mpgc.rpg125668.model.enumeration;
 
+import com.google.gson.annotations.SerializedName;
+
 public enum EnemyDifficult {
+    @SerializedName("EASY")
     EASY {
         @Override
         public double damageModifier() {return 1.10;}
@@ -8,6 +11,7 @@ public enum EnemyDifficult {
         @Override
         public boolean startBoss() {return false;}
     },
+    @SerializedName("MEDIUM")
     MEDIUM {
         @Override
         public double damageModifier() {return 1.0;}
@@ -15,6 +19,7 @@ public enum EnemyDifficult {
         @Override
         public boolean startBoss() {return false;}
     },
+    @SerializedName("HARD")
     HARD {
         @Override
         public double damageModifier() {return 0.85;}
@@ -24,14 +29,13 @@ public enum EnemyDifficult {
     };
 
     /**
-     * Definisce il modificatore per i danni ricevuti dall'attacco dei giocatori
+     * Defines a moltiplicator to upgrade damage at target
      * @return double
      */
     public abstract double damageModifier();
 
     /**
-     * Stabilisce chi deve iniziare il turno di combattimento
-     * false se inizia il giocatore, true se inizia il boss
+     * Define who start the fight, true start boss, false start student
      * @return boolean
      */
     public abstract boolean startBoss();

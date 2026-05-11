@@ -1,14 +1,18 @@
 package it.unicam.cs.mpgc.rpg125668.model.characters;
 
 import it.unicam.cs.mpgc.rpg125668.model.enumeration.EnemyDifficult;
+import it.unicam.cs.mpgc.rpg125668.model.skill.Skill;
 
-public class Enemy extends Character {
-    private EnemyDifficult difficult;
-    //private List<Mossa> mosse;
+import java.io.Serializable;
+import java.util.List;
 
-    public Enemy(String name, int life, int maxLife, EnemyDifficult difficult) {
-        super(name, life, maxLife);
+public class Enemy extends Character implements Serializable {
+    private final EnemyDifficult difficult;
+
+    public Enemy(String name, int life, int maxLife, EnemyDifficult difficult, List<Skill> skills) {
+        super(name, life, maxLife,skills);
         this.difficult = difficult;
+
     }
 
     //Getter
