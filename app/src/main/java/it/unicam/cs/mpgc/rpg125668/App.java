@@ -49,22 +49,24 @@ public class App {
                 .setPrettyPrinting()
                 .create();
 
-        Student student2 = new Student("", 0, 0, 0, 0, 0, new ArrayList<>(), new Inventory(0, new ArrayList<>()));
+        /*Student student2 = new Student("", 0, 0, 0, 0, 0, new ArrayList<>(), new Inventory(0, new ArrayList<>()));
         try (FileReader reader = new FileReader("/Users/nicolo/Desktop/Progetti/ProgettoGioco/ProgettoMDP/prova.json")) {
             student2 =  gson.fromJson(reader, Student.class);
         }catch (IOException e) {
             System.err.println("Errore durante la lettura: " + e.getMessage());
-        }
-
+        }*/
 
         String jsonString = gson.toJson(student);
         System.out.println(jsonString);
         System.out.println("----------------------------");
+        Student student2 = gson.fromJson(jsonString, Student.class);
         System.out.println(student2.getInventory().getCoins());
         for( InventorySlot slot : student2.getInventory().getItems()){
             System.out.println(slot.getItem().getName());
             System.out.println(slot.getQuantity());
             System.out.println("----------------------------");
         }
+        for(Skill skill5 : student2.getSkills())
+            System.out.println(skill5.getName());
     }
 }

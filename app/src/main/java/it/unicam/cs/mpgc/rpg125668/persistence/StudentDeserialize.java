@@ -19,31 +19,13 @@ public class StudentDeserialize implements JsonDeserializer<Student> {
         JsonObject jsonObject = jsonElement.getAsJsonObject();
         List<Skill> skills = new ArrayList<>();
         if (hasSkill(jsonObject)) {
-            for (JsonElement skillElement : jsonObject.getAsJsonArray("skills")) {
-                skills.add(jsonDeserializationContext.deserialize(skillElement, Skill.class));
-            }
+            getSkill(jsonObject, skills, jsonDeserializationContext);
         }
-
 
         Inventory inventory = new Inventory(0, new ArrayList<>());
         if(hasInventory(jsonObject)) {
-            if(hasCoins(jsonObject)){
-                inventory.addCoins(jsonObject.get("inventory").getAsJsonObject().get("coins").getAsInt());
-            }
-            if(hasItems(jsonObject)){
-                for(JsonElement item : jsonObject.get("inventory").getAsJsonObject().getAsJsonArray("items").getAsJsonArray()){
-                    switch (item.getAsJsonObject().get("item").getAsJsonObject().get("type").getAsString()){
-                        case "book":
-                            inventory.addItem(jsonDeserializationContext.deserialize(item.getAsJsonObject().get("item"), Book.class), item.getAsJsonObject().get("quantity").getAsInt());
-                            break;
-                        case "drink":
-                            inventory.addItem(jsonDeserializationContext.deserialize(item.getAsJsonObject().get("item"), Drink.class), item.getAsJsonObject().get("quantity").getAsInt());
-                            break;
-                        case "snack":
-                            inventory.addItem(jsonDeserializationContext.deserialize(item.getAsJsonObject().get("item"), Snack.class), item.getAsJsonObject().get("quantity").getAsInt());
-                    }
-                }
-            }
+            if(hasCoins(jsonObject)) getCoins(jsonObject, inventory, jsonDeserializationContext);
+            if(hasItems(jsonObject)) getInventory(jsonObject, inventory, jsonDeserializationContext);
         }
 
         return new Student(
@@ -57,6 +39,16 @@ public class StudentDeserialize implements JsonDeserializer<Student> {
                 inventory
         );
 
+    }
+
+    private void getSkill(JsonObject jsonObject, List<Skill> skills, JsonDeserializationContext jsonDeserializationContext) {
+        for(JsonElement skill : jsonObject.get("skills").getAsJsonArray()){
+            skills.add(jsonDeserializationContext.deserialize(skill.getAsJsonObject(), Skill.class));
+        }
+    }
+
+    private void getCoins(JsonObject jsonObject, Inventory inventory, JsonDeserializationContext jsonDeserializationContext) {
+        inventory.addCoins(jsonObject.get("inventory").getAsJsonObject().get("coins").getAsInt());
     }
 
     private boolean hasSkill(JsonObject jsonObject) {
@@ -73,5 +65,20 @@ public class StudentDeserialize implements JsonDeserializer<Student> {
 
     private boolean hasInventory(JsonObject jsonObject) {
         return jsonObject.has("inventory") && !jsonObject.get("inventory").isJsonNull();
+    }
+
+    private void getInventory(JsonObject jsonObject, Inventory inventory, JsonDeserializationContext jsonDeserializationContext) {
+        for(JsonElement item : jsonObject.get("inventory").getAsJsonObject().getAsJsonArray("items").getAsJsonArray()){
+            switch (item.getAsJsonObject().get("item").getAsJsonObject().get("type").getAsString()){
+                case "book":
+                    inventory.addItem(jsonDeserializationContext.deserialize(item.getAsJsonObject().get("item"), Book.class), item.getAsJsonObject().get("quantity").getAsInt());
+                    break;
+                case "drink":
+                    inventory.addItem(jsonDeserializationContext.deserialize(item.getAsJsonObject().get("item"), Drink.class), item.getAsJsonObject().get("quantity").getAsInt());
+                    break;
+                case "snack":
+                    inventory.addItem(jsonDeserializationContext.deserialize(item.getAsJsonObject().get("item"), Snack.class), item.getAsJsonObject().get("quantity").getAsInt());
+            }
+        }
     }
 }
