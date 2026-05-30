@@ -3,76 +3,8 @@
  */
 package it.unicam.cs.mpgc.rpg125668;
 
-<<<<<<< Updated upstream
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import it.unicam.cs.mpgc.rpg125668.model.characters.Student;
-import it.unicam.cs.mpgc.rpg125668.model.consumable.Book;
-import it.unicam.cs.mpgc.rpg125668.model.consumable.Drink;
-import it.unicam.cs.mpgc.rpg125668.model.consumable.Item;
-import it.unicam.cs.mpgc.rpg125668.model.consumable.Snack;
-import it.unicam.cs.mpgc.rpg125668.model.enumeration.BookRarity;
-import it.unicam.cs.mpgc.rpg125668.model.enumeration.SkillRarity;
-import it.unicam.cs.mpgc.rpg125668.model.inventory.Inventory;
-import it.unicam.cs.mpgc.rpg125668.model.inventory.InventorySlot;
-import it.unicam.cs.mpgc.rpg125668.model.skill.Skill;
-import it.unicam.cs.mpgc.rpg125668.persistence.StudentDeserialize;
-import it.unicam.cs.mpgc.rpg125668.persistence.StudentSerialize;
-
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
-import java.util.ArrayList;
-
-public class App {
-    public static void main(String[] args) throws FileNotFoundException {
-//        STUDENT SERIALIZES
-        Skill skill = new Skill("Appunti magici", 50, SkillRarity.COMMON, 40);
-        Skill skill2 = new Skill("Appunti segreti", 55, SkillRarity.RARE, 50);
-        Skill skill1 = new Skill("Appunti magici", 50, SkillRarity.COMMON, 40);
-
-        Student student = new Student("Mario", 100, 1, 100, 100, 100, new ArrayList<>(), new Inventory(90, new ArrayList<>()));
-        Item drink = new Drink("Coca Cola", 10, "drink");
-        Item snack = new Snack("Pasta", 10, "snack");
-        Item drink2 = new Drink("Coca Cola", 10, "drink");
-        Item book = new Book("Libro wireshark", BookRarity.COMMON, "book");
-        student.getInventory().addItem(drink, 1);
-        student.getInventory().addItem(snack, 1);
-        student.getInventory().addItem(drink2, 1);
-        student.getInventory().addItem(book, 1);
-        student.addSkill(skill);
-        student.addSkill(skill1);
-        student.addSkill(skill2);
-
-        Gson gson = new GsonBuilder()
-                .registerTypeAdapter(Student.class, new StudentSerialize())
-                .registerTypeAdapter(Student.class, new StudentDeserialize())
-                .setPrettyPrinting()
-                .create();
-
-        /*Student student2 = new Student("", 0, 0, 0, 0, 0, new ArrayList<>(), new Inventory(0, new ArrayList<>()));
-        try (FileReader reader = new FileReader("/Users/nicolo/Desktop/Progetti/ProgettoGioco/ProgettoMDP/prova.json")) {
-            student2 =  gson.fromJson(reader, Student.class);
-        }catch (IOException e) {
-            System.err.println("Errore durante la lettura: " + e.getMessage());
-        }*/
-
-        String jsonString = gson.toJson(student);
-        System.out.println(jsonString);
-        System.out.println("----------------------------");
-        Student student2 = gson.fromJson(jsonString, Student.class);
-        System.out.println(student2.getInventory().getCoins());
-        for( InventorySlot slot : student2.getInventory().getItems()){
-            System.out.println(slot.getItem().getName());
-            System.out.println(slot.getQuantity());
-            System.out.println("----------------------------");
-        }
-        for(Skill skill5 : student2.getSkills())
-            System.out.println(skill5.getName());
-=======
 public class App {
     public static void main(String[] args){
-        System.out.println("Hello World!");
->>>>>>> Stashed changes
+
     }
 }
