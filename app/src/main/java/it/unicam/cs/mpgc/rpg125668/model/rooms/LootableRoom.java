@@ -22,8 +22,7 @@ public class LootableRoom extends Room implements Lootable {
     }
 
     public int getLootableCoins() {
-        if(coinsLotable < 0) throw new IllegalArgumentException("Illegal arguments: coinsLotable < 0");
-        return coinsLotable;
+        return this.coinsLotable;
     }
 
     public void setLootableCoins(int coinsLotable) {

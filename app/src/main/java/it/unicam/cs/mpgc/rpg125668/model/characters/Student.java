@@ -1,11 +1,8 @@
 package it.unicam.cs.mpgc.rpg125668.model.characters;
-<<<<<<< Updated upstream
-=======
 import it.unicam.cs.mpgc.rpg125668.model.characters.interfaces.Combatant;
 import it.unicam.cs.mpgc.rpg125668.model.characters.interfaces.IStudent;
 import it.unicam.cs.mpgc.rpg125668.model.consumable.interfaces.StudentUsable;
->>>>>>> Stashed changes
-import it.unicam.cs.mpgc.rpg125668.model.inventory.Inventory;
+import it.unicam.cs.mpgc.rpg125668.model.inventory.interfaces.IInventory;
 import it.unicam.cs.mpgc.rpg125668.model.skill.interfaces.ISkill;
 import it.unicam.cs.mpgc.rpg125668.model.skill.interfaces.IStudentSkill;
 
@@ -17,25 +14,17 @@ public class Student extends Character<IStudentSkill> implements Serializable, C
     private int level;
     private int preparation;
     private int concentration;
-    private final Inventory inventory;
+    private final IInventory inventory;
 
-<<<<<<< Updated upstream
-
-    public Student(String name, int life, int level, int preparation, int concentration, int maxLife, List<Skill> skills, Inventory inventory) {
-        super(name,life,maxLife, skills);
-=======
-    public Student(String name, int life, int level, int preparation, int concentration, int maxLife, List<IStudentSkill> skills, Inventory inventory) {
+    public Student(String name, int life, int level, int preparation, int concentration, int maxLife, List<IStudentSkill> skills, IInventory inventory) {
         super(name,maxLife,life, skills);
         if(level < 0 || preparation < 0 || concentration < 0 || inventory == null) throw new IllegalArgumentException("Illegal arguments: level < 0 || preparation < 0 || concentration < 0 orto inventory == null");
->>>>>>> Stashed changes
         this.level = level;
         this.preparation = preparation;
         this.concentration = concentration;
         this.inventory = inventory;
     }
 
-<<<<<<< Updated upstream
-=======
     @Override
     public void useSkill(Combatant target, ISkill skill) {
         if(target == null || skill == null) throw new IllegalArgumentException("Illegal arguments: target or skill is null");
@@ -44,7 +33,6 @@ public class Student extends Character<IStudentSkill> implements Serializable, C
         else
             target.takeDamage(skill.getDamage());
     }
->>>>>>> Stashed changes
 
     @Override
     public void heal(int amount) {
@@ -64,7 +52,7 @@ public class Student extends Character<IStudentSkill> implements Serializable, C
             this.inventory.useItem(item, this);
     }
 
-    public Inventory getInventory() {
+    public IInventory getInventory() {
         return this.inventory;
     }
 

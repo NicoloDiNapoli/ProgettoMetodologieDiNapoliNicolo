@@ -38,5 +38,5 @@ public interface ISkill {
      * Check if the skill is a healing skill
      * @return boolean true if the skill is a healing skill, false otherwise
      */
-    public boolean isHealing();
+    boolean isHealing();
 }

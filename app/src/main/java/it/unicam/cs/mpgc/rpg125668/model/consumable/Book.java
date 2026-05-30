@@ -2,25 +2,18 @@ package it.unicam.cs.mpgc.rpg125668.model.consumable;
 
 import it.unicam.cs.mpgc.rpg125668.model.characters.interfaces.IStudent;
 import it.unicam.cs.mpgc.rpg125668.model.enumeration.BookRarity;
-<<<<<<< Updated upstream
-import it.unicam.cs.mpgc.rpg125668.model.consumable.interfaces.Usable;
-=======
-import it.unicam.cs.mpgc.rpg125668.model.skill.interfaces.IStudentSkill;
->>>>>>> Stashed changes
 
-public class Book extends Item implements Usable{
+import it.unicam.cs.mpgc.rpg125668.model.skill.interfaces.IStudentSkill;
+
+public class Book extends Item{
     private final BookRarity rarity;
 
     public Book(String name, BookRarity rarity, String type){
         super(name, type);
+        if(rarity == null) throw new IllegalArgumentException("Rarity cannot be null");
         this.rarity = rarity;
     }
 
-    @Override
-<<<<<<< Updated upstream
-    public void use(Student student) {
-        student.setPreparation(student.getPreparation() + rarity.getPreparation());
-=======
     public String toString() {
         return this.getName();
     }
@@ -32,6 +25,5 @@ public class Book extends Item implements Usable{
         target.setPreparation(target.getPreparation() + this.rarity.getPreparation());
         target.setConcentration(target.getConcentration() - this.rarity.getConcentrationRequired());
         return true;
->>>>>>> Stashed changes
     }
 }

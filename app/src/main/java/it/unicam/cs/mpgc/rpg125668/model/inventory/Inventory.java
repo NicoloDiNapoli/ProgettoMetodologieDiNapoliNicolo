@@ -91,12 +91,8 @@ public class Inventory implements IInventory {
         items.put(item, items.getOrDefault(item, 0) + quantity);
     }
 
-    @Override
-    public int getCoins() {
-        return coins;
-    }
+    public int getCoins() {return this.coins;}
 
-    @Override
     public void setCoins(int coins) {
         if (coins < 0)
             throw new IllegalArgumentException("Illegal arguments: coins < 0");

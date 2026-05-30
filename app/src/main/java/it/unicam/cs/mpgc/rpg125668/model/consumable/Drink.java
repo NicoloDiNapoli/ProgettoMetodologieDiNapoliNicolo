@@ -1,28 +1,17 @@
 package it.unicam.cs.mpgc.rpg125668.model.consumable;
-<<<<<<< Updated upstream
-import it.unicam.cs.mpgc.rpg125668.model.characters.Student;
-import it.unicam.cs.mpgc.rpg125668.model.consumable.interfaces.Usable;
-=======
 import it.unicam.cs.mpgc.rpg125668.model.characters.interfaces.IStudent;
 import it.unicam.cs.mpgc.rpg125668.model.skill.interfaces.IStudentSkill;
->>>>>>> Stashed changes
 
-public class Drink extends Item implements Usable{
+
+public class Drink extends Item{
     private final int increaseConcentration;
 
     public Drink(String name, int increaseConcentration, String type) {
         super(name, type);
+        if(increaseConcentration < 0) throw new IllegalArgumentException("Illegal arguments: increaseConcentration < 0");
         this.increaseConcentration = increaseConcentration;
     }
 
-<<<<<<< Updated upstream
-    @Override
-    public void use(Student student) {
-        student.setConcentration(student.getConcentration()+increaseConcentration);
-    }
-
-=======
->>>>>>> Stashed changes
     public int getIncreaseConcentration() {return increaseConcentration;}
 
     @Override

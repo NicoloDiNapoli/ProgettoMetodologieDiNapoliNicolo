@@ -16,4 +16,10 @@ public interface ICharacter<T extends ISkill> {
      * @return boolean true if the student is dead, false otherwise
      */
     boolean isDead();
+
+    /**
+     * Get the max life of the student
+     * @return int max life
+     */
+    int getMaxLife();
 }

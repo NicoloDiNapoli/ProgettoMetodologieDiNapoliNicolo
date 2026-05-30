@@ -9,17 +9,16 @@ import java.util.List;
 
 public class Enemy extends Character<ISkill> implements Serializable, Combatant {
     private final EnemyDifficult difficult;
+
     public Enemy(String name, int life, int maxLife, EnemyDifficult difficult, List<ISkill> skills) {
         super(name, life, maxLife,skills);
+        if(difficult == null) throw new IllegalArgumentException("Difficult cannot be null");
         this.difficult = difficult;
 
     }
 
     //Getter
-<<<<<<< Updated upstream
     public EnemyDifficult getDifficult() {return difficult;}
-=======
-    public EnemyDifficult getDifficult() {return this.difficult;}
 
     @Override
     public void useSkill(Combatant target, ISkill skill) {
@@ -41,5 +40,4 @@ public class Enemy extends Character<ISkill> implements Serializable, Combatant 
         if (amount <= 0) throw new IllegalArgumentException("Damage amount is negative");
         this.setLife(this.getLife() - amount);
     }
->>>>>>> Stashed changes
 }

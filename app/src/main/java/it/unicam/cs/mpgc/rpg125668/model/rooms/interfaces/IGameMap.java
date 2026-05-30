@@ -6,12 +6,12 @@ public interface IGameMap {
      * Get the start room of the game
      * @return main room of the game
      */
-    public IRoom getStartRoom();
+    IRoom getStartRoom();
 
     /**
      * Get the list of rooms of the game
      * @return Map<String, IRoom> of rooms
      */
-    public Map<String, IRoom> getRooms();
+    Map<String, IRoom> getRooms();
 }
 
