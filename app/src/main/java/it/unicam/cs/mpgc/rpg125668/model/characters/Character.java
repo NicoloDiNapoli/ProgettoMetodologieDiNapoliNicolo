@@ -21,6 +21,8 @@ public abstract class Character<T extends ISkill> implements Serializable, IChar
 
 
     public void addSkill(T skill){
+        if(skill == null) throw new IllegalArgumentException("Illegal arguments: skill is null");
+        if(skills.contains(skill)) return;
         skills.add(skill);
     }
 
