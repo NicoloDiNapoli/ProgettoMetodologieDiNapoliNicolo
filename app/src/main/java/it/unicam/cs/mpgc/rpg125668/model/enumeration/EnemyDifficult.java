@@ -1,9 +1,6 @@
 package it.unicam.cs.mpgc.rpg125668.model.enumeration;
 
-import com.google.gson.annotations.SerializedName;
-
 public enum EnemyDifficult {
-    @SerializedName("EASY")
     EASY {
         @Override
         public double damageModifier() {return 1.10;}
@@ -11,25 +8,22 @@ public enum EnemyDifficult {
         @Override
         public boolean startBoss() {return false;}
     },
-    @SerializedName("MEDIUM")
-    MEDIUM {
+    MEDIUM{
         @Override
         public double damageModifier() {return 1.0;}
 
         @Override
         public boolean startBoss() {return false;}
     },
-    @SerializedName("HARD")
     HARD {
         @Override
         public double damageModifier() {return 0.85;}
-
         @Override
         public boolean startBoss() {return true;}
     };
 
     /**
-     * Defines a moltiplicator to upgrade damage at target
+     * Defines a multiplier to reduce damage from the target
      * @return double
      */
     public abstract double damageModifier();

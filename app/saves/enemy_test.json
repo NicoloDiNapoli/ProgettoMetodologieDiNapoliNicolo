@@ -1,0 +1,22 @@
+{
+  "name": "Professor Vesuvio",
+  "life": 100,
+  "maxLife": 80,
+  "difficult": "HARD",
+  "skills": [
+    {
+      "name": "Bocciatura Istantanea",
+      "preparationRequired": 50,
+      "rarity": "LEGENDARY",
+      "damage": 40,
+      "description": "Boccia senza appello"
+    },
+    {
+      "name": "Domanda a Sorpresa",
+      "preparationRequired": 20,
+      "rarity": "COMMON",
+      "damage": 15,
+      "description": "Destabilizza lo studente"
+    }
+  ]
+}

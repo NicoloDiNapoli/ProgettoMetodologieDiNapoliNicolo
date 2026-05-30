@@ -3,6 +3,7 @@
  */
 package it.unicam.cs.mpgc.rpg125668;
 
+<<<<<<< Updated upstream
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import it.unicam.cs.mpgc.rpg125668.model.characters.Student;
@@ -68,5 +69,10 @@ public class App {
         }
         for(Skill skill5 : student2.getSkills())
             System.out.println(skill5.getName());
+=======
+public class App {
+    public static void main(String[] args){
+        System.out.println("Hello World!");
+>>>>>>> Stashed changes
     }
 }
