@@ -8,6 +8,12 @@ public interface ICurrencyManagement {
     void addCoins(int coins);
 
     /**
+     * See how many coins are in the inventory
+     * @return int coins
+     */
+    int seeCoins();
+
+    /**
      * Remove coins from the inventory
      * @param coins int coins to remove
      */

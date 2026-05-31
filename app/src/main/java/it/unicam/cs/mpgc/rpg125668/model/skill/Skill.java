@@ -24,25 +24,29 @@ public class Skill implements ISkill {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof Skill)) return false;
-        Skill skill = (Skill) o;
+        if (!(o instanceof Skill skill)) return false;
         return this.name.equals(skill.getName()) && this.rarity.equals(skill.getRarity());
     }
 
+    @Override
+    public int hashCode() {
+        return this.name.hashCode() + this.rarity.hashCode();
+    }
+
     public String getName() {
-        return name;
+        return this.name;
     }
 
     public SkillRarity getRarity() {
-        return rarity;
+        return this.rarity;
     }
 
     public int getDamage() {
-        return damage;
+        return this.damage;
     }
 
     public String getDescription() {
-        return description;
+        return this.description;
     }
 
     @Override
@@ -51,6 +55,6 @@ public class Skill implements ISkill {
     }
 
     public boolean isHealing() {
-        return skillType == SkillType.HEALING;
+        return this.skillType == SkillType.HEALING;
     }
 }

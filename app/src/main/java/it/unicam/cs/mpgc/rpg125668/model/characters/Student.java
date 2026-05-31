@@ -9,20 +9,22 @@ import it.unicam.cs.mpgc.rpg125668.model.skill.interfaces.IStudentSkill;
 import java.io.Serializable;
 import java.util.List;
 
-public class Student extends Character<IStudentSkill> implements Serializable, Combatant, IStudent<IStudentSkill> {
-    protected final int maxPreparation=100 , maxConcentration=100;
-    private int level;
+public class Student extends Character<IStudentSkill> implements Serializable, IStudent<IStudentSkill> {
+    protected int maxPreparation , maxConcentration;
+    private Level level;
     private int preparation;
     private int concentration;
     private final IInventory inventory;
 
-    public Student(String name, int life, int level, int preparation, int concentration, int maxLife, List<IStudentSkill> skills, IInventory inventory) {
+    public Student(String name, int life, Level level, int preparation, int concentration, int maxLife, List<IStudentSkill> skills, IInventory inventory) {
         super(name,maxLife,life, skills);
-        if(level < 0 || preparation < 0 || concentration < 0 || inventory == null) throw new IllegalArgumentException("Illegal arguments: level < 0 || preparation < 0 || concentration < 0 orto inventory == null");
+        if(level == null || preparation < 0 || concentration < 0 || inventory == null) throw new IllegalArgumentException("Illegal arguments: level = null || preparation < 0 || concentration < 0 orto inventory == null");
         this.level = level;
         this.preparation = preparation;
         this.concentration = concentration;
         this.inventory = inventory;
+        this.setMaxPreparation();
+        this.setMaxConcentration();
     }
 
     @Override
@@ -49,7 +51,7 @@ public class Student extends Character<IStudentSkill> implements Serializable, C
     @Override
     public void useItem(StudentUsable item){
         if(item != null)
-            this.inventory.useItem(item, this);
+            this.inventory.applyItem(item, this);
     }
 
     public IInventory getInventory() {
@@ -58,11 +60,24 @@ public class Student extends Character<IStudentSkill> implements Serializable, C
 
 
     public int getLevel() {
-        return this.level;
+        if(this.level == null) return 0;
+        return this.level.getLevel();
     }
 
-    public void setLevel(int level) {
-        this.level = level;
+    public void addExperience(int experienceRewarded){
+        if (experienceRewarded < 0) throw new IllegalArgumentException("Experience rewarded is negative");
+        this.level.addExperience(experienceRewarded);
+        setMaxConcentration();
+        setMaxPreparation();
+        setMaxLife();
+    }
+
+    private void setMaxPreparation() {
+        this.maxPreparation =  100 + (level.getLevel() - 1) * 30;
+    }
+
+    private void setMaxConcentration() {
+        this.maxConcentration =  100 + (level.getLevel() - 1) * 20;
     }
 
     @Override
@@ -88,8 +103,11 @@ public class Student extends Character<IStudentSkill> implements Serializable, C
     public void setPreparation(int preparation) {
         if(preparation > maxPreparation)
             this.preparation = maxPreparation;
-        else if(preparation < 0 )
-            this.preparation = 0;
-        else this.preparation = preparation;
+        else this.preparation = Math.max(preparation, 0);
+    }
+
+    @Override
+    public void setMaxLife() {
+        this.maxLife = 100 + (level.getLevel() - 1) * 10;
     }
 }

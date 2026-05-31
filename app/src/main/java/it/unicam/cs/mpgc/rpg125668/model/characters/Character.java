@@ -6,7 +6,7 @@ import java.io.Serializable;
 import java.util.List;
 
 public abstract class Character<T extends ISkill> implements Serializable, ICharacter<T> {
-    protected final int maxLife;
+    protected int maxLife;
     private final String name;
     private int life;
     private final List<T> skills;
@@ -30,10 +30,13 @@ public abstract class Character<T extends ISkill> implements Serializable, IChar
         return this.life <= 0;
     }
 
+    public List<T> getSkills() {
+        return this.skills;
+    }
+
     //Getter
     public String getName() {return this.name;}
     public int getLife() {return this.life;}
-    public List<T> getSkills() {return this.skills;}
     public int getMaxLife() {return this.maxLife;}
 
 
@@ -42,5 +45,8 @@ public abstract class Character<T extends ISkill> implements Serializable, IChar
         if(life > maxLife)
             this.life = maxLife;
         else this.life = Math.max(life, 0);
+    }
+
+    protected void setMaxLife() {
     }
 }

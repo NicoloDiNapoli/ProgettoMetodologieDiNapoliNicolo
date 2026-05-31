@@ -1,15 +1,16 @@
 package it.unicam.cs.mpgc.rpg125668.model.consumable;
 
 import it.unicam.cs.mpgc.rpg125668.model.characters.interfaces.IStudent;
+import it.unicam.cs.mpgc.rpg125668.model.consumable.interfaces.IPurchasable;
 import it.unicam.cs.mpgc.rpg125668.model.enumeration.BookRarity;
 
 import it.unicam.cs.mpgc.rpg125668.model.skill.interfaces.IStudentSkill;
 
-public class Book extends Item{
+public class Book extends Item implements IPurchasable  {
     private final BookRarity rarity;
 
-    public Book(String name, BookRarity rarity, String type){
-        super(name, type);
+    public Book(String name, BookRarity rarity, String type, int price){
+        super(name, type, price);
         if(rarity == null) throw new IllegalArgumentException("Rarity cannot be null");
         this.rarity = rarity;
     }
@@ -25,5 +26,10 @@ public class Book extends Item{
         target.setPreparation(target.getPreparation() + this.rarity.getPreparation());
         target.setConcentration(target.getConcentration() - this.rarity.getConcentrationRequired());
         return true;
+    }
+
+    @Override
+    public int getPrice() {
+        return this.price;
     }
 }

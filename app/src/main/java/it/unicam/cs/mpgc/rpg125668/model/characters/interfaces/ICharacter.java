@@ -4,7 +4,7 @@ import it.unicam.cs.mpgc.rpg125668.model.skill.interfaces.ISkill;
 
 import java.util.List;
 
-public interface ICharacter<T extends ISkill> {
+public interface ICharacter<T extends ISkill> extends Combatant {
     /**
      * Get the list of skills of the student
      * @return list of skills
@@ -18,8 +18,8 @@ public interface ICharacter<T extends ISkill> {
     boolean isDead();
 
     /**
-     * Get the max life of the student
-     * @return int max life
+     * Add a skill to the character
+     * @param skill skill to add
      */
-    int getMaxLife();
+    void addSkill(T skill);
 }

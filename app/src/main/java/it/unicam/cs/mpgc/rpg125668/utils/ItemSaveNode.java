@@ -1,6 +1,4 @@
 package it.unicam.cs.mpgc.rpg125668.utils;
-
-import it.unicam.cs.mpgc.rpg125668.model.consumable.Item;
 import it.unicam.cs.mpgc.rpg125668.model.consumable.interfaces.IItem;
 
 import java.util.List;

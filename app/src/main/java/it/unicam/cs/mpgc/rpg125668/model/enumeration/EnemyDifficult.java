@@ -1,37 +1,24 @@
 package it.unicam.cs.mpgc.rpg125668.model.enumeration;
 
 public enum EnemyDifficult {
-    EASY {
-        @Override
-        public double damageModifier() {return 1.10;}
+    EASY(1.10, false, 20, 150),
+    MEDIUM(1.0, false, 50, 200),
+    HARD(0.85, true, 80, 300);
 
-        @Override
-        public boolean startBoss() {return false;}
-    },
-    MEDIUM{
-        @Override
-        public double damageModifier() {return 1.0;}
+    private final double damageModifier;
+    private final boolean startBoss;
+    private final int experienceReward;
+    private final int maxLife;
 
-        @Override
-        public boolean startBoss() {return false;}
-    },
-    HARD {
-        @Override
-        public double damageModifier() {return 0.85;}
-        @Override
-        public boolean startBoss() {return true;}
-    };
+    EnemyDifficult(double damageModifier, boolean startBoss, int experienceReward, int maxLife) {
+        this.damageModifier = damageModifier;
+        this.startBoss = startBoss;
+        this.experienceReward = experienceReward;
+        this.maxLife = maxLife;
+    }
 
-    /**
-     * Defines a multiplier to reduce damage from the target
-     * @return double
-     */
-    public abstract double damageModifier();
-
-    /**
-     * Define who start the fight, true start boss, false start student
-     * @return boolean
-     */
-    public abstract boolean startBoss();
-
+    public double damageModifier() { return damageModifier; }
+    public boolean startBoss() { return startBoss; }
+    public int experienceReward() { return experienceReward; }
+    public int maxLife() { return maxLife; }
 }

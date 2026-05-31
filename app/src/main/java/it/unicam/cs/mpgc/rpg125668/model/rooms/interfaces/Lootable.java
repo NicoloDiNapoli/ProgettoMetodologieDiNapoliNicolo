@@ -1,10 +1,13 @@
 package it.unicam.cs.mpgc.rpg125668.model.rooms.interfaces;
 
+import it.unicam.cs.mpgc.rpg125668.model.consumable.interfaces.IItem;
 import it.unicam.cs.mpgc.rpg125668.model.inventory.interfaces.ICurrencyManagement;
 import it.unicam.cs.mpgc.rpg125668.model.inventory.interfaces.IInventory;
 import it.unicam.cs.mpgc.rpg125668.model.inventory.interfaces.IItemManagement;
 
-public interface Lootable extends ICurrencyManagement, IItemManagement {
+import java.util.List;
+
+public interface Lootable{
     /**
      * Return the inventory of a lootable Object
      * @return IInventory inventory of the lootable Object
@@ -16,4 +19,11 @@ public interface Lootable extends ICurrencyManagement, IItemManagement {
      * @return IInventory inventory of the lootable Object
      */
     IInventory reset();
+
+    /**
+     * Generate loot in the room
+     * @param items List<IItem> items to add
+     * @param coins int coins to add
+     */
+    void generateLoot(List<IItem> items, int coins);
 }

@@ -1,11 +1,12 @@
 package it.unicam.cs.mpgc.rpg125668.model.characters.interfaces;
 
 import it.unicam.cs.mpgc.rpg125668.model.consumable.interfaces.StudentUsable;
+import it.unicam.cs.mpgc.rpg125668.model.inventory.interfaces.IInventory;
 import it.unicam.cs.mpgc.rpg125668.model.skill.interfaces.IStudentSkill;
 
 import java.util.List;
 
-public interface IStudent<T extends IStudentSkill> extends ICharacter<T>,Combatant {
+public interface IStudent<T extends IStudentSkill> extends ICharacter<T> {
     /**
      * Get the preparation of the student
      * @return int preparation
@@ -34,4 +35,10 @@ public interface IStudent<T extends IStudentSkill> extends ICharacter<T>,Combata
      *
      */
     void useItem(StudentUsable item);
+
+    /**
+     * Get the inventory of the student
+     * @return IInventory inventory
+     */
+    IInventory getInventory();
 }

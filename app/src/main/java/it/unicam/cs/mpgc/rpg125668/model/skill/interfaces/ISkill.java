@@ -11,22 +11,10 @@ public interface ISkill {
     int getDamage();
 
     /**
-     * Get the name of the skill
-     * @return String name
-     */
-    String getName();
-
-    /**
      * Get the rarity of the skill
      * @return SkillRarity rarity
      */
     SkillRarity getRarity();
-
-    /**
-     * Get the description of the skill
-     * @return String description
-     */
-    String getDescription();
 
     /**
      * Get the type of the skill

@@ -7,10 +7,13 @@ import it.unicam.cs.mpgc.rpg125668.model.consumable.interfaces.StudentUsable;
 public abstract class Item implements IItem, StudentUsable {
     private final String name;
     private final String type;
-    public Item(String name, String type) {
+    protected final int price;
+
+    public Item(String name, String type, int price) {
         if(name == null || type == null) throw new IllegalArgumentException("Name cannot be null or type cannot be null");
         this.name = name;
         this.type = type;
+        this.price = price;
     }
 
     public String getName() {return name;}

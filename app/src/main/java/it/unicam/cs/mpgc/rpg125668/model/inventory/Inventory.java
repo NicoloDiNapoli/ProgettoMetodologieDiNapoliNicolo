@@ -20,10 +20,10 @@ public class Inventory implements IInventory {
     }
 
     @Override
-    public void useItem(StudentUsable item, IStudent<IStudentSkill> student) {
+    public void applyItem(StudentUsable item, IStudent<IStudentSkill> student) {
         if (this.hasItem(item)) {
-            item.use(student);
-            removeItem(item);
+            if(item.use(student))
+                removeItem(item);
         }
     }
 
@@ -102,6 +102,11 @@ public class Inventory implements IInventory {
     @Override
     public void addCoins(int coins) {
         setCoins(getCoins() + coins);
+    }
+
+    @Override
+    public int seeCoins() {
+      return this.coins;
     }
 
     @Override

@@ -3,18 +3,15 @@ package it.unicam.cs.mpgc.rpg125668.model.characters;
 import it.unicam.cs.mpgc.rpg125668.model.characters.interfaces.Combatant;
 import it.unicam.cs.mpgc.rpg125668.model.enumeration.EnemyDifficult;
 import it.unicam.cs.mpgc.rpg125668.model.skill.interfaces.ISkill;
-
-import java.io.Serializable;
 import java.util.List;
 
-public class Enemy extends Character<ISkill> implements Serializable, Combatant {
+public class Enemy extends Character<ISkill> implements Combatant {
     private final EnemyDifficult difficult;
 
     public Enemy(String name, int life, int maxLife, EnemyDifficult difficult, List<ISkill> skills) {
-        super(name, life, maxLife,skills);
-        if(difficult == null) throw new IllegalArgumentException("Difficult cannot be null");
+        if (difficult == null) throw new IllegalArgumentException("Illegal arguments: difficult is null");
+        super(name, difficult.maxLife(), life,skills);
         this.difficult = difficult;
-
     }
 
     //Getter
@@ -40,4 +37,5 @@ public class Enemy extends Character<ISkill> implements Serializable, Combatant 
         if (amount <= 0) throw new IllegalArgumentException("Damage amount is negative");
         this.setLife(this.getLife() - amount);
     }
+
 }
