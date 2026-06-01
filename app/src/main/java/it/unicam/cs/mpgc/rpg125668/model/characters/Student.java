@@ -1,7 +1,7 @@
 package it.unicam.cs.mpgc.rpg125668.model.characters;
 import it.unicam.cs.mpgc.rpg125668.model.characters.interfaces.Combatant;
 import it.unicam.cs.mpgc.rpg125668.model.characters.interfaces.IStudent;
-import it.unicam.cs.mpgc.rpg125668.model.consumable.interfaces.StudentUsable;
+import it.unicam.cs.mpgc.rpg125668.model.consumable.interfaces.IItem;
 import it.unicam.cs.mpgc.rpg125668.model.inventory.interfaces.IInventory;
 import it.unicam.cs.mpgc.rpg125668.model.skill.interfaces.ISkill;
 import it.unicam.cs.mpgc.rpg125668.model.skill.interfaces.IStudentSkill;
@@ -49,7 +49,7 @@ public class Student extends Character<IStudentSkill> implements Serializable, I
     }
 
     @Override
-    public void useItem(StudentUsable item){
+    public void useItem(IItem item){
         if(item != null)
             this.inventory.applyItem(item, this);
     }

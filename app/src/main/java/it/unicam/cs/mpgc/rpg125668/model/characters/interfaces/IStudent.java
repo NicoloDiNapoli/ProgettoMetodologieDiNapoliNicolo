@@ -1,6 +1,6 @@
 package it.unicam.cs.mpgc.rpg125668.model.characters.interfaces;
 
-import it.unicam.cs.mpgc.rpg125668.model.consumable.interfaces.StudentUsable;
+import it.unicam.cs.mpgc.rpg125668.model.consumable.interfaces.IItem;
 import it.unicam.cs.mpgc.rpg125668.model.inventory.interfaces.IInventory;
 import it.unicam.cs.mpgc.rpg125668.model.skill.interfaces.IStudentSkill;
 
@@ -34,7 +34,7 @@ public interface IStudent<T extends IStudentSkill> extends ICharacter<T> {
      * @param item item to use
      *
      */
-    void useItem(StudentUsable item);
+    void useItem(IItem item);
 
     /**
      * Get the inventory of the student

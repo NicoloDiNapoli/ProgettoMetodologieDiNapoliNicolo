@@ -3,7 +3,7 @@ package it.unicam.cs.mpgc.rpg125668.model.consumable.interfaces;
 import it.unicam.cs.mpgc.rpg125668.model.characters.interfaces.IStudent;
 import it.unicam.cs.mpgc.rpg125668.model.skill.interfaces.IStudentSkill;
 
-public interface StudentUsable extends IItem{
+public interface StudentUsable{
     /**
      * Use the item on a target
      *

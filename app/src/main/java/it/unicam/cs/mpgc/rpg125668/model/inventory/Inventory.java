@@ -20,7 +20,7 @@ public class Inventory implements IInventory {
     }
 
     @Override
-    public void applyItem(StudentUsable item, IStudent<IStudentSkill> student) {
+    public void applyItem(IItem item, IStudent<IStudentSkill> student) {
         if (this.hasItem(item)) {
             if(item.use(student))
                 removeItem(item);

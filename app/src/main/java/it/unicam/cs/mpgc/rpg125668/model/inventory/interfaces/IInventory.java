@@ -12,11 +12,12 @@ public interface IInventory extends ICurrencyManagement, IItemManagement {
      * Use an item
      * @param item item to use
      */
-    void applyItem(StudentUsable item, IStudent<IStudentSkill> target);
+    void applyItem(IItem item, IStudent<IStudentSkill> target);
 
     /**
      * Get the items in the inventory
      * @return Map<IItem, Integer>
      */
     Map<IItem, Integer> getItems();
+
 }
