@@ -3,8 +3,67 @@
  */
 package it.unicam.cs.mpgc.rpg125668;
 
+import it.unicam.cs.mpgc.rpg125668.model.characters.Level;
+import it.unicam.cs.mpgc.rpg125668.model.characters.Student;
+import it.unicam.cs.mpgc.rpg125668.model.characters.interfaces.IStudent;
+import it.unicam.cs.mpgc.rpg125668.model.consumable.Book;
+import it.unicam.cs.mpgc.rpg125668.model.consumable.Drink;
+import it.unicam.cs.mpgc.rpg125668.model.consumable.Snack;
+import it.unicam.cs.mpgc.rpg125668.model.consumable.interfaces.IItem;
+import it.unicam.cs.mpgc.rpg125668.model.dispenser.BookDispenser;
+import it.unicam.cs.mpgc.rpg125668.model.dispenser.interfaces.IShop;
+import it.unicam.cs.mpgc.rpg125668.model.enumeration.BookRarity;
+import it.unicam.cs.mpgc.rpg125668.model.enumeration.SkillRarity;
+import it.unicam.cs.mpgc.rpg125668.model.enumeration.SkillType;
+import it.unicam.cs.mpgc.rpg125668.model.inventory.Inventory;
+import it.unicam.cs.mpgc.rpg125668.model.skill.StudentSkill;
+import it.unicam.cs.mpgc.rpg125668.model.skill.interfaces.IStudentSkill;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+
 public class App {
     public static void main(String[] args){
 
+        IStudentSkill studentSkill1 = new StudentSkill(30,"Prova1", SkillRarity.RARE
+        , 60, "Skill studente di prova", SkillType.ATTACK);
+
+        IStudentSkill studentSkill2 = new StudentSkill(30,"Prova1", SkillRarity.COMMON
+                , 60, "Skill studente di prova1", SkillType.HEALING);
+
+        IStudentSkill studentSkill3 = new StudentSkill(30,"Prova1", SkillRarity.LEGENDARY
+                , 90, "Skill studente di prova3", SkillType.ATTACK);
+
+        IStudent<IStudentSkill> student1 = new Student("Studente1", 100, new Level(),0, 0, 100, new ArrayList<>(), new Inventory(0, new HashMap<>()));
+
+        student1.getSkills().forEach(Skill-> System.out.println(Skill.getName() + " Damage: " + Skill.getDamage()));
+
+        student1.addSkill(studentSkill1);
+        student1.addSkill(studentSkill2);
+        student1.addSkill(studentSkill3);
+
+        student1.getSkills().forEach(Skill-> System.out.println(Skill.getName() + " Damage: " + Skill.getDamage()));
+
+        IItem item1 = new Drink("Caffè", 10, 10);
+        IItem item2 = new Book("Apounti Reti", BookRarity.RARE, 34);
+        IItem item3 = new Book("Apounti Sistemi", BookRarity.COMMON, 60);
+        IItem item4 = new Snack("Merendina", 20 , 20);
+
+        student1.getInventory().addItem(item1);
+        student1.getInventory().addItem(item2);
+        student1.getInventory().addItem(item3);
+        student1.getInventory().addItem(item4);
+
+        System.out.println(student1.getConcentration());
+        System.out.println(student1.getPreparation());
+        student1.getInventory().applyItem(item1,student1);
+        student1.getInventory().applyItem(item4,student1);
+        System.out.println(student1.getConcentration());
+        System.out.println(student1.getPreparation());
+
+        IShop dispenser1 = new BookDispenser(new HashMap<>());
+        dispenser1.addItemToShop(item3);
+
+        System.out.println(dispenser1.getItems().size());
     }
 }
