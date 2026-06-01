@@ -22,6 +22,12 @@ public interface IShop {
     Map<IItem, Integer> getItems();
 
     /**
+     * Add an item to the shop
+     * @param item IItem item to add
+     */
+    void addItemToShop(IItem item);
+
+    /**
      * Buy an item from the shop
      * @param student student who buys the item
      * @param item IPurchasable extends IItem item to buy

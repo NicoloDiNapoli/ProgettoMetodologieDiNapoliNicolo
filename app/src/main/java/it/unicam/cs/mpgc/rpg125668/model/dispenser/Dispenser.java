@@ -39,6 +39,15 @@ public abstract class Dispenser implements IShop {
         this.items.replaceAll((item, quantity) -> quantity + amount);
     }
 
+    @Override
+    public void addItemToShop(IItem item){
+        if(item == null) throw new IllegalArgumentException("Illegal arguments: item is null");
+        if ( !this.items.containsKey(item))
+            this.items.put(item, 1);
+        else
+            this.items.put(item, this.items.get(item) + 1);
+    }
+
     private void addItem(IStudent<IStudentSkill> student, IPurchasable item) {
         student.getInventory().addItem(item);
         student.getInventory().removeCoins(item.getPrice());
