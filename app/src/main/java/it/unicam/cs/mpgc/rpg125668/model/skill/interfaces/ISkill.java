@@ -5,6 +5,12 @@ import it.unicam.cs.mpgc.rpg125668.model.enumeration.SkillType;
 
 public interface ISkill {
     /**
+     * Get the name of the skill
+     * @return String name of the skill
+     */
+    String getName();
+
+    /**
      * Get the damage to the skill
      * @return int damage
      */
