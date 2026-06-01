@@ -9,8 +9,8 @@ import it.unicam.cs.mpgc.rpg125668.model.skill.interfaces.IStudentSkill;
 public class Book extends Item implements IPurchasable  {
     private final BookRarity rarity;
 
-    public Book(String name, BookRarity rarity, String type, int price){
-        super(name, type, price);
+    public Book(String name, BookRarity rarity, int price){
+        super(name, "book", price);
         if(rarity == null) throw new IllegalArgumentException("Rarity cannot be null");
         this.rarity = rarity;
     }

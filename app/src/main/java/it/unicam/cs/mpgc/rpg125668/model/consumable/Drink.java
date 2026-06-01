@@ -7,8 +7,8 @@ import it.unicam.cs.mpgc.rpg125668.model.skill.interfaces.IStudentSkill;
 public class Drink extends Item implements IPurchasable {
     private final int increaseConcentration;
 
-    public Drink(String name, int increaseConcentration, String type, int price) {
-        super(name, type, price);
+    public Drink(String name, int increaseConcentration, int price) {
+        super(name, "drink", price);
         if(increaseConcentration < 0) throw new IllegalArgumentException("Illegal arguments: increaseConcentration < 0");
         this.increaseConcentration = increaseConcentration;
     }
