@@ -13,6 +13,10 @@ public class Level {
         this.nextLevelExperience = nextLevelExperience;
     }
 
+    public Level() {
+        this(1, 0, 100);
+    }
+
     public void addExperience(int amount) {
         if (amount <= 0) throw new IllegalArgumentException("Amount must be positive");
         this.experience += amount;
