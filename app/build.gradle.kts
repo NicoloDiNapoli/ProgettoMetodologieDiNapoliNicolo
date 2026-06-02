@@ -21,6 +21,10 @@ dependencies {
 
     // This dependency is used by the application.
     implementation(libs.guava)
+    implementation("org.hibernate.orm:hibernate-core:7.4.0.Final")
+    implementation("jakarta.persistence:jakarta.persistence-api:3.2.0")
+    //implementation("")
+
 }
 
 // Apply a specific Java toolchain to ease working on different environments.
