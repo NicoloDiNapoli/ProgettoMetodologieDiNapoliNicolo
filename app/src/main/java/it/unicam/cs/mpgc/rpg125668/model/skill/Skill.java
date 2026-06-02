@@ -4,7 +4,7 @@ import it.unicam.cs.mpgc.rpg125668.model.enumeration.SkillRarity;
 import it.unicam.cs.mpgc.rpg125668.model.enumeration.SkillType;
 import it.unicam.cs.mpgc.rpg125668.model.skill.interfaces.ISkill;
 
-public class Skill implements ISkill {
+public abstract class Skill implements ISkill {
     private final String name;
     private final SkillRarity rarity;
     private final int damage;
@@ -12,7 +12,7 @@ public class Skill implements ISkill {
     private final SkillType skillType;
 
     public Skill(String name, SkillRarity rarity, int damage, String description, SkillType skillType) {
-        if (name == null || rarity == null || damage < 0 || description == null || skillType == null)
+        if (name == null || rarity == null || damage < 0 || description == null)
             throw new IllegalArgumentException("Illegal arguments: null values or negative damage");
         this.name = name;
         this.rarity = rarity;
@@ -50,10 +50,6 @@ public class Skill implements ISkill {
     }
 
     @Override
-    public SkillType getSkillType() {
-        return this.skillType;
-    }
-
     public boolean isHealing() {
         return this.skillType == SkillType.HEALING;
     }

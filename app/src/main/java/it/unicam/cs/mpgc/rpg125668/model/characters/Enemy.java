@@ -2,13 +2,14 @@ package it.unicam.cs.mpgc.rpg125668.model.characters;
 
 import it.unicam.cs.mpgc.rpg125668.model.characters.interfaces.Combatant;
 import it.unicam.cs.mpgc.rpg125668.model.enumeration.EnemyDifficult;
+import it.unicam.cs.mpgc.rpg125668.model.skill.interfaces.IBossSkill;
 import it.unicam.cs.mpgc.rpg125668.model.skill.interfaces.ISkill;
 import java.util.List;
 
-public class Enemy extends Character<ISkill> implements Combatant {
+public class Enemy extends Character<IBossSkill> implements Combatant {
     private final EnemyDifficult difficult;
 
-    public Enemy(String name, int life, int maxLife, EnemyDifficult difficult, List<ISkill> skills) {
+    public Enemy(String name, int life, int maxLife, EnemyDifficult difficult, List<IBossSkill> skills) {
         if (difficult == null) throw new IllegalArgumentException("Illegal arguments: difficult is null");
         super(name, difficult.maxLife(), life,skills);
         this.difficult = difficult;

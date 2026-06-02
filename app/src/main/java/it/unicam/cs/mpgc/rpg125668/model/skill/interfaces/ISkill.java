@@ -20,17 +20,5 @@ public interface ISkill {
      * Get the rarity of the skill
      * @return SkillRarity rarity
      */
-    SkillRarity getRarity();
-
-    /**
-     * Get the type of the skill
-     * @return SkillType type
-     */
-    SkillType getSkillType();
-
-    /**
-     * Check if the skill is a healing skill
-     * @return boolean true if the skill is a healing skill, false otherwise
-     */
     boolean isHealing();
 }

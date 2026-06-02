@@ -11,8 +11,6 @@ import it.unicam.cs.mpgc.rpg125668.model.consumable.Drink;
 import it.unicam.cs.mpgc.rpg125668.model.consumable.Snack;
 import it.unicam.cs.mpgc.rpg125668.model.consumable.interfaces.IItem;
 import it.unicam.cs.mpgc.rpg125668.model.consumable.interfaces.IPurchasable;
-import it.unicam.cs.mpgc.rpg125668.model.dispenser.BookDispenser;
-import it.unicam.cs.mpgc.rpg125668.model.dispenser.interfaces.IShop;
 import it.unicam.cs.mpgc.rpg125668.model.enumeration.BookRarity;
 import it.unicam.cs.mpgc.rpg125668.model.enumeration.SkillRarity;
 import it.unicam.cs.mpgc.rpg125668.model.enumeration.SkillType;
@@ -27,13 +25,13 @@ public class App {
     public static void main(String[] args){
 
         IStudentSkill studentSkill1 = new StudentSkill(30,"Prova1", SkillRarity.RARE
-        , 60, "Skill studente di prova", SkillType.ATTACK);
+        , 60, "Skill studente di prova");
 
         IStudentSkill studentSkill2 = new StudentSkill(30,"Prova1", SkillRarity.COMMON
-                , 60, "Skill studente di prova1", SkillType.HEALING);
+                , 60, "Skill studente di prova1");
 
         IStudentSkill studentSkill3 = new StudentSkill(30,"Prova1", SkillRarity.LEGENDARY
-                , 90, "Skill studente di prova3", SkillType.ATTACK);
+                , 90, "Skill studente di prova3");
 
         IStudent<IStudentSkill> student1 = new Student("Studente1", 100, new Level(),0, 0, 100, new ArrayList<>(), new Inventory(0, new HashMap<>()));
 
