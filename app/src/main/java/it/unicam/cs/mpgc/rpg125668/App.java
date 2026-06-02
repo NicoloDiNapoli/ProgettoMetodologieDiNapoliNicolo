@@ -25,13 +25,13 @@ public class App {
     public static void main(String[] args){
 
         IStudentSkill studentSkill1 = new StudentSkill(30,"Prova1", SkillRarity.RARE
-        , 60, "Skill studente di prova");
+        , 60, "Skill studente di prova", SkillType.ATTACK);
 
         IStudentSkill studentSkill2 = new StudentSkill(30,"Prova1", SkillRarity.COMMON
-                , 60, "Skill studente di prova1");
+                , 60, "Skill studente di prova1", SkillType.HEALING);
 
         IStudentSkill studentSkill3 = new StudentSkill(30,"Prova1", SkillRarity.LEGENDARY
-                , 90, "Skill studente di prova3");
+                , 90, "Skill studente di prova3", SkillType.ATTACK);
 
         IStudent<IStudentSkill> student1 = new Student("Studente1", 100, new Level(),0, 0, 100, new ArrayList<>(), new Inventory(0, new HashMap<>()));
 
