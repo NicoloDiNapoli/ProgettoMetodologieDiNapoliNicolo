@@ -2,9 +2,8 @@ package it.unicam.cs.mpgc.rpg125668.model.consumable;
 
 
 import it.unicam.cs.mpgc.rpg125668.model.consumable.interfaces.IItem;
-import it.unicam.cs.mpgc.rpg125668.model.consumable.interfaces.StudentUsable;
 
-public abstract class Item implements IItem, StudentUsable {
+public abstract class Item implements IItem {
     private final String name;
     private final String type;
     protected final int price;

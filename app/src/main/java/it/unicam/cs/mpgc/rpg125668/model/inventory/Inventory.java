@@ -1,7 +1,6 @@
 package it.unicam.cs.mpgc.rpg125668.model.inventory;
 
 import it.unicam.cs.mpgc.rpg125668.model.consumable.interfaces.IItem;
-import it.unicam.cs.mpgc.rpg125668.model.consumable.interfaces.StudentUsable;
 import it.unicam.cs.mpgc.rpg125668.model.characters.interfaces.IStudent;
 import it.unicam.cs.mpgc.rpg125668.model.inventory.interfaces.IInventory;
 import it.unicam.cs.mpgc.rpg125668.model.skill.interfaces.IStudentSkill;

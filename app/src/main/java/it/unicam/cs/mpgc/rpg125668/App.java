@@ -10,6 +10,7 @@ import it.unicam.cs.mpgc.rpg125668.model.consumable.Book;
 import it.unicam.cs.mpgc.rpg125668.model.consumable.Drink;
 import it.unicam.cs.mpgc.rpg125668.model.consumable.Snack;
 import it.unicam.cs.mpgc.rpg125668.model.consumable.interfaces.IItem;
+import it.unicam.cs.mpgc.rpg125668.model.consumable.interfaces.IPurchasable;
 import it.unicam.cs.mpgc.rpg125668.model.dispenser.BookDispenser;
 import it.unicam.cs.mpgc.rpg125668.model.dispenser.interfaces.IShop;
 import it.unicam.cs.mpgc.rpg125668.model.enumeration.BookRarity;
@@ -44,10 +45,10 @@ public class App {
 
         student1.getSkills().forEach(Skill-> System.out.println(Skill.getName() + " Damage: " + Skill.getDamage()));
 
-        IItem item1 = new Drink("Caffè", 10, 10);
+        IPurchasable item1 = new Drink("Caffè", 10, 10);
         IItem item2 = new Book("Apounti Reti", BookRarity.RARE, 34);
         IItem item3 = new Book("Apounti Sistemi", BookRarity.COMMON, 60);
-        IItem item4 = new Snack("Merendina", 20 , 20);
+        IPurchasable item4 = new Snack("Merendina", 20 , 20);
 
         student1.getInventory().addItem(item1);
         student1.getInventory().addItem(item2);
