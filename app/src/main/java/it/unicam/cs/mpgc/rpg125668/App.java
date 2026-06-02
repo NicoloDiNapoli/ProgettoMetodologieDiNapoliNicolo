@@ -56,15 +56,9 @@ public class App {
         student1.getInventory().addItem(item4);
 
         System.out.println(student1.getConcentration());
-        System.out.println(student1.getPreparation());
         student1.getInventory().applyItem(item1,student1);
         student1.getInventory().applyItem(item4,student1);
         System.out.println(student1.getConcentration());
-        System.out.println(student1.getPreparation());
 
-        IShop dispenser1 = new BookDispenser(new HashMap<>());
-        dispenser1.addItemToShop(item3);
-
-        System.out.println(dispenser1.getItems().size());
     }
 }
