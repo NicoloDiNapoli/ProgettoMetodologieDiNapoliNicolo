@@ -25,7 +25,7 @@ public interface IShop {
      * Add an item to the shop
      * @param item IItem item to add
      */
-    void addItemToShop(IItem item);
+    void addItemToShop(IItem item, int quantity);
 
     /**
      * Buy an item from the shop

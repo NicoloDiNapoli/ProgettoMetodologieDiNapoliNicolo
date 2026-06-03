@@ -2,10 +2,11 @@ package it.unicam.cs.mpgc.rpg125668.model.rooms;
 
 import it.unicam.cs.mpgc.rpg125668.model.dispenser.interfaces.IShop;
 import it.unicam.cs.mpgc.rpg125668.model.rooms.interfaces.IRoom;
+import it.unicam.cs.mpgc.rpg125668.model.rooms.interfaces.IShopRoom;
 
 import java.util.List;
 
-public class ShopRoom extends Room{
+public class ShopRoom extends Room implements IShopRoom {
 
     private final IShop dispenser;
 
@@ -16,6 +17,7 @@ public class ShopRoom extends Room{
     }
 
     public IShop getDispenser() {
-        return dispenser;
+        return this.dispenser;
     }
+
 }

@@ -21,4 +21,10 @@ public interface ISkill {
      * @return SkillRarity rarity
      */
     boolean isHealing();
+
+    /**
+     * Get the rarity of the skill
+     * @return SkillRarity rarity
+     */
+    SkillRarity getRarity();
 }

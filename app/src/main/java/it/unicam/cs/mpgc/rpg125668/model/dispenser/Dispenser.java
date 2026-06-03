@@ -40,12 +40,12 @@ public abstract class Dispenser implements IShop {
     }
 
     @Override
-    public void addItemToShop(IItem item){
-        if(item == null) throw new IllegalArgumentException("Illegal arguments: item is null");
+    public void addItemToShop(IItem item, int quantity){
+        if(item == null || quantity < 0) throw new IllegalArgumentException("Illegal arguments: item is null or quantity < 0");
         if ( !this.items.containsKey(item))
-            this.items.put(item, 1);
+            this.items.put(item, quantity);
         else
-            this.items.put(item, this.items.get(item) + 1);
+            this.items.put(item, this.items.get(item) + quantity);
     }
 
     private void addItem(IStudent<IStudentSkill> student, IPurchasable item) {

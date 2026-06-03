@@ -1,13 +1,11 @@
 package it.unicam.cs.mpgc.rpg125668.model.rooms.interfaces;
 
 import it.unicam.cs.mpgc.rpg125668.model.consumable.interfaces.IItem;
-import it.unicam.cs.mpgc.rpg125668.model.inventory.interfaces.ICurrencyManagement;
 import it.unicam.cs.mpgc.rpg125668.model.inventory.interfaces.IInventory;
-import it.unicam.cs.mpgc.rpg125668.model.inventory.interfaces.IItemManagement;
 
 import java.util.List;
 
-public interface Lootable{
+public interface IRoomLootable extends IRoom{
     /**
      * Return the inventory of a lootable Object
      * @return IInventory inventory of the lootable Object
