@@ -3,60 +3,161 @@
  */
 package it.unicam.cs.mpgc.rpg125668;
 
-import it.unicam.cs.mpgc.rpg125668.model.characters.Level;
-import it.unicam.cs.mpgc.rpg125668.model.characters.Student;
-import it.unicam.cs.mpgc.rpg125668.model.characters.interfaces.IStudent;
+import it.unicam.cs.mpgc.rpg125668.model.characters.Enemy;
+import it.unicam.cs.mpgc.rpg125668.model.characters.interfaces.IEnemy;
 import it.unicam.cs.mpgc.rpg125668.model.consumable.Book;
 import it.unicam.cs.mpgc.rpg125668.model.consumable.Drink;
 import it.unicam.cs.mpgc.rpg125668.model.consumable.Snack;
 import it.unicam.cs.mpgc.rpg125668.model.consumable.interfaces.IItem;
-import it.unicam.cs.mpgc.rpg125668.model.consumable.interfaces.IPurchasable;
+import it.unicam.cs.mpgc.rpg125668.model.dispenser.BookDispenser;
+import it.unicam.cs.mpgc.rpg125668.model.dispenser.SnackDrinkDispenser;
 import it.unicam.cs.mpgc.rpg125668.model.enumeration.BookRarity;
+import it.unicam.cs.mpgc.rpg125668.model.enumeration.EnemyDifficult;
 import it.unicam.cs.mpgc.rpg125668.model.enumeration.SkillRarity;
 import it.unicam.cs.mpgc.rpg125668.model.enumeration.SkillType;
 import it.unicam.cs.mpgc.rpg125668.model.inventory.Inventory;
-import it.unicam.cs.mpgc.rpg125668.model.skill.StudentSkill;
-import it.unicam.cs.mpgc.rpg125668.model.skill.interfaces.IStudentSkill;
+import it.unicam.cs.mpgc.rpg125668.model.rooms.GameMap;
+import it.unicam.cs.mpgc.rpg125668.model.rooms.LootableRoom;
+import it.unicam.cs.mpgc.rpg125668.model.rooms.Room;
+import it.unicam.cs.mpgc.rpg125668.model.rooms.ShopRoom;
+import it.unicam.cs.mpgc.rpg125668.model.rooms.interfaces.IGameMap;
+import it.unicam.cs.mpgc.rpg125668.model.rooms.interfaces.IRoom;
+import it.unicam.cs.mpgc.rpg125668.model.rooms.interfaces.IRoomLootable;
+import it.unicam.cs.mpgc.rpg125668.model.rooms.interfaces.IShopRoom;
+import it.unicam.cs.mpgc.rpg125668.model.skill.BossSkill;
+import it.unicam.cs.mpgc.rpg125668.model.skill.interfaces.IBossSkill;
 
+import java.lang.foreign.Arena;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class App {
     public static void main(String[] args){
+        //Prendere skill da Database
+        List<IBossSkill> skills = getBossSkill();
 
-        IStudentSkill studentSkill1 = new StudentSkill(30,"Prova1", SkillRarity.RARE
-        , 60, "Skill studente di prova", SkillType.ATTACK);
+        //Creazione dei nemici all'avvio del gioco, parametri base presi da Database
+        IEnemy<IBossSkill> bossFacile = new Enemy("Professor Rossi", EnemyDifficult.EASY.maxLife(), EnemyDifficult.EASY.maxLife(), EnemyDifficult.EASY, new ArrayList<>());
+        IEnemy<IBossSkill> bossMedio = new Enemy("Professor Verdi", EnemyDifficult.MEDIUM.maxLife(), EnemyDifficult.MEDIUM.maxLife(), EnemyDifficult.MEDIUM, new ArrayList<>());
+        IEnemy<IBossSkill> bossHard = new Enemy("Professor Bianchi", EnemyDifficult.HARD.maxLife(),EnemyDifficult.HARD.maxLife(),EnemyDifficult.HARD, new ArrayList<>());
 
-        IStudentSkill studentSkill2 = new StudentSkill(30,"Prova1", SkillRarity.COMMON
-                , 60, "Skill studente di prova1", SkillType.HEALING);
+        //Skill generate casualmente
+        bossFacile.getSkills().addAll(pickRandomSkills(skills,bossFacile.getDifficult()));
+        bossMedio.getSkills().addAll(pickRandomSkills(skills,bossMedio.getDifficult()));
+        bossHard.getSkills().addAll(pickRandomSkills(skills,bossHard.getDifficult()));
 
-        IStudentSkill studentSkill3 = new StudentSkill(30,"Prova1", SkillRarity.LEGENDARY
-                , 90, "Skill studente di prova3", SkillType.ATTACK);
+        //Stanze prese da Database
+        IRoom atrio = new Room("Atrio", new ArrayList<>(), "Atrio");
+        IShopRoom areaRistoro = new ShopRoom("Area Ristoro", new ArrayList<>(), "Area Ristoro", new SnackDrinkDispenser(new HashMap<>()));
+        IShopRoom biblioteca = new ShopRoom("Biblioteca", new ArrayList<>(), "Biblioteca", new BookDispenser(new HashMap<>()));
+        IRoomLootable aula1 = new LootableRoom("Aula", new ArrayList<>(), "Aula", new Inventory(0, new HashMap<>()));
+        IRoomLootable aula2 = new LootableRoom("Aula", new ArrayList<>(), "Aula", new Inventory(0, new HashMap<>()));
+        IRoom salaProfessori = new Room("Sala Professori", new ArrayList<>(), "Sala Professori");
 
-        IStudent<IStudentSkill> student1 = new Student("Studente1", 100, new Level(),0, 0, 100, new ArrayList<>(), new Inventory(0, new HashMap<>()));
+        //Collegamento preso da Database
+        atrio.addExit(areaRistoro);
+        atrio.addExit(biblioteca);
+        atrio.addExit(aula1);
+        atrio.addExit(aula2);
+        atrio.addExit(salaProfessori);
 
-        student1.getSkills().forEach(Skill-> System.out.println(Skill.getName() + " Damage: " + Skill.getDamage()));
+        areaRistoro.addExit(atrio);
+        areaRistoro.addExit(biblioteca);
+        areaRistoro.addExit(salaProfessori);
 
-        student1.addSkill(studentSkill1);
-        student1.addSkill(studentSkill2);
-        student1.addSkill(studentSkill3);
+        biblioteca.addExit(atrio);
+        biblioteca.addExit(areaRistoro);
+        biblioteca.addExit(salaProfessori);
 
-        student1.getSkills().forEach(Skill-> System.out.println(Skill.getName() + " Damage: " + Skill.getDamage()));
+        aula1.addExit(atrio);
+        aula2.addExit(atrio);
 
-        IPurchasable item1 = new Drink("Caffè", 10, 10);
-        IItem item2 = new Book("Apounti Reti", BookRarity.RARE, 34);
-        IItem item3 = new Book("Apounti Sistemi", BookRarity.COMMON, 60);
-        IPurchasable item4 = new Snack("Merendina", 20 , 20);
+        salaProfessori.addExit(atrio);
+        salaProfessori.addExit(areaRistoro);
+        salaProfessori.addExit(biblioteca);
 
-        student1.getInventory().addItem(item1);
-        student1.getInventory().addItem(item2);
-        student1.getInventory().addItem(item3);
-        student1.getInventory().addItem(item4);
+        IGameMap gameMap = new GameMap(new HashMap<>(), atrio);
+        gameMap.getRooms().put("Atrio", atrio);
+        gameMap.getRooms().put("Area Ristoro", areaRistoro);
+        gameMap.getRooms().put("Biblioteca", biblioteca);
+        gameMap.getRooms().put("Aula", aula1);
+        gameMap.getRooms().put("Sala Professori", salaProfessori);
+        gameMap.getRooms().put("Aula2", aula2);
 
-        System.out.println(student1.getConcentration());
-        student1.getInventory().applyItem(item1,student1);
-        student1.getInventory().applyItem(item4,student1);
-        System.out.println(student1.getConcentration());
+        areaRistoro.getDispenser().addItemToShop(new Drink("Caffè", 15, 10), 100);
+        areaRistoro.getDispenser().addItemToShop(new Drink("Energy Drink", 30, 15), 100);
+        areaRistoro.getDispenser().addItemToShop(new Snack("Merendina", 20, 10), 100);
+        areaRistoro.getDispenser().addItemToShop(new Snack("Panino", 40, 25), 100);
 
+        biblioteca.getDispenser().addItemToShop(new Book("Apputni Fotocopiati", BookRarity.COMMON), 10);
+        biblioteca.getDispenser().addItemToShop(new Book("Dispensa del Prof", BookRarity.COMMON), 10);
+
+        biblioteca.getDispenser().addItemToShop(new Book("Apputni Fotocopiati", BookRarity.COMMON), 10);
+        biblioteca.getDispenser().addItemToShop(new Book("Apputni Fotocopiati", BookRarity.COMMON), 10);
+
+        biblioteca.getDispenser().addItemToShop(new Book("Apputni Fotocopiati", BookRarity.COMMON), 10);
+        biblioteca.getDispenser().addItemToShop(new Book("Apputni Fotocopiati", BookRarity.COMMON), 10);
+
+        biblioteca.getDispenser().addItemToShop(new Book("Apputni Fotocopiati", BookRarity.COMMON), 10);
+        biblioteca.getDispenser().addItemToShop(new Book("Apputni Fotocopiati", BookRarity.COMMON), 10);
+    }
+
+
+    private static List<IBossSkill> pickRandomSkills(List<IBossSkill> skills, EnemyDifficult enemyDifficult) {
+        final int numSkills = 3;
+        List<SkillRarity> allowed = switch (enemyDifficult) {
+            case EASY   -> List.of(SkillRarity.COMMON, SkillRarity.RARE);
+            case MEDIUM -> List.of(SkillRarity.RARE, SkillRarity.EPIC);
+            case HARD   -> List.of(SkillRarity.EPIC, SkillRarity.LEGENDARY);
+        };
+
+        List<IBossSkill> filtered = skills.stream()
+                .filter(skill -> allowed.contains(skill.getRarity()))
+                .collect(Collectors.toList());
+
+        Collections.shuffle(filtered);
+        return filtered.subList(0, numSkills);
+    }
+
+    private static List<IBossSkill> getBossSkill() {
+        IBossSkill richiamoAllaLavagna = new BossSkill("Richiamo alla Lavagna", SkillRarity.COMMON, 8, "Domanda improvvisa sotto pressione, causa danni leggeri e destabilizzazione mentale.", SkillType.ATTACK);
+
+        IBossSkill annotazioneCorrettiva = new BossSkill("Annotazione Correttiva", SkillRarity.COMMON, 6, "Corregge gli errori in tempo reale trasformando ogni imprecisione in pressione costante.", SkillType.ATTACK);
+
+        IBossSkill interrogazioneMinore = new BossSkill("Interrogazione Minore", SkillRarity.COMMON, 10, "Domanda semplice ma insidiosa che infligge pressione mentale e danno diretto.", SkillType.ATTACK);
+
+        IBossSkill dominandaIncrocioLogico = new BossSkill("Domanda a Incrocio Logico", SkillRarity.RARE, 22, "Collega più argomenti sotto stress, infligge danno medio e riduce la concentrazione.", SkillType.ATTACK);
+
+        IBossSkill analisiImpietosa = new BossSkill("Analisi Impietosa", SkillRarity.RARE, 25, "Espone le debolezze dello studente pubblicamente, riduce preparazione e infligge danno medio.", SkillType.ATTACK);
+
+        IBossSkill vorticeDomanneMirate = new BossSkill("Vortice di Domande Mirate", SkillRarity.RARE, 20, "Sequenza rapida di domande precise che riduce concentrazione e infligge danni medi.", SkillType.ATTACK);
+
+        IBossSkill esameResistenzaCognitiva = new BossSkill("Esame di Resistenza Cognitiva", SkillRarity.EPIC, 50, "Lunga sequenza di domande complesse che consuma energie mentali e riduce concentrazione.", SkillType.ATTACK);
+
+        IBossSkill risonanzaSapere = new BossSkill("Risonanza del Sapere", SkillRarity.EPIC, 45, "Il boss assorbe l'energia mentale dispersa dello studente e recupera HP moderati.", SkillType.HEALING);
+
+        IBossSkill esameSignilloTemporale = new BossSkill("Esame del Sigillo Temporale", SkillRarity.EPIC, 55, "Altera la percezione del tempo, fa perdere preparazione accumulata e infligge danni significativi.", SkillType.ATTACK);
+
+        IBossSkill giudizioSaggio = new BossSkill("Giudizio Saggio", SkillRarity.LEGENDARY, 90, "La commissione infligge danni enormi riducendo concentrazione e preparazione simultaneamente.", SkillType.ATTACK);
+
+        IBossSkill verdettoFinale = new BossSkill("Verdetto Finale", SkillRarity.LEGENDARY, 100, "La commissione giudica lo studente infliggendo danni elevati e alterando la stabilità mentale.", SkillType.ATTACK);
+
+        IBossSkill privilegioDocente = new BossSkill("Privilegio del Docente", SkillRarity.LEGENDARY, 80, "Il professore converte la conoscenza accumulata in rigenerazione pura recuperando grandi quantità di HP.", SkillType.HEALING);
+
+        List<IBossSkill> skills = new ArrayList<>();
+        skills.add(richiamoAllaLavagna);
+        skills.add(annotazioneCorrettiva);
+        skills.add(interrogazioneMinore);
+        skills.add(dominandaIncrocioLogico);
+        skills.add(analisiImpietosa);
+        skills.add(vorticeDomanneMirate);
+        skills.add(esameResistenzaCognitiva);
+        skills.add(risonanzaSapere);
+        skills.add(esameSignilloTemporale);
+        skills.add(giudizioSaggio);
+        return skills;
     }
 }
