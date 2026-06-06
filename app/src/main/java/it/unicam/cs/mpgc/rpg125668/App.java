@@ -8,7 +8,6 @@ import it.unicam.cs.mpgc.rpg125668.model.characters.interfaces.IEnemy;
 import it.unicam.cs.mpgc.rpg125668.model.consumable.Book;
 import it.unicam.cs.mpgc.rpg125668.model.consumable.Drink;
 import it.unicam.cs.mpgc.rpg125668.model.consumable.Snack;
-import it.unicam.cs.mpgc.rpg125668.model.consumable.interfaces.IItem;
 import it.unicam.cs.mpgc.rpg125668.model.dispenser.BookDispenser;
 import it.unicam.cs.mpgc.rpg125668.model.dispenser.SnackDrinkDispenser;
 import it.unicam.cs.mpgc.rpg125668.model.enumeration.BookRarity;
@@ -27,7 +26,6 @@ import it.unicam.cs.mpgc.rpg125668.model.rooms.interfaces.IShopRoom;
 import it.unicam.cs.mpgc.rpg125668.model.skill.BossSkill;
 import it.unicam.cs.mpgc.rpg125668.model.skill.interfaces.IBossSkill;
 
-import java.lang.foreign.Arena;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
