@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence xmlns="https://jakarta.ee/xml/ns/persistence"
+             version="3.0">
+
+    <persistence-unit name="rpg-pu" transaction-type="RESOURCE_LOCAL">
+        <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
+
+        <!-- Entity classes -->
+        <class>it.unicam.cs.mpgc.rpg125668.persistence.entity.character.StudentEntity</class>
+        <class>it.unicam.cs.mpgc.rpg125668.persistence.entity.character.EnemyEntity</class>
+        <class>it.unicam.cs.mpgc.rpg125668.persistence.entity.character.LevelEntity</class>
+        <class>it.unicam.cs.mpgc.rpg125668.persistence.entity.inventory.InventoryEntity</class>
+        <class>it.unicam.cs.mpgc.rpg125668.persistence.entity.inventory.InventoryItemEntity</class>
+        <class>it.unicam.cs.mpgc.rpg125668.persistence.entity.item.ItemEntity</class>
+        <class>it.unicam.cs.mpgc.rpg125668.persistence.entity.item.BookEntity</class>
+        <class>it.unicam.cs.mpgc.rpg125668.persistence.entity.item.SnackEntity</class>
+        <class>it.unicam.cs.mpgc.rpg125668.persistence.entity.item.DrinkEntity</class>
+        <class>it.unicam.cs.mpgc.rpg125668.persistence.entity.skill.StudentSkillEntity</class>
+        <class>it.unicam.cs.mpgc.rpg125668.persistence.entity.skill.BossSkillEntity</class>
+        <class>it.unicam.cs.mpgc.rpg125668.persistence.entity.room.RoomEntity</class>
+        <class>it.unicam.cs.mpgc.rpg125668.persistence.entity.room.LootableRoomEntity</class>
+        <class>it.unicam.cs.mpgc.rpg125668.persistence.entity.room.ShopRoomEntity</class>
+        <class>it.unicam.cs.mpgc.rpg125668.persistence.entity.room.ShopItemEntity</class>
+        <class>it.unicam.cs.mpgc.rpg125668.persistence.entity.GameStateEntity</class>
+
+        <properties>
+            <!-- H2 database file locale -->
+            <property name="jakarta.persistence.jdbc.driver" value="org.h2.Driver"/>
+            <property name="jakarta.persistence.jdbc.url" value="jdbc:h2:file:./data/rpgdb"/>
+            <property name="jakarta.persistence.jdbc.user" value="sa"/>
+            <property name="jakarta.persistence.jdbc.password" value=""/>
+
+            <!-- Hibernate settings -->
+            <property name="hibernate.dialect" value="org.hibernate.dialect.H2Dialect"/>
+            <property name="hibernate.hbm2ddl.auto" value="update"/>
+            <property name="hibernate.show_sql" value="true"/>
+            <property name="hibernate.format_sql" value="true"/>
+        </properties>
+
+    </persistence-unit>
+
+</persistence>
