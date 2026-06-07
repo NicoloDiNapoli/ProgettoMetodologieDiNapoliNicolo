@@ -1,6 +1,6 @@
 package it.unicam.cs.mpgc.rpg125668.persistence.entity.room;
 
-import it.unicam.cs.mpgc.rpg125668.persistence.entity.Item.ItemEntity;
+import it.unicam.cs.mpgc.rpg125668.persistence.entity.item.ItemEntity;
 import jakarta.persistence.*;
 
 @Entity

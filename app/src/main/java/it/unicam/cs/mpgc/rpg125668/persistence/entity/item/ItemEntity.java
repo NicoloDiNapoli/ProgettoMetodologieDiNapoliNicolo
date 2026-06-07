@@ -1,4 +1,4 @@
-package it.unicam.cs.mpgc.rpg125668.persistence.entity.Item;
+package it.unicam.cs.mpgc.rpg125668.persistence.entity.item;
 
 import jakarta.persistence.*;
 
