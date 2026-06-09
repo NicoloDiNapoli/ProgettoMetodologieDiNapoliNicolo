@@ -9,3 +9,5 @@ build
 
 # Ignore gradle configurations
 .idea/
+
+app/data/rpgdb.*
