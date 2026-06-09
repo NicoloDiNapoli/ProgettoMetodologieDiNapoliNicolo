@@ -11,8 +11,7 @@ public class ShopRoomEntity extends RoomEntity {
     @Column(name = "dispenser_name", nullable = false)
     private String dispenserName;
 
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-    @JoinColumn(name = "shop_room_id")
+    @OneToMany(mappedBy = "shopRoom", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ShopItemEntity> shopItems = new ArrayList<>();
 
     protected ShopRoomEntity() {}
@@ -27,4 +26,6 @@ public class ShopRoomEntity extends RoomEntity {
     public String getDispenserName() { return dispenserName; }
     public List<ShopItemEntity> getShopItems() { return shopItems; }
     public void addShopItem(ShopItemEntity item) { this.shopItems.add(item); }
+    public void setShopItems(List<ShopItemEntity> shopItems) { this.shopItems = shopItems; }
+    public void setDispenserName(String dispenserName) { this.dispenserName = dispenserName; }
 }

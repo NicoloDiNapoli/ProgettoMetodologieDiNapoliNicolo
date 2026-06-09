@@ -18,6 +18,10 @@ public class ShopItemEntity {
     @Column(name = "quantity", nullable = false)
     private int quantity;
 
+    @ManyToOne
+    @JoinColumn(name = "shop_room_id")
+    private ShopRoomEntity shopRoom;
+
     protected ShopItemEntity() {}
 
     public ShopItemEntity(ItemEntity item, int quantity) {
@@ -28,5 +32,9 @@ public class ShopItemEntity {
     public Long getId() { return id; }
     public ItemEntity getItem() { return item; }
     public int getQuantity() { return quantity; }
+    public ShopRoomEntity getShopRoom() { return shopRoom; }
     public void setQuantity(int quantity) { this.quantity = quantity; }
+    public void setItem(ItemEntity item) { this.item = item; }
+    public void setShopRoom(ShopRoomEntity shopRoom) { this.shopRoom = shopRoom; }
+
 }

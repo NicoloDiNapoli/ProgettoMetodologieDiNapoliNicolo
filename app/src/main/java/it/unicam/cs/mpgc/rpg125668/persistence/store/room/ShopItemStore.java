@@ -13,9 +13,8 @@ public class ShopItemStore extends BaseStore<ShopItemEntity> {
     }
 
     public List<ShopItemEntity> findByShopRoom(ShopRoomEntity shopRoom) {
-        return entityManager.createQuery(
-                        "SELECT s FROM ShopItemEntity s WHERE s.shopRoom = :shopRoom",
-                        ShopItemEntity.class)
+        return entityManager.createQuery("select s from ShopItemEntity s where s.shopRoom = :shopRoom",
+                ShopItemEntity.class)
                 .setParameter("shopRoom", shopRoom)
                 .getResultList();
     }
