@@ -13,4 +13,5 @@ public class StudentSkill extends Skill implements IStudentSkill {
         this.preparationRequired = preparationRequired;
     }
     public int getPreparationRequired() {return this.preparationRequired;}
+
 }
