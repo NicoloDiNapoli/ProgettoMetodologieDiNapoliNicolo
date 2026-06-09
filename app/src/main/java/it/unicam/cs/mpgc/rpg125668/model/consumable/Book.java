@@ -15,9 +15,9 @@ public class Book extends Item implements IPurchasable  {
         this.rarity = rarity;
     }
 
-    public String toString() {
-        return this.getName();
-    }
+    public int getIncrease() {return rarity.getPreparation();}
+
+    public String toString() {return this.getName();}
 
     @Override
     public boolean use(IStudent<IStudentSkill> target) {
@@ -27,6 +27,8 @@ public class Book extends Item implements IPurchasable  {
         target.setConcentration(target.getConcentration() - this.rarity.getConcentrationRequired());
         return true;
     }
+
+    public BookRarity getRarity() {return this.rarity;}
 
     @Override
     public int getPrice() {

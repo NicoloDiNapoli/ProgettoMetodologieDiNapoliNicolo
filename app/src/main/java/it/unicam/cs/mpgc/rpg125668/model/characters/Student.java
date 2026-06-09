@@ -59,9 +59,8 @@ public class Student extends Character<IStudentSkill> implements Serializable, I
     }
 
 
-    public int getLevel() {
-        if(this.level == null) return 0;
-        return this.level.getLevel();
+    public Level getLevel() {
+        return this.level;
     }
 
     public void addExperience(int experienceRewarded){
@@ -84,10 +83,17 @@ public class Student extends Character<IStudentSkill> implements Serializable, I
     public int getPreparation() {
         return this.preparation;
     }
+
     @Override
     public int getConcentration() {
         return this.concentration;
     }
+
+    @Override
+    public int getMaxPreparation() {return this.maxPreparation;}
+
+    @Override
+    public int getMaxConcentration() {return this.maxConcentration;}
 
 
     @Override

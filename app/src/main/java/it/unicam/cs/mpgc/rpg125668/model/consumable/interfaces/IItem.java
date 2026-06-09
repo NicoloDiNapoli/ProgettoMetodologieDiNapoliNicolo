@@ -17,4 +17,10 @@ public interface IItem {
      * @return true if the item was used, false otherwise
      */
     boolean use(IStudent<IStudentSkill> target);
+
+    /**
+     * Get the increase of the item
+     * @return int increase of the item
+     */
+    int getIncrease();
 }

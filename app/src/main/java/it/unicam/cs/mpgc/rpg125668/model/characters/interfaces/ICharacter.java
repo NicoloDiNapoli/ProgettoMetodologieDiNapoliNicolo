@@ -22,4 +22,22 @@ public interface ICharacter<T extends ISkill> extends Combatant {
      * @param skill skill to add
      */
     void addSkill(T skill);
+
+    /**
+     * Get the maximum life of the character
+     * @return int maximum life
+     */
+    int getMaxLife();
+
+    /**
+     * Get the name of the character
+     * @return String name of the character
+     */
+    String getName();
+
+    /**
+     * Get the life of the character
+     * @return int life of the character
+     */
+    int getLife();
 }

@@ -13,6 +13,7 @@ public class Snack extends Item implements IPurchasable {
         this.increaseLife = increaseLife;
     }
 
+    public int getIncrease() {return increaseLife;}
 
     public boolean use(IStudent<IStudentSkill> target) {
         if (target == null)throw new IllegalArgumentException("Target cannot be null");

@@ -13,7 +13,7 @@ public class Drink extends Item implements IPurchasable {
         this.increaseConcentration = increaseConcentration;
     }
 
-    public int getIncreaseConcentration() {return increaseConcentration;}
+    public int getIncrease() {return increaseConcentration;}
 
     @Override
     public boolean use(IStudent<IStudentSkill> target) {

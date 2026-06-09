@@ -1,5 +1,6 @@
 package it.unicam.cs.mpgc.rpg125668.model.characters.interfaces;
 
+import it.unicam.cs.mpgc.rpg125668.model.characters.Level;
 import it.unicam.cs.mpgc.rpg125668.model.consumable.interfaces.IItem;
 import it.unicam.cs.mpgc.rpg125668.model.inventory.interfaces.IInventory;
 import it.unicam.cs.mpgc.rpg125668.model.skill.interfaces.IStudentSkill;
@@ -17,6 +18,18 @@ public interface IStudent<T extends IStudentSkill> extends ICharacter<T> {
      * @return int concentration
      */
     int getConcentration();
+
+    /**
+     * Get the max preparation of the student
+     * @return int max preparation
+     */
+    int getMaxPreparation();
+
+    /**
+     * Get the max concentration of the student
+     * @return int max concentration
+     */
+    int getMaxConcentration();
 
     /**
      * Set the preparation of the student
@@ -41,4 +54,10 @@ public interface IStudent<T extends IStudentSkill> extends ICharacter<T> {
      * @return IInventory inventory
      */
     IInventory getInventory();
+
+    /**
+     * Get the level of the student
+     * @return Level level
+     */
+    Level getLevel();
 }

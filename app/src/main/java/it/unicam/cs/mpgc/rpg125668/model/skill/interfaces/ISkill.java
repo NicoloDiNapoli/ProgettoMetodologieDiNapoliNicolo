@@ -27,4 +27,16 @@ public interface ISkill {
      * @return SkillRarity rarity
      */
     SkillRarity getRarity();
+
+    /**
+     * Get the description of the skill
+     * @return String description of the skill
+     */
+    String getDescription();
+
+    /**
+     * Get the type of the skill
+     * @return SkillType type of the skill
+     */
+    SkillType getSkillType();
 }

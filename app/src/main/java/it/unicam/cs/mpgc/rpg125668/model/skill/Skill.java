@@ -53,4 +53,6 @@ public abstract class Skill implements ISkill {
     public boolean isHealing() {
         return this.skillType == SkillType.HEALING;
     }
+
+    public SkillType getSkillType() {return this.skillType;}
 }
