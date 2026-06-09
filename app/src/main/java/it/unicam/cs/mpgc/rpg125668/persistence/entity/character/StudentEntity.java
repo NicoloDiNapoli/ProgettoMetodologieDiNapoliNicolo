@@ -3,6 +3,8 @@ package it.unicam.cs.mpgc.rpg125668.persistence.entity.character;
 import it.unicam.cs.mpgc.rpg125668.persistence.entity.inventory.InventoryEntity;
 import it.unicam.cs.mpgc.rpg125668.persistence.entity.skill.StudentSkillEntity;
 import jakarta.persistence.*;
+
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -55,7 +57,7 @@ public class StudentEntity extends CharacterEntity {
         this.maxConcentration = maxConcentration;
         this.level = level;
         this.inventory = inventory;
-        this.skills = skills;
+        this.skills = skills != null ? skills : new ArrayList<>();
     }
 
     public Long getId() { return id; }
@@ -66,11 +68,12 @@ public class StudentEntity extends CharacterEntity {
     public LevelEntity getLevel() { return level; }
     public InventoryEntity getInventory() { return inventory; }
     public List<StudentSkillEntity> getSkills() { return skills; }
+    public void setId(Long id) { this.id = id; }
     public void setPreparation(int preparation) { this.preparation = preparation; }
     public void setMaxPreparation(int maxPreparation) { this.maxPreparation = maxPreparation; }
     public void setConcentration(int concentration) { this.concentration = concentration; }
     public void setMaxConcentration(int maxConcentration) { this.maxConcentration = maxConcentration; }
     public void setLevel(LevelEntity level) { this.level = level; }
     public void setInventory(InventoryEntity inventory) { this.inventory = inventory; }
-    public void setSkills(List<StudentSkillEntity> skills) { this.skills = skills; }
+    public void setSkills(List<StudentSkillEntity> skills) { this.skills = skills != null ? skills : new ArrayList<>(); }
 }

@@ -5,7 +5,7 @@ import jakarta.persistence.*;
 @MappedSuperclass
 public abstract class CharacterEntity {
 
-    @Column(name = "name", nullable = false)
+    @Column(name = "name",unique = true, nullable = false)
     private String name;
 
     @Column(name = "life", nullable = false)
