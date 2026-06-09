@@ -7,6 +7,10 @@ import it.unicam.cs.mpgc.rpg125668.model.skill.interfaces.IStudentSkill;
 
 import java.util.List;
 
+/**
+ * Interface for a player student character
+ * @param <T> type of the skill
+ */
 public interface IStudent<T extends IStudentSkill> extends ICharacter<T> {
     /**
      * Get the preparation of the student

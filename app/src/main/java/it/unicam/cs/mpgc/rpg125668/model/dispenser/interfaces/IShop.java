@@ -8,6 +8,9 @@ import it.unicam.cs.mpgc.rpg125668.model.skill.interfaces.IStudentSkill;
 
 import java.util.Map;
 
+/**
+ * Interface for a shop that sells items to students
+ */
 public interface IShop {
     /**
      * Get the name of the shop

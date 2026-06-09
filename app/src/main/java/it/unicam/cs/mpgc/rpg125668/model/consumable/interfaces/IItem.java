@@ -3,6 +3,9 @@ package it.unicam.cs.mpgc.rpg125668.model.consumable.interfaces;
 import it.unicam.cs.mpgc.rpg125668.model.characters.interfaces.IStudent;
 import it.unicam.cs.mpgc.rpg125668.model.skill.interfaces.IStudentSkill;
 
+/**
+ * Interface for an item that can be used by a student
+ */
 public interface IItem {
     /**
      * Get the name of the item

@@ -4,6 +4,10 @@ import it.unicam.cs.mpgc.rpg125668.model.skill.interfaces.ISkill;
 
 import java.util.List;
 
+/**
+ * Interface for all the characters
+ * @param <T> type of the skill
+ */
 public interface ICharacter<T extends ISkill> extends Combatant {
     /**
      * Get the list of skills of the student

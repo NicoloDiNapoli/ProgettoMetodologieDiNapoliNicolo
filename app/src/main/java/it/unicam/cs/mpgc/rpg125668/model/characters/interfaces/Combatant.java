@@ -1,6 +1,9 @@
 package it.unicam.cs.mpgc.rpg125668.model.characters.interfaces;
 import it.unicam.cs.mpgc.rpg125668.model.skill.interfaces.ISkill;
 
+/**
+ * Interface for all the characters that can be combatted
+ */
 public interface Combatant {
     /**
      * Use a skill on a target

@@ -2,6 +2,9 @@ package it.unicam.cs.mpgc.rpg125668.model.inventory.interfaces;
 
 import it.unicam.cs.mpgc.rpg125668.model.consumable.interfaces.IItem;
 
+/**
+ * Interface for an inventory that contains items and can manage them
+ */
 public interface IItemManagement {
     /**
      * Add an item to the inventory

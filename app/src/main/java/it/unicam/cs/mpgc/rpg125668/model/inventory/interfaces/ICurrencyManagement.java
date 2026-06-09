@@ -1,5 +1,8 @@
 package it.unicam.cs.mpgc.rpg125668.model.inventory.interfaces;
 
+/**
+ * Interface for the currency management of an inventory
+ */
 public interface ICurrencyManagement {
     /**
      * Add coins from the inventory

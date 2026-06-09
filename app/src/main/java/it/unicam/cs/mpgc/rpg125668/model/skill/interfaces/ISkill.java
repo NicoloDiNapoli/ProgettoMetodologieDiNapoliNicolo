@@ -3,6 +3,10 @@ package it.unicam.cs.mpgc.rpg125668.model.skill.interfaces;
 import it.unicam.cs.mpgc.rpg125668.model.enumeration.SkillRarity;
 import it.unicam.cs.mpgc.rpg125668.model.enumeration.SkillType;
 
+/**
+ * Interface for all the skills of the game
+ * They are used by the characters
+ */
 public interface ISkill {
     /**
      * Get the name of the skill

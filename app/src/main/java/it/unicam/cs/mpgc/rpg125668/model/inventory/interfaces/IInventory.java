@@ -6,6 +6,9 @@ import it.unicam.cs.mpgc.rpg125668.model.skill.interfaces.IStudentSkill;
 
 import java.util.Map;
 
+/**
+ * Interface for an inventory that contains items
+ */
 public interface IInventory extends ICurrencyManagement, IItemManagement {
     /**
      * Use an item

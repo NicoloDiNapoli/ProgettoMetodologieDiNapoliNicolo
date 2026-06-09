@@ -1,6 +1,9 @@
 package it.unicam.cs.mpgc.rpg125668.model.rooms.interfaces;
 import java.util.List;
 
+/**
+ * Interface for a room
+ */
 public interface IRoom {
     /**
      * Get the name of the room
