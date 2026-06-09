@@ -5,10 +5,11 @@ import it.unicam.cs.mpgc.rpg125668.persistence.entity.item.DrinkEntity;
 import it.unicam.cs.mpgc.rpg125668.persistence.entity.item.ItemEntity;
 import it.unicam.cs.mpgc.rpg125668.persistence.entity.item.SnackEntity;
 import it.unicam.cs.mpgc.rpg125668.persistence.store.BaseStore;
+import it.unicam.cs.mpgc.rpg125668.persistence.store.item.interfaces.IItemStore;
 
 import java.util.List;
 
-public class ItemStore extends BaseStore<ItemEntity> {
+public class ItemStore extends BaseStore<ItemEntity> implements IItemStore {
 
     public ItemStore() {
         super(ItemEntity.class);

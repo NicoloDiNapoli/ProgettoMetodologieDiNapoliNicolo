@@ -1,12 +1,12 @@
 package it.unicam.cs.mpgc.rpg125668.persistence.store.skill;
 
-import it.unicam.cs.mpgc.rpg125668.model.enumeration.SkillRarity;
 import it.unicam.cs.mpgc.rpg125668.persistence.entity.skill.SkillEntity;
 import it.unicam.cs.mpgc.rpg125668.persistence.store.BaseStore;
+import it.unicam.cs.mpgc.rpg125668.persistence.store.skill.interfaces.ISKillStore;
 
 import java.util.List;
 
-public class SkillStore<T extends SkillEntity> extends BaseStore<T> {
+public class SkillStore<T extends SkillEntity> extends BaseStore<T> implements ISKillStore<T> {
 
     private final Class<T> skillClass;
 

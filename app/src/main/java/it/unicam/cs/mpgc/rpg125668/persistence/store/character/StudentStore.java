@@ -1,19 +1,18 @@
 package it.unicam.cs.mpgc.rpg125668.persistence.store.character;
 
-import it.unicam.cs.mpgc.rpg125668.model.skill.StudentSkill;
 import it.unicam.cs.mpgc.rpg125668.persistence.entity.character.StudentEntity;
-import it.unicam.cs.mpgc.rpg125668.persistence.entity.inventory.InventoryEntity;
 import it.unicam.cs.mpgc.rpg125668.persistence.entity.inventory.InventoryItemEntity;
 import it.unicam.cs.mpgc.rpg125668.persistence.entity.item.ItemEntity;
 import it.unicam.cs.mpgc.rpg125668.persistence.entity.skill.StudentSkillEntity;
 import it.unicam.cs.mpgc.rpg125668.persistence.store.BaseStore;
+import it.unicam.cs.mpgc.rpg125668.persistence.store.character.interfaces.IStudentStore;
 import it.unicam.cs.mpgc.rpg125668.persistence.store.item.ItemStore;
 import it.unicam.cs.mpgc.rpg125668.persistence.store.skill.SkillStore;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class StudentStore extends BaseStore<StudentEntity> {
+public class StudentStore extends BaseStore<StudentEntity> implements IStudentStore {
 
     public StudentStore() {
         super(StudentEntity.class);

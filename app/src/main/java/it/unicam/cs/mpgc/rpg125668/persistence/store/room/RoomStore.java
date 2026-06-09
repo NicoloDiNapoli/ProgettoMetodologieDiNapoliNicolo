@@ -1,8 +1,6 @@
 package it.unicam.cs.mpgc.rpg125668.persistence.store.room;
 
-import it.unicam.cs.mpgc.rpg125668.persistence.entity.room.LootableRoomEntity;
 import it.unicam.cs.mpgc.rpg125668.persistence.entity.room.RoomEntity;
-import it.unicam.cs.mpgc.rpg125668.persistence.entity.room.ShopRoomEntity;
 import it.unicam.cs.mpgc.rpg125668.persistence.store.BaseStore;
 
 import java.util.List;
