@@ -3,7 +3,7 @@
  */
 package it.unicam.cs.mpgc.rpg125668;
 
-import it.unicam.cs.mpgc.rpg125668.model.characters.Enemy;
+/*import it.unicam.cs.mpgc.rpg125668.model.characters.Enemy;
 import it.unicam.cs.mpgc.rpg125668.model.characters.interfaces.IEnemy;
 import it.unicam.cs.mpgc.rpg125668.model.consumable.Book;
 import it.unicam.cs.mpgc.rpg125668.model.consumable.Drink;
@@ -24,138 +24,175 @@ import it.unicam.cs.mpgc.rpg125668.model.rooms.interfaces.IRoom;
 import it.unicam.cs.mpgc.rpg125668.model.rooms.interfaces.IRoomLootable;
 import it.unicam.cs.mpgc.rpg125668.model.rooms.interfaces.IShopRoom;
 import it.unicam.cs.mpgc.rpg125668.model.skill.BossSkill;
+import it.unicam.cs.mpgc.rpg125668.model.skill.interfaces.IBossSkill;*/
+import it.unicam.cs.mpgc.rpg125668.model.characters.Enemy;
+import it.unicam.cs.mpgc.rpg125668.model.characters.Level;
+import it.unicam.cs.mpgc.rpg125668.model.characters.Student;
+import it.unicam.cs.mpgc.rpg125668.model.characters.interfaces.IStudent;
+import it.unicam.cs.mpgc.rpg125668.model.consumable.interfaces.IItem;
+import it.unicam.cs.mpgc.rpg125668.model.inventory.Inventory;
+import it.unicam.cs.mpgc.rpg125668.model.rooms.interfaces.IRoom;
 import it.unicam.cs.mpgc.rpg125668.model.skill.interfaces.IBossSkill;
+import it.unicam.cs.mpgc.rpg125668.model.skill.interfaces.IStudentSkill;
+import it.unicam.cs.mpgc.rpg125668.persistence.entity.character.EnemyEntity;
+import it.unicam.cs.mpgc.rpg125668.persistence.entity.character.StudentEntity;
+import it.unicam.cs.mpgc.rpg125668.persistence.entity.item.BookEntity;
+import it.unicam.cs.mpgc.rpg125668.persistence.entity.room.RoomEntity;
+import it.unicam.cs.mpgc.rpg125668.persistence.entity.skill.BossSkillEntity;
+import it.unicam.cs.mpgc.rpg125668.persistence.entity.skill.StudentSkillEntity;
+import it.unicam.cs.mpgc.rpg125668.persistence.mapper.*;
+import it.unicam.cs.mpgc.rpg125668.persistence.store.character.EnemyStore;
+import it.unicam.cs.mpgc.rpg125668.persistence.store.character.StudentStore;
+import it.unicam.cs.mpgc.rpg125668.persistence.store.item.ItemStore;
+import it.unicam.cs.mpgc.rpg125668.persistence.store.room.RoomStore;
+import it.unicam.cs.mpgc.rpg125668.persistence.store.skill.SkillStore;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class App {
-    public static void main(String[] args){
-        //Prendere skill da Database
-        List<IBossSkill> skills = getBossSkill();
+    public static void main(String[] args) {
 
-        //Creazione dei nemici all'avvio del gioco, parametri base presi da Database
-        IEnemy<IBossSkill> bossFacile = new Enemy("Professor Rossi", EnemyDifficult.EASY.maxLife(), EnemyDifficult.EASY.maxLife(), EnemyDifficult.EASY, new ArrayList<>());
-        IEnemy<IBossSkill> bossMedio = new Enemy("Professor Verdi", EnemyDifficult.MEDIUM.maxLife(), EnemyDifficult.MEDIUM.maxLife(), EnemyDifficult.MEDIUM, new ArrayList<>());
-        IEnemy<IBossSkill> bossHard = new Enemy("Professor Bianchi", EnemyDifficult.HARD.maxLife(),EnemyDifficult.HARD.maxLife(),EnemyDifficult.HARD, new ArrayList<>());
+        System.out.println("=== TEST PERSISTENZA ===\n");
 
-        //Skill generate casualmente
-        bossFacile.getSkills().addAll(pickRandomSkills(skills,bossFacile.getDifficult()));
-        bossMedio.getSkills().addAll(pickRandomSkills(skills,bossMedio.getDifficult()));
-        bossHard.getSkills().addAll(pickRandomSkills(skills,bossHard.getDifficult()));
+        // ── 1. TEST CARICAMENTO DATI STATICI ──────────────────
 
-        //Stanze prese da Database
-        IRoom atrio = new Room("Atrio", new ArrayList<>(), "Atrio");
-        IShopRoom areaRistoro = new ShopRoom("Area Ristoro", new ArrayList<>(), "Area Ristoro", new SnackDrinkDispenser(new HashMap<>()));
-        IShopRoom biblioteca = new ShopRoom("Biblioteca", new ArrayList<>(), "Biblioteca", new BookDispenser(new HashMap<>()));
-        IRoomLootable aula1 = new LootableRoom("Aula", new ArrayList<>(), "Aula", new Inventory(0, new HashMap<>()));
-        IRoomLootable aula2 = new LootableRoom("Aula", new ArrayList<>(), "Aula", new Inventory(0, new HashMap<>()));
-        IRoom salaProfessori = new Room("Sala Professori", new ArrayList<>(), "Sala Professori");
+        System.out.println("--- 1. Caricamento skill studente ---");
+        SkillStore<StudentSkillEntity> studentSkillStore =
+                new SkillStore<>(StudentSkillEntity.class);
+        List<StudentSkillEntity> studentSkills = studentSkillStore.findAll();
+        studentSkills.forEach(s ->
+                System.out.println("  Skill: " + s.getName() + " | Danno: " + s.getDamage() + " | Rarità: " + s.getRarity())
+        );
 
-        //Collegamento preso da Database
-        atrio.addExit(areaRistoro);
-        atrio.addExit(biblioteca);
-        atrio.addExit(aula1);
-        atrio.addExit(aula2);
-        atrio.addExit(salaProfessori);
+        System.out.println("\n--- 2. Caricamento skill boss ---");
+        SkillStore<BossSkillEntity> bossSkillStore =
+                new SkillStore<>(BossSkillEntity.class);
+        List<BossSkillEntity> bossSkills = bossSkillStore.findAll();
+        bossSkills.forEach(s ->
+                System.out.println("  Skill: " + s.getName() + " | Danno: " + s.getDamage() + " | Rarità: " + s.getRarity())
+        );
 
-        areaRistoro.addExit(atrio);
-        areaRistoro.addExit(biblioteca);
-        areaRistoro.addExit(salaProfessori);
+        System.out.println("\n--- 3. Caricamento nemici ---");
+        EnemyStore enemyStore = new EnemyStore();
+        List<EnemyEntity> enemies = enemyStore.findAll();
+        enemies.forEach(e ->
+                System.out.println("  Nemico: " + e.getName() + " | Difficoltà: " + e.getDifficult() + " | HP: " + e.getLife())
+        );
 
-        biblioteca.addExit(atrio);
-        biblioteca.addExit(areaRistoro);
-        biblioteca.addExit(salaProfessori);
+        System.out.println("\n--- 4. Caricamento libri ---");
+        ItemStore itemStore = new ItemStore();
+        List<BookEntity> books = itemStore.findAllBooks();
+        books.forEach(b ->
+                System.out.println("  Libro: " + b.getName() + " | Rarità: " + b.getRarity() + " | Prezzo: " + b.getPrice())
+        );
 
-        aula1.addExit(atrio);
-        aula2.addExit(atrio);
+        System.out.println("\n--- 5. Caricamento stanze ---");
+        RoomStore roomStore = new RoomStore();
+        List<RoomEntity> rooms = roomStore.findAll();
+        rooms.forEach(r ->
+                System.out.println("  Stanza: " + r.getName() + " | Uscite: " + r.getExits().size())
+        );
 
-        salaProfessori.addExit(atrio);
-        salaProfessori.addExit(areaRistoro);
-        salaProfessori.addExit(biblioteca);
+        // ── 2. TEST MAPPER entity → model ─────────────────────
 
-        IGameMap gameMap = new GameMap(new HashMap<>(), atrio);
-        gameMap.getRooms().put("Atrio", atrio);
-        gameMap.getRooms().put("Area Ristoro", areaRistoro);
-        gameMap.getRooms().put("Biblioteca", biblioteca);
-        gameMap.getRooms().put("Aula", aula1);
-        gameMap.getRooms().put("Sala Professori", salaProfessori);
-        gameMap.getRooms().put("Aula2", aula2);
+        System.out.println("\n--- 6. Mapper skill studente ---");
+        List<IStudentSkill> mappedStudentSkills = studentSkills.stream()
+                .map(StudentSkillMapper::toModel)
+                .toList();
+        mappedStudentSkills.forEach(s ->
+                System.out.println("  Skill mappata: " + s.getName() + " | PreparazioneRichiesta: " + s.getPreparationRequired())
+        );
 
-        areaRistoro.getDispenser().addItemToShop(new Drink("Caffè", 15, 10), 100);
-        areaRistoro.getDispenser().addItemToShop(new Drink("Energy Drink", 30, 15), 100);
-        areaRistoro.getDispenser().addItemToShop(new Snack("Merendina", 20, 10), 100);
-        areaRistoro.getDispenser().addItemToShop(new Snack("Panino", 40, 25), 100);
+        System.out.println("\n--- 7. Mapper nemici con skill random ---");
+        List<IBossSkill> mappedBossSkills = bossSkills.stream()
+                .map(BossSkillMapper::toModel)
+                .toList();
+        enemies.forEach(e -> {
+            // assegna skill random al nemico
+            List<BossSkillEntity> randomSkills = bossSkills.stream()
+                    .filter(s -> Math.random() > 0.5)
+                    .limit(3)
+                    .toList();
+            e.setSkills(randomSkills);
+            Enemy enemy = EnemyMapper.toModel(e);
+            System.out.println("  Nemico: " + enemy.getName() +
+                    " | Skill assegnate: " + enemy.getSkills().size());
+        });
 
-        biblioteca.getDispenser().addItemToShop(new Book("Apputni Fotocopiati", BookRarity.COMMON), 10);
-        biblioteca.getDispenser().addItemToShop(new Book("Dispensa del Prof", BookRarity.COMMON), 10);
+        System.out.println("\n--- 8. Mapper stanze ---");
+        rooms.forEach(r -> {
+            IRoom room = RoomMapper.toModel(r);
+            System.out.println("  Stanza mappata: " + room.getName() +
+                    " | Tipo: " + room.getClass().getSimpleName() +
+                    " | Uscite: " + room.getExits().size());
+        });
 
-        biblioteca.getDispenser().addItemToShop(new Book("Apputni Fotocopiati", BookRarity.COMMON), 10);
-        biblioteca.getDispenser().addItemToShop(new Book("Apputni Fotocopiati", BookRarity.COMMON), 10);
+        // ── 3. TEST SALVATAGGIO STUDENTE ──────────────────────
 
-        biblioteca.getDispenser().addItemToShop(new Book("Apputni Fotocopiati", BookRarity.COMMON), 10);
-        biblioteca.getDispenser().addItemToShop(new Book("Apputni Fotocopiati", BookRarity.COMMON), 10);
+        System.out.println("\n--- 9. Creazione e salvataggio studente ---");
+        Student student = new Student(
+                "TestStudente",
+                100,
+                new Level(),
+                50,
+                50,
+                100,
+                mappedStudentSkills,
+                new Inventory(100, new HashMap<>())
+        );
 
-        biblioteca.getDispenser().addItemToShop(new Book("Apputni Fotocopiati", BookRarity.COMMON), 10);
-        biblioteca.getDispenser().addItemToShop(new Book("Apputni Fotocopiati", BookRarity.COMMON), 10);
-    }
+        StudentEntity studentEntity = StudentMapper.toEntity(student);
+        StudentStore studentStore = new StudentStore();
+        studentStore.save(studentEntity);
+        System.out.println("  Studente salvato: " + studentEntity.getName());
 
+        // ── 4. TEST CARICAMENTO STUDENTE ──────────────────────
 
-    private static List<IBossSkill> pickRandomSkills(List<IBossSkill> skills, EnemyDifficult enemyDifficult) {
-        final int numSkills = 3;
-        List<SkillRarity> allowed = switch (enemyDifficult) {
-            case EASY   -> List.of(SkillRarity.COMMON, SkillRarity.RARE);
-            case MEDIUM -> List.of(SkillRarity.RARE, SkillRarity.EPIC);
-            case HARD   -> List.of(SkillRarity.EPIC, SkillRarity.LEGENDARY);
-        };
+        System.out.println("\n--- 10. Caricamento studente dal DB ---");
+        StudentEntity loadedEntity = studentStore.findById(studentEntity.getId());
+        IStudent<IStudentSkill> loadedStudent = StudentMapper.toModel(loadedEntity);
+        System.out.println("  Studente caricato: " + loadedStudent.getName() +
+                " | HP: " + loadedStudent.getLife() +
+                " | Monete: " + loadedStudent.getInventory().seeCoins() +
+                " | Skill: " + loadedStudent.getSkills().size());
 
-        List<IBossSkill> filtered = skills.stream()
-                .filter(skill -> allowed.contains(skill.getRarity()))
-                .collect(Collectors.toList());
+        // ── 5. TEST AGGIORNAMENTO STUDENTE ────────────────────
 
-        Collections.shuffle(filtered);
-        return filtered.subList(0, numSkills);
-    }
+        System.out.println("\n--- 11. Aggiornamento studente ---");
+        loadedEntity.setLife(80);
+        studentStore.update(loadedEntity);
+        StudentEntity updatedEntity = studentStore.findByName("TestStudente");
+        System.out.println("  HP aggiornati: " + updatedEntity.getLife());
 
-    private static List<IBossSkill> getBossSkill() {
-        IBossSkill richiamoAllaLavagna = new BossSkill("Richiamo alla Lavagna", SkillRarity.COMMON, 8, "Domanda improvvisa sotto pressione, causa danni leggeri e destabilizzazione mentale.", SkillType.ATTACK);
+        // ── 5. TEST AGGIUNTA LIBRO STUDENTE ────────────────────
 
-        IBossSkill annotazioneCorrettiva = new BossSkill("Annotazione Correttiva", SkillRarity.COMMON, 6, "Corregge gli errori in tempo reale trasformando ogni imprecisione in pressione costante.", SkillType.ATTACK);
+        System.out.println("\n--- 12. Aggiunta libro studente ---");
 
-        IBossSkill interrogazioneMinore = new BossSkill("Interrogazione Minore", SkillRarity.COMMON, 10, "Domanda semplice ma insidiosa che infligge pressione mentale e danno diretto.", SkillType.ATTACK);
+        StudentEntity ldStudent = studentStore.findByName("TestStudente");
+        IStudent<IStudentSkill> studentModel = StudentMapper.toModel(ldStudent);
+        System.out.println("  Libri dello studente: " + studentModel.getInventory().getItems().size());
+        IItem book = ItemMapper.toModel(books.getFirst());
+        studentModel.getInventory().addItem(book);
+        StudentMapper.updateEntity(studentModel, ldStudent);
+        studentStore.update(ldStudent);
+        System.out.println("  Libro aggiunto: " + studentModel.getInventory().getItems().size());
 
-        IBossSkill dominandaIncrocioLogico = new BossSkill("Domanda a Incrocio Logico", SkillRarity.RARE, 22, "Collega più argomenti sotto stress, infligge danno medio e riduce la concentrazione.", SkillType.ATTACK);
+        System.out.println("\n--- 13. Aggiunta skill studente ---");
 
-        IBossSkill analisiImpietosa = new BossSkill("Analisi Impietosa", SkillRarity.RARE, 25, "Espone le debolezze dello studente pubblicamente, riduce preparazione e infligge danno medio.", SkillType.ATTACK);
+        StudentEntity ldStudentForSkill = studentStore.findByName("TestStudente");
+        IStudent<IStudentSkill> studentModelForSkill = StudentMapper.toModel(ldStudentForSkill);
+        System.out.println("  Skill attuali dello studente: " + studentModelForSkill.getSkills().size());
 
-        IBossSkill vorticeDomanneMirate = new BossSkill("Vortice di Domande Mirate", SkillRarity.RARE, 20, "Sequenza rapida di domande precise che riduce concentrazione e infligge danni medi.", SkillType.ATTACK);
+        IStudentSkill newSkill = StudentSkillMapper.toModel(studentSkills.getFirst());
+        studentModelForSkill.addSkill(newSkill);
 
-        IBossSkill esameResistenzaCognitiva = new BossSkill("Esame di Resistenza Cognitiva", SkillRarity.EPIC, 50, "Lunga sequenza di domande complesse che consuma energie mentali e riduce concentrazione.", SkillType.ATTACK);
+        StudentMapper.updateEntity(studentModelForSkill, ldStudentForSkill);
+        studentStore.update(ldStudentForSkill);
 
-        IBossSkill risonanzaSapere = new BossSkill("Risonanza del Sapere", SkillRarity.EPIC, 45, "Il boss assorbe l'energia mentale dispersa dello studente e recupera HP moderati.", SkillType.HEALING);
+        IStudent<IStudentSkill> studentModelVerify = StudentMapper.toModel(ldStudentForSkill);
+        System.out.println("  Skill dopo l'aggiunta: " + studentModelVerify.getSkills().size());
 
-        IBossSkill esameSignilloTemporale = new BossSkill("Esame del Sigillo Temporale", SkillRarity.EPIC, 55, "Altera la percezione del tempo, fa perdere preparazione accumulata e infligge danni significativi.", SkillType.ATTACK);
-
-        IBossSkill giudizioSaggio = new BossSkill("Giudizio Saggio", SkillRarity.LEGENDARY, 90, "La commissione infligge danni enormi riducendo concentrazione e preparazione simultaneamente.", SkillType.ATTACK);
-
-        IBossSkill verdettoFinale = new BossSkill("Verdetto Finale", SkillRarity.LEGENDARY, 100, "La commissione giudica lo studente infliggendo danni elevati e alterando la stabilità mentale.", SkillType.ATTACK);
-
-        IBossSkill privilegioDocente = new BossSkill("Privilegio del Docente", SkillRarity.LEGENDARY, 80, "Il professore converte la conoscenza accumulata in rigenerazione pura recuperando grandi quantità di HP.", SkillType.HEALING);
-
-        List<IBossSkill> skills = new ArrayList<>();
-        skills.add(richiamoAllaLavagna);
-        skills.add(annotazioneCorrettiva);
-        skills.add(interrogazioneMinore);
-        skills.add(dominandaIncrocioLogico);
-        skills.add(analisiImpietosa);
-        skills.add(vorticeDomanneMirate);
-        skills.add(esameResistenzaCognitiva);
-        skills.add(risonanzaSapere);
-        skills.add(esameSignilloTemporale);
-        skills.add(giudizioSaggio);
-        return skills;
+        System.out.println("\n=== TEST SKILL COMPLETATO ===");
     }
 }
