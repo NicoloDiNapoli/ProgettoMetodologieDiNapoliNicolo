@@ -24,15 +24,17 @@
         <class>it.unicam.cs.mpgc.rpg125668.persistence.entity.GameStateEntity</class>
 
         <properties>
-            <!-- H2 database file locale -->
+            <!-- H2 database local file -->
             <property name="jakarta.persistence.jdbc.driver" value="org.h2.Driver"/>
             <property name="jakarta.persistence.jdbc.url" value="jdbc:h2:file:./data/rpgdb"/>
             <property name="jakarta.persistence.jdbc.user" value="sa"/>
             <property name="jakarta.persistence.jdbc.password" value=""/>
+            <!-- Loading Static Data to run the game -->
+            <property name="jakarta.persistence.sql-load-script-source" value="data.sql"/>
 
             <!-- Hibernate settings -->
             <property name="hibernate.dialect" value="org.hibernate.dialect.H2Dialect"/>
-            <property name="hibernate.hbm2ddl.auto" value="update"/>
+            <property name="hibernate.hbm2ddl.auto" value="create"/>
             <property name="hibernate.show_sql" value="true"/>
             <property name="hibernate.format_sql" value="true"/>
         </properties>
