@@ -12,7 +12,7 @@ public abstract class Character<T extends ISkill> implements Serializable, IChar
     private final List<T> skills;
 
     public Character(String name, int maxLife, int life, List<T> skills) {
-        if(name == null || life > maxLife || skills == null) throw new IllegalArgumentException("Illegal arguments: name is null or life > maxLife or skills is null");
+        if(name == null || life < 0 || skills == null) throw new IllegalArgumentException("Illegal arguments: name is null or life > maxLife or skills is null");
         this.name = name;
         this.maxLife = maxLife;
         this.life = life;
