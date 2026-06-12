@@ -3,6 +3,7 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
@@ -10,9 +11,9 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox alignment="TOP_CENTER" prefHeight="650.0" prefWidth="850.0" spacing="25.0" style="-fx-background-color: #2c3e50;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<VBox alignment="TOP_CENTER" prefHeight="650.0" prefWidth="850.0" spacing="20.0" style="-fx-background-color: #2c3e50;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.unicam.cs.mpgc.rpg125668.gui.controller.NewGameController">
     <padding>
-        <Insets bottom="40.0" left="40.0" right="40.0" top="40.0" />
+        <Insets bottom="30.0" left="40.0" right="40.0" top="30.0" />
     </padding>
 
     <Label text="SELEZIONA IL TUO PERSONAGGIO" textFill="WHITE">
@@ -25,6 +26,15 @@
             <Font size="14.0" />
         </font>
     </Label>
+
+    <HBox alignment="CENTER" spacing="15.0" style="-fx-background-color: #34495e; -fx-padding: 15; -fx-background-radius: 10;">
+        <Label text="NOME EROE:" textFill="WHITE">
+            <font>
+                <Font name="System Bold" size="14.0" />
+            </font>
+        </Label>
+        <TextField fx:id="playerNameField" promptText="Inserisci il tuo nome..." style="-fx-font-size: 14px; -fx-background-color: #ecf0f1; -fx-text-fill: #2c3e50; -fx-font-weight: bold; -fx-pref-width: 300px; -fx-background-radius: 5;" />
+    </HBox>
 
     <GridPane hgap="25.0" vgap="25.0" VBox.vgrow="ALWAYS">
         <columnConstraints>
@@ -48,7 +58,7 @@
         </children>
     </GridPane>
 
-    <HBox alignment="CENTER" style="-fx-padding: 15 0 0 0;">
-        <Button fx:id="backBtn" prefHeight="45.0" prefWidth="200.0" style="-fx-font-size: 14px; -fx-background-color: #c0392b; -fx-text-fill: white; -fx-font-weight: bold; -fx-cursor: hand;" text="TORNA AL MENU" />
+    <HBox alignment="CENTER" style="-fx-padding: 10 0 0 0;">
+        <Button fx:id="backBtn" prefHeight="45.0" prefWidth="200.0" style="-fx-font-size: 14px; -fx-background-color: #c0392b; -fx-text-fill: white; -fx-font-weight: bold; -fx-cursor: hand; -fx-border-radius: 5; -fx-background-radius: 5;" text="TORNA AL MENU" />
     </HBox>
 </VBox>

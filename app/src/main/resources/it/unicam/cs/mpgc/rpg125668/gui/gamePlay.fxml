@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane prefHeight="720.0" prefWidth="1100.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane prefHeight="720.0" prefWidth="1100.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.unicam.cs.mpgc.rpg125668.gui.controller.GamePlayController">
 
     <top>
         <HBox alignment="CENTER_LEFT" spacing="25.0" style="-fx-background-color: #34495e; -fx-padding: 15;">
@@ -39,6 +39,7 @@
                     <children>
                         <Label style="-fx-font-weight: bold;" text="CONCENTRAZIONE:" textFill="WHITE" />
                         <ProgressBar fx:id="concentrationBar" prefWidth="100.0" progress="0.0" style="-fx-accent: #9b59b6; -fx-control-inner-background: #2c3e50;" />
+                        <Label fx:id="concentrationText" text="0/100" textFill="WHITE" />
                     </children>
                 </HBox>
 
@@ -46,6 +47,7 @@
                     <children>
                         <Label style="-fx-font-weight: bold;" text="PREPARAZIONE:" textFill="WHITE" />
                         <ProgressBar fx:id="prepBar" prefWidth="100.0" progress="0.0" style="-fx-accent: #3498db; -fx-control-inner-background: #2c3e50;" />
+                        <Label fx:id="prepText" text="0/100" textFill="WHITE" />
                     </children>
                 </HBox>
 
