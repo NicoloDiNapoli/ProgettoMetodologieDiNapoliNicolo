@@ -1,4 +1,4 @@
-package it.unicam.cs.mpgc.rpg125668.persistence.entity;
+package it.unicam.cs.mpgc.rpg125668.persistence.entity.game;
 
 import it.unicam.cs.mpgc.rpg125668.persistence.entity.character.StudentEntity;
 import it.unicam.cs.mpgc.rpg125668.persistence.entity.room.RoomEntity;
@@ -34,6 +34,7 @@ public class GameStateEntity {
         this.saveGameName = saveGameName;
         this.saveGameTime = LocalDateTime.now();
     }
+
 
     public Long getId() { return id; }
     public StudentEntity getStudent() { return student; }
