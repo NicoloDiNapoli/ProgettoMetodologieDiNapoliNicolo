@@ -61,7 +61,14 @@ public interface IStudent<T extends IStudentSkill> extends ICharacter<T> {
 
     /**
      * Get the level of the student
-     * @return Level level
+     * @return Level levelStudent
      */
     Level getLevel();
+
+
+    /**
+     * Add experience to the student
+     * @param experience >0
+     */
+    void addExperience(int experience);
 }
