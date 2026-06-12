@@ -21,6 +21,8 @@ import java.util.Map;
 import java.util.Random;
 
 public class GameManager {
+    private static final String RESPAWN_ROOM = "Atrio";
+    private static final String FIGHTING_ROOM = "Sala Professori";
     private IStudent<IStudentSkill> player;
     private List<IEnemy<IBossSkill>> enemies;
     private final IGameMap gameMap;
@@ -41,7 +43,7 @@ public class GameManager {
         player.heal(100);
         player.setConcentration(0);
         player.setPreparation(0);
-        gameMap.setCurrenRoom("Atrio");
+        gameMap.setCurrentRoom(RESPAWN_ROOM);
     }
 
     //if the player wins the game, generate the loot in the lootable rooms and restock the dispensers
@@ -57,13 +59,13 @@ public class GameManager {
                 .filter(room -> room.getName().equals(newRoom.getName()))
                 .findFirst()
                 .ifPresent(room -> {
-                    this.gameMap.setCurrenRoom(room.getName());
+                    this.gameMap.setCurrentRoom(room.getName());
                 });
     }
 
     //return true if player is in Sala Professori and there are still enemies alive
     public boolean canAttack() {
-        return this.gameMap.getCurrentRoom().getName().equals("Sala Professori")
+        return this.gameMap.getCurrentRoom().getName().equals(FIGHTING_ROOM)
                 && !this.combatManager.allEnemiesDefeated();
     }
 
@@ -110,6 +112,16 @@ public class GameManager {
             if (newSkill != null) this.player.addSkill(newSkill);
         }
         else this.player.useItem(item);
+    }
+
+    /**
+     * Uses an item during combat: applies its effect, then the enemy takes its turn.
+     * @param item the item to use
+     * @return LOSE if the enemy kills the player after the item use, FIGHT otherwise
+     */
+    public CombatResult useItemInCombat(IItem item) {
+        useItem(item);
+        return this.combatManager.enemyTurn();
     }
 
     /**
