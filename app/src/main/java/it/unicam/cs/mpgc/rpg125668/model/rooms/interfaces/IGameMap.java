@@ -16,7 +16,7 @@ public interface IGameMap {
      * Set the current room of the game
      * @param roomName String name of the room
      */
-    void setCurrenRoom(String roomName);
+    void setCurrentRoom(String roomName);
 
     /**
      * Get the current room of the game

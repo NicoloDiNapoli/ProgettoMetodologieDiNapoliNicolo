@@ -20,7 +20,7 @@ public class GameMap implements IGameMap {
 
 
     @Override
-    public void setCurrenRoom(String room) {
+    public void setCurrentRoom(String room) {
         if(room == null) throw new IllegalArgumentException("Illegal arguments: room is null");
         this.currentRoom = this.rooms.get(room);
     }
