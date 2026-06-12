@@ -25,7 +25,7 @@ public class LootGenerator {
     public static void generateLoot(IGameMap map) {
         Random random = new Random();
         List<IItem> allItems = loadedData.getItems();
-        int itemCount = random.nextInt(4);
+        int itemCount = random.nextInt(3) + 1;
         int coins = random.nextInt(51);
         if (itemCount > 0) {
             List<IItem> loot = new ArrayList<>();
