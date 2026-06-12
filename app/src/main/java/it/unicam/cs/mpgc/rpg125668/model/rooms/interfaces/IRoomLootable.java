@@ -26,5 +26,5 @@ public interface IRoomLootable extends IRoom{
      * @param items List<IItem> items to add
      * @param coins int coins to add
      */
-    void generateLoot(List<IItem> items, int coins);
+    void addGeneratedLoot(List<IItem> items, int coins);
 }

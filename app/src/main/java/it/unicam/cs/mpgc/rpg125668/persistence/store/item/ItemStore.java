@@ -37,9 +37,7 @@ public class ItemStore extends BaseStore<ItemEntity> implements IItemStore {
     }
 
     public ItemEntity findByName(String name) {
-        return entityManager.createQuery(
-                        "SELECT i FROM ItemEntity i WHERE i.name = :name",
-                        ItemEntity.class)
+        return entityManager.createQuery("FROM ItemEntity i WHERE i.name = :name", ItemEntity.class)
                 .setParameter("name", name)
                 .getSingleResult();
     }

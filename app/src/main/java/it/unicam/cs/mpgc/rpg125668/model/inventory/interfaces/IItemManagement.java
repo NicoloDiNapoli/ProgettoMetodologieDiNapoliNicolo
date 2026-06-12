@@ -25,24 +25,4 @@ public interface IItemManagement {
      */
     boolean hasItem(IItem item);
 
-    /**
-     * Get the quantity of an item in the inventory
-     * @param item IItem item to check
-     * @return int quantity of the item
-     */
-    int getItemQuantity(IItem item);
-
-    /**
-     * Remove an item quantity from the inventory
-     * @param item IItem item to remove
-     * @param quantity int quantity of the item to remove
-     */
-    void removeItemQuantity(IItem item, int quantity);
-
-    /**
-     * Add an item quantity to the inventory
-     * @param item IItem item to add
-     * @param quantity int quantity of the item to add
-     */
-    void addItems(IItem item, int quantity);
 }

@@ -22,10 +22,6 @@ public class LootableRoom extends Room implements IRoomLootable {
         return this.roomInventory.seeCoins();
     }
 
-    public void setLootableCoins(int coinsLotable) {
-        if(coinsLotable < 0) throw new IllegalArgumentException("Illegal arguments: coinsLotable < 0");
-        this.roomInventory.addCoins(coinsLotable);
-    }
 
     @Override
     public IInventory loot() {
@@ -40,7 +36,7 @@ public class LootableRoom extends Room implements IRoomLootable {
     }
 
     @Override
-    public void generateLoot(List<IItem> items, int coins) {
+    public void addGeneratedLoot(List<IItem> items, int coins) {
         items.forEach(item -> this.roomInventory.addItem(item));
         this.roomInventory.addCoins(coins);
     }

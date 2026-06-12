@@ -23,9 +23,4 @@ public interface IRoom {
      */
     List<IRoom> getExits();
 
-    /**
-     * Add an exit to the room
-     * @param room IRoom exit to add
-     */
-    void addExit(IRoom room);
 }
