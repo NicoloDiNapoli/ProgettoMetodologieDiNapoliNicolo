@@ -29,15 +29,6 @@ public class Student extends Character<IStudentSkill> implements Serializable, I
     }
 
     @Override
-    public void useSkill(Combatant target, ISkill skill) {
-        if(target == null || skill == null) throw new IllegalArgumentException("Illegal arguments: target or skill is null");
-        if(skill.isHealing())
-            target.heal(skill.getDamage());
-        else
-            target.takeDamage(skill.getDamage());
-    }
-
-    @Override
     public void heal(int amount) {
         if (amount <= 0) throw new IllegalArgumentException("Healing amount is negative");
         this.setLife(this.getLife() + amount);

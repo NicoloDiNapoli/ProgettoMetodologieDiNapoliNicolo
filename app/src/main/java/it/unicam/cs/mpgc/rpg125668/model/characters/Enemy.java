@@ -20,14 +20,6 @@ public class Enemy extends Character<IBossSkill> implements IEnemy<IBossSkill> {
         return difficult;
     }
 
-    @Override
-    public void useSkill(Combatant target, ISkill skill) {
-        if(target == null || skill == null) throw new IllegalArgumentException("Illegal arguments: target or skill is null");
-        if(skill.isHealing())
-            target.heal(skill.getDamage());
-        else
-            target.takeDamage(skill.getDamage());
-    }
 
     @Override
     public void heal(int amount) {
@@ -41,4 +33,9 @@ public class Enemy extends Character<IBossSkill> implements IEnemy<IBossSkill> {
         this.setLife(this.getLife() - amount);
     }
 
+
+    @Override
+    protected void setMaxLife() {
+        this.maxLife = difficult.maxLife();
+    }
 }

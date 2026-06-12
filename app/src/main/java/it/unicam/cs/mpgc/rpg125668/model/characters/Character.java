@@ -1,5 +1,6 @@
 package it.unicam.cs.mpgc.rpg125668.model.characters;
 
+import it.unicam.cs.mpgc.rpg125668.model.characters.interfaces.Combatant;
 import it.unicam.cs.mpgc.rpg125668.model.characters.interfaces.ICharacter;
 import it.unicam.cs.mpgc.rpg125668.model.skill.interfaces.ISkill;
 import java.io.Serializable;
@@ -19,6 +20,13 @@ public abstract class Character<T extends ISkill> implements Serializable, IChar
         this.skills = skills;
     }
 
+    public void useSkill(Combatant target, ISkill skill) {
+        if(target == null || skill == null) throw new IllegalArgumentException("Illegal arguments: target or skill is null");
+        if(skill.isHealing())
+            target.heal(skill.getDamage());
+        else
+            target.takeDamage(skill.getDamage());
+    }
 
     public void addSkill(T skill){
         if(skill == null) throw new IllegalArgumentException("Illegal arguments: skill is null");
@@ -47,6 +55,5 @@ public abstract class Character<T extends ISkill> implements Serializable, IChar
         else this.life = Math.max(life, 0);
     }
 
-    protected void setMaxLife() {
-    }
+    protected abstract void setMaxLife();
 }
