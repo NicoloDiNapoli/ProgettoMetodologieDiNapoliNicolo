@@ -87,6 +87,14 @@ public class CombatManager implements ICombatManager {
         }
     }
 
+    @Override
+    public CombatResult enemyTurn() {
+        IEnemy<IBossSkill> enemy = this.enemies.getFirst();
+        enemyAttack(enemy);
+        if (this.player.isDead()) return CombatResult.LOSE;
+        return CombatResult.FIGHT;
+    }
+
     public IEnemy<IBossSkill> getCurrentEnemy() {
         return this.enemies.getFirst();
     }

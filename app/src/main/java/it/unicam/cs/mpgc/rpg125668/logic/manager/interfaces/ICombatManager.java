@@ -10,4 +10,10 @@ public interface ICombatManager {
      * @return CombatResult result of the fight (WIN, LOSE, FIGHT)
      */
     CombatResult fight(IStudentSkill skill);
+
+    /**
+     * Executes the enemy's turn (called when the player uses an item in combat).
+     * @return LOSE if the enemy kills the player, FIGHT otherwise
+     */
+    CombatResult enemyTurn();
 }
