@@ -16,4 +16,10 @@ public class RoomStore extends BaseStore<RoomEntity> {
                 RoomEntity.class)
                 .getResultList();
     }
+
+    public RoomEntity findByName(String name) {
+        return entityManager.createQuery("select r from RoomEntity r where r.name = :name", RoomEntity.class)
+                .setParameter("name", name)
+                .getSingleResult();
+    }
 }
