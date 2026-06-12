@@ -10,4 +10,4 @@ build
 # Ignore gradle configurations
 .idea/
 
-app/data/rpgdb.*
+data/*.trace.db
