@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.ProgressBar?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane prefHeight="720.0" prefWidth="1100.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1">
+
+    <top>
+        <HBox alignment="CENTER_LEFT" spacing="25.0" style="-fx-background-color: #34495e; -fx-padding: 15;">
+            <children>
+                <VBox alignment="CENTER_LEFT">
+                    <children>
+                        <Label fx:id="roomLabel" text="CurrentRoom" textFill="#f1c40f">
+                            <font>
+                                <Font name="System Bold" size="16.0" />
+                            </font>
+                        </Label>
+                    </children>
+                </VBox>
+                <Separator orientation="VERTICAL" style="-fx-opacity: 0.3;" />
+
+                <HBox alignment="CENTER" spacing="10.0">
+                    <children>
+                        <Label style="-fx-font-weight: bold;" text="VITA:" textFill="WHITE" />
+                        <ProgressBar fx:id="lifeBar" prefWidth="140.0" progress="1.0" style="-fx-accent: #e74c3c; -fx-control-inner-background: #2c3e50;" />
+                        <Label fx:id="lifeText" text="100/100" textFill="WHITE" />
+                    </children>
+                </HBox>
+
+                <HBox alignment="CENTER" spacing="10.0">
+                    <children>
+                        <Label style="-fx-font-weight: bold;" text="CONCENTRAZIONE:" textFill="WHITE" />
+                        <ProgressBar fx:id="concentrationBar" prefWidth="100.0" progress="0.0" style="-fx-accent: #9b59b6; -fx-control-inner-background: #2c3e50;" />
+                    </children>
+                </HBox>
+
+                <HBox alignment="CENTER" spacing="10.0">
+                    <children>
+                        <Label style="-fx-font-weight: bold;" text="PREPARAZIONE:" textFill="WHITE" />
+                        <ProgressBar fx:id="prepBar" prefWidth="100.0" progress="0.0" style="-fx-accent: #3498db; -fx-control-inner-background: #2c3e50;" />
+                    </children>
+                </HBox>
+
+                <Separator orientation="VERTICAL" style="-fx-opacity: 0.3;" />
+                <Label fx:id="coinsLabel" style="-fx-font-weight: bold; -fx-font-size: 15px;" text="MONETE: 0" textFill="#f1c40f" />
+            </children>
+        </HBox>
+    </top>
+
+    <left>
+        <VBox prefWidth="220.0" spacing="12.0" style="-fx-background-color: #2c3e50; -fx-padding: 15; -fx-border-color: #34495e; -fx-border-width: 0 2 0 0;">
+            <children>
+                <Label style="-fx-font-weight: bold;" text="MOVIMENTO / MAPPA" textFill="WHITE" />
+                <ListView fx:id="exitsList" style="-fx-background-color: #34495e; -fx-text-fill: white; -fx-background-radius: 5;" VBox.vgrow="ALWAYS" />
+                <Button fx:id="moveBtn" maxWidth="Infinity" prefHeight="35.0" style="-fx-background-color: #1abc9c; -fx-text-fill: white; -fx-font-weight: bold; -fx-cursor: hand;" text="VAI ALLA STANZA" />
+                <Separator style="-fx-opacity: 0.2;" />
+                <Button fx:id="lootBtn" maxWidth="Infinity" prefHeight="35.0" style="-fx-background-color: #34495e; -fx-text-fill: white; -fx-cursor: hand; -fx-border-color: #bdc3c7; -fx-border-radius: 3;" text="RACCOGLI LOOT" />
+                <Button fx:id="shopBtn" maxWidth="Infinity" prefHeight="35.0" style="-fx-background-color: #34495e; -fx-text-fill: white; -fx-cursor: hand; -fx-border-color: #bdc3c7; -fx-border-radius: 3;" text="APRI NEGOZIO" />
+            </children>
+        </VBox>
+    </left>
+
+    <center>
+        <VBox spacing="10.0" style="-fx-background-color: #1a252f; -fx-padding: 15;">
+            <children>
+                <Label style="-fx-font-weight: bold;" text="CRONOLOGIA EVENTI DI GIOCO" textFill="#bdc3c7" />
+                <TextArea fx:id="gameLog" editable="false" style="-fx-control-inner-background: #2c3e50; -fx-text-fill: #2ecc71; -fx-font-family: 'Consolas', 'Courier New'; -fx-font-size: 14px; -fx-border-color: #34495e;" text="=== BENVENUTO NEL GIOCO ===&#10;Seleziona un'azione dai pannelli laterali per iniziare..." wrapText="true" VBox.vgrow="ALWAYS" />
+            </children>
+        </VBox>
+    </center>
+
+    <right>
+        <VBox prefWidth="260.0" spacing="12.0" style="-fx-background-color: #2c3e50; -fx-padding: 15; -fx-border-color: #34495e; -fx-border-width: 0 0 0 2;">
+            <children>
+                <Label style="-fx-font-weight: bold;" text="⚔ COMBATTIMENTO" textFill="#e74c3c" />
+                <VBox fx:id="combatBox" spacing="5.0" style="-fx-background-color: #c0392b; -fx-padding: 8; -fx-background-radius: 5;">
+                    <children>
+                        <Label fx:id="enemyName" style="-fx-font-weight: bold;" text="Nessun Nemico Presente" textFill="WHITE" />
+                        <Label fx:id="enemyLife" text="Vita: --" textFill="WHITE" />
+                    </children>
+                </VBox>
+
+                <Label style="-fx-font-weight: bold;" text="LE TUE SKILL" textFill="WHITE" />
+                <ListView fx:id="skillList" prefHeight="130.0" style="-fx-background-color: #34495e; -fx-text-fill: white; -fx-background-radius: 5;" />
+                <Button fx:id="attackBtn" maxWidth="Infinity" prefHeight="35.0" style="-fx-background-color: #e74c3c; -fx-text-fill: white; -fx-font-weight: bold; -fx-cursor: hand;" text="ATTACCA" />
+
+                <Separator style="-fx-opacity: 0.2;" />
+
+                <Label style="-fx-font-weight: bold;" text="ZAINO (INVENTARIO)" textFill="WHITE" />
+                <ListView fx:id="inventoryList" style="-fx-background-color: #34495e; -fx-text-fill: white; -fx-background-radius: 5;" VBox.vgrow="ALWAYS" />
+                <Button fx:id="useItemBtn" maxWidth="Infinity" prefHeight="35.0" style="-fx-background-color: #34495e; -fx-text-fill: white; -fx-cursor: hand; -fx-border-color: #bdc3c7; -fx-border-radius: 3;" text="USA OGGETTO" />
+            </children>
+        </VBox>
+    </right>
+
+    <bottom>
+        <HBox alignment="CENTER_RIGHT" style="-fx-background-color: #34495e; -fx-padding: 10 15;">
+            <children>
+                <Button fx:id="quitBtn" prefHeight="35.0" prefWidth="160.0" style="-fx-background-color: #c0392b; -fx-text-fill: white; -fx-font-weight: bold; -fx-cursor: hand; -fx-background-radius: 5;" text="ABBANDONA GIOCO" />
+            </children>
+        </HBox>
+    </bottom>
+</BorderPane>
