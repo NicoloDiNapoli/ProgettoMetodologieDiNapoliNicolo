@@ -58,37 +58,6 @@ public class Inventory implements IInventory {
         return items.containsKey(item);
     }
 
-    @Override
-    public int getItemQuantity(IItem item) {
-        return items.getOrDefault(item, 0);
-    }
-
-    @Override
-    public void removeItemQuantity(IItem item, int quantity) {
-        if (quantity < 0)
-            throw new IllegalArgumentException("Illegal arguments: quantity < 0");
-        if (hasItem(item)) {
-            int currentQty = items.get(item);
-            if (currentQty >= quantity) {
-                if (currentQty == quantity) {
-                    items.remove(item);
-                } else {
-                    items.put(item, currentQty - quantity);
-                }
-            } else {
-                throw new IllegalArgumentException("Impossible to remove quantity");
-            }
-        } else {
-            throw new IllegalArgumentException("Item not found");
-        }
-    }
-
-    @Override
-    public void addItems(IItem item, int quantity) {
-        if (quantity < 0 || item == null)
-            throw new IllegalArgumentException("Illegal arguments: quantity < 0 or item is null");
-        items.put(item, items.getOrDefault(item, 0) + quantity);
-    }
 
     public int getCoins() {return this.coins;}
 
