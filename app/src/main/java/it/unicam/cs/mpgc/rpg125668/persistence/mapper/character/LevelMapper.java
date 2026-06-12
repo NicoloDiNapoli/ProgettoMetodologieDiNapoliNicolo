@@ -1,4 +1,4 @@
-package it.unicam.cs.mpgc.rpg125668.persistence.mapper;
+package it.unicam.cs.mpgc.rpg125668.persistence.mapper.character;
 
 import it.unicam.cs.mpgc.rpg125668.model.characters.Level;
 import it.unicam.cs.mpgc.rpg125668.persistence.entity.character.LevelEntity;

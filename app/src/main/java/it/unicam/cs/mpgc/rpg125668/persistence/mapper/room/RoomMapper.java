@@ -1,4 +1,4 @@
-package it.unicam.cs.mpgc.rpg125668.persistence.mapper;
+package it.unicam.cs.mpgc.rpg125668.persistence.mapper.room;
 
 import it.unicam.cs.mpgc.rpg125668.model.consumable.interfaces.IItem;
 import it.unicam.cs.mpgc.rpg125668.model.dispenser.BookDispenser;
@@ -12,6 +12,8 @@ import it.unicam.cs.mpgc.rpg125668.model.rooms.interfaces.IRoom;
 import it.unicam.cs.mpgc.rpg125668.persistence.entity.room.LootableRoomEntity;
 import it.unicam.cs.mpgc.rpg125668.persistence.entity.room.RoomEntity;
 import it.unicam.cs.mpgc.rpg125668.persistence.entity.room.ShopRoomEntity;
+import it.unicam.cs.mpgc.rpg125668.persistence.mapper.inventory.InventoryMapper;
+import it.unicam.cs.mpgc.rpg125668.persistence.mapper.item.ItemMapper;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -74,9 +76,9 @@ public class RoomMapper {
                 items.put(ItemMapper.toModel(si.getItem()), si.getQuantity())
         );
         if (shopRoomEntity.getDispenserName().contains("Book"))
-            return new ShopRoom(entity.getName(), new ArrayList<>(exits), entity.getDescription(), new BookDispenser(items));
+            return new ShopRoom(entity.getName(), exits, entity.getDescription(), new BookDispenser(items));
         else
-            return new ShopRoom(entity.getName(), new ArrayList<>(exits), entity.getDescription(), new SnackDrinkDispenser(items));
+            return new ShopRoom(entity.getName(), exits, entity.getDescription(), new SnackDrinkDispenser(items));
     }
 
     /**
@@ -92,7 +94,7 @@ public class RoomMapper {
             inventory = InventoryMapper.toModel(lootableRoomEntity.getRoomInventory());
         else
             inventory = new Inventory(0, new HashMap<>());
-        return new LootableRoom(entity.getName(), new ArrayList<>(exits), entity.getDescription(), inventory);
+        return new LootableRoom(entity.getName(), exits, entity.getDescription(), inventory);
     }
 
 }

@@ -1,19 +1,21 @@
-package it.unicam.cs.mpgc.rpg125668.persistence.mapper;
+package it.unicam.cs.mpgc.rpg125668.persistence.mapper.character;
 
 import it.unicam.cs.mpgc.rpg125668.model.characters.Enemy;
 import it.unicam.cs.mpgc.rpg125668.model.characters.interfaces.IEnemy;
 import it.unicam.cs.mpgc.rpg125668.model.skill.interfaces.IBossSkill;
 import it.unicam.cs.mpgc.rpg125668.persistence.entity.character.EnemyEntity;
+import it.unicam.cs.mpgc.rpg125668.persistence.mapper.skills.BossSkillMapper;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class EnemyMapper {
 
     public static Enemy toModel(EnemyEntity entity) {
         if (entity == null) throw new IllegalArgumentException("Entity cannot be null");
-        List<IBossSkill> skills = entity.getSkills().stream()
+        List<IBossSkill> skills = new ArrayList<>(entity.getSkills().stream()
                 .map(BossSkillMapper::toModel)
-                .toList();
+                .toList());
         return new Enemy(
                 entity.getName(),
                 entity.getLife(),
@@ -30,9 +32,9 @@ public class EnemyMapper {
                 model.getLife(),
                 model.getMaxLife(),
                 model.getDifficult(),
-                model.getSkills().stream()
+                new ArrayList<>(model.getSkills().stream()
                         .map(BossSkillMapper::toEntity)
-                        .toList()
+                        .toList())
         );
     }
 }

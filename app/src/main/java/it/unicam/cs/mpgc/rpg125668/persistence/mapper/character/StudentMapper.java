@@ -1,17 +1,19 @@
-package it.unicam.cs.mpgc.rpg125668.persistence.mapper;
+package it.unicam.cs.mpgc.rpg125668.persistence.mapper.character;
 
 import it.unicam.cs.mpgc.rpg125668.model.characters.Level;
 import it.unicam.cs.mpgc.rpg125668.model.characters.Student;
 import it.unicam.cs.mpgc.rpg125668.model.characters.interfaces.IStudent;
-import it.unicam.cs.mpgc.rpg125668.model.consumable.interfaces.IItem;
 import it.unicam.cs.mpgc.rpg125668.model.inventory.interfaces.IInventory;
 import it.unicam.cs.mpgc.rpg125668.model.skill.interfaces.IStudentSkill;
 import it.unicam.cs.mpgc.rpg125668.persistence.entity.character.StudentEntity;
 import it.unicam.cs.mpgc.rpg125668.persistence.entity.inventory.InventoryEntity;
 import it.unicam.cs.mpgc.rpg125668.persistence.entity.inventory.InventoryItemEntity;
 import it.unicam.cs.mpgc.rpg125668.persistence.entity.item.ItemEntity;
-import it.unicam.cs.mpgc.rpg125668.persistence.entity.skill.StudentSkillEntity;
+import it.unicam.cs.mpgc.rpg125668.persistence.mapper.inventory.InventoryMapper;
+import it.unicam.cs.mpgc.rpg125668.persistence.mapper.item.ItemMapper;
+import it.unicam.cs.mpgc.rpg125668.persistence.mapper.skills.StudentSkillMapper;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class StudentMapper {
@@ -20,9 +22,9 @@ public class StudentMapper {
         if (entity == null) throw new IllegalArgumentException("Entity cannot be null");
         Level level = LevelMapper.toModel(entity.getLevel());
         IInventory inventory = InventoryMapper.toModel(entity.getInventory());
-        List<IStudentSkill> skills = entity.getSkills().stream()
+        List<IStudentSkill> skills = new ArrayList<>(entity.getSkills().stream()
                 .map(StudentSkillMapper::toModel)
-                .toList();
+                .toList());
         return new Student(
                 entity.getName(),
                 entity.getLife(),
@@ -47,9 +49,9 @@ public class StudentMapper {
                 model.getMaxConcentration(),
                 LevelMapper.toEntity(model.getLevel()),
                 InventoryMapper.toEntity(model.getInventory()),
-                model.getSkills().stream()
+                new ArrayList<>(model.getSkills().stream()
                         .map(StudentSkillMapper::toEntity)
-                        .toList()
+                        .toList())
         );
     }
 

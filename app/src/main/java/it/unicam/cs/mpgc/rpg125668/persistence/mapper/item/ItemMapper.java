@@ -1,4 +1,4 @@
-package it.unicam.cs.mpgc.rpg125668.persistence.mapper;
+package it.unicam.cs.mpgc.rpg125668.persistence.mapper.item;
 
 import it.unicam.cs.mpgc.rpg125668.model.consumable.Book;
 import it.unicam.cs.mpgc.rpg125668.model.consumable.Drink;
@@ -8,6 +8,7 @@ import it.unicam.cs.mpgc.rpg125668.persistence.entity.item.BookEntity;
 import it.unicam.cs.mpgc.rpg125668.persistence.entity.item.DrinkEntity;
 import it.unicam.cs.mpgc.rpg125668.persistence.entity.item.ItemEntity;
 import it.unicam.cs.mpgc.rpg125668.persistence.entity.item.SnackEntity;
+import it.unicam.cs.mpgc.rpg125668.persistence.store.item.ItemStore;
 
 public class ItemMapper {
 
@@ -22,12 +23,7 @@ public class ItemMapper {
     }
 
     public static ItemEntity toEntity(IItem model) {
-        return switch (model) {
-            case null -> throw new IllegalArgumentException("Model cannot be null");
-            case Book book -> new BookEntity(book.getName(), book.getRarity());
-            case Snack snack -> new SnackEntity(snack.getName(), snack.getIncrease(), snack.getPrice());
-            case Drink drink -> new DrinkEntity(drink.getName(), drink.getIncrease(), drink.getPrice());
-            default -> throw new IllegalArgumentException("Unknown item type: " + model.getClass().getSimpleName());
-        };
+        if (model == null) throw new IllegalArgumentException("Model cannot be null");
+        return new ItemStore().findByName(model.getName());
     }
 }

@@ -1,10 +1,11 @@
-package it.unicam.cs.mpgc.rpg125668.persistence.mapper;
+package it.unicam.cs.mpgc.rpg125668.persistence.mapper.inventory;
 
 import it.unicam.cs.mpgc.rpg125668.model.consumable.interfaces.IItem;
 import it.unicam.cs.mpgc.rpg125668.model.inventory.Inventory;
 import it.unicam.cs.mpgc.rpg125668.model.inventory.interfaces.IInventory;
 import it.unicam.cs.mpgc.rpg125668.persistence.entity.inventory.InventoryEntity;
 import it.unicam.cs.mpgc.rpg125668.persistence.entity.inventory.InventoryItemEntity;
+import it.unicam.cs.mpgc.rpg125668.persistence.mapper.item.ItemMapper;
 
 import java.util.HashMap;
 import java.util.Map;

@@ -1,4 +1,4 @@
-package it.unicam.cs.mpgc.rpg125668.persistence.mapper;
+package it.unicam.cs.mpgc.rpg125668.persistence.mapper.skills;
 
 import it.unicam.cs.mpgc.rpg125668.model.skill.BossSkill;
 import it.unicam.cs.mpgc.rpg125668.model.skill.interfaces.IBossSkill;
