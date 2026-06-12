@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<VBox alignment="TOP_CENTER" prefHeight="650.0" prefWidth="850.0" spacing="25.0" style="-fx-background-color: #2c3e50;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1">
+    <padding>
+        <Insets bottom="40.0" left="40.0" right="40.0" top="40.0" />
+    </padding>
+
+    <Label text="SELEZIONA IL TUO PERSONAGGIO" textFill="WHITE">
+        <font>
+            <Font name="System Bold" size="28.0" />
+        </font>
+    </Label>
+    <Label text="Scegli uno dei 4 eroi disponibili per iniziare l'avventura:" textFill="#bdc3c7">
+        <font>
+            <Font size="14.0" />
+        </font>
+    </Label>
+
+    <GridPane hgap="25.0" vgap="25.0" VBox.vgrow="ALWAYS">
+        <columnConstraints>
+            <ColumnConstraints percentWidth="50.0" />
+            <ColumnConstraints percentWidth="50.0" />
+        </columnConstraints>
+        <rowConstraints>
+            <RowConstraints percentHeight="50.0" />
+            <RowConstraints percentHeight="50.0" />
+        </rowConstraints>
+        <children>
+
+            <Button fx:id="heroOneBtn" maxHeight="Infinity" maxWidth="Infinity" style="-fx-font-size: 15px; -fx-background-color: #27ae60; -fx-text-fill: white; -fx-border-color: #2ecc71; -fx-border-width: 2; -fx-border-radius: 10; -fx-background-radius: 10; -fx-cursor: hand; -fx-font-weight: bold;" text="EROE: GUERRIERO&#10;&#10;HP: 120  |  Skill: Fendente&#10;Danni Skill: 25&#10;Zaino: [Pozione del Passaggio x1]" textAlignment="CENTER" wrapText="true" GridPane.columnIndex="0" GridPane.rowIndex="0" />
+
+            <Button fx:id="heroTwoBtn" maxHeight="Infinity" maxWidth="Infinity" style="-fx-font-size: 15px; -fx-background-color: #27ae60; -fx-text-fill: white; -fx-border-color: #2ecc71; -fx-border-width: 2; -fx-border-radius: 10; -fx-background-radius: 10; -fx-cursor: hand; -fx-font-weight: bold;" text="EROE: MAGO&#10;&#10;HP: 80  |  Skill: Dardo Arcano&#10;Danni Skill: 40&#10;Zaino: [Caffè Concentrazione x2]" textAlignment="CENTER" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+
+            <Button fx:id="heroThreeBtn" maxHeight="Infinity" maxWidth="Infinity" style="-fx-font-size: 15px; -fx-background-color: #27ae60; -fx-text-fill: white; -fx-border-color: #2ecc71; -fx-border-width: 2; -fx-border-radius: 10; -fx-background-radius: 10; -fx-cursor: hand; -fx-font-weight: bold;" text="EROE: LADRO&#10;&#10;HP: 95  |  Skill: Pugnalata alle Spalle&#10;Danni Skill: 30&#10;Zaino: [Moneta Fortunata x1, Erba Medica x1]" textAlignment="CENTER" wrapText="true" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+
+            <Button fx:id="heroFourBtn" maxHeight="Infinity" maxWidth="Infinity" style="-fx-font-size: 15px; -fx-background-color: #27ae60; -fx-text-fill: white; -fx-border-color: #2ecc71; -fx-border-width: 2; -fx-border-radius: 10; -fx-background-radius: 10; -fx-cursor: hand; -fx-font-weight: bold;" text="EROE: PALADINO&#10;&#10;HP: 110  |  Skill: Punizione Divina&#10;Danni Skill: 20&#10;Zaino: [Scudo Temporaneo x1]" textAlignment="CENTER" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+
+        </children>
+    </GridPane>
+
+    <HBox alignment="CENTER" style="-fx-padding: 15 0 0 0;">
+        <Button fx:id="backBtn" prefHeight="45.0" prefWidth="200.0" style="-fx-font-size: 14px; -fx-background-color: #c0392b; -fx-text-fill: white; -fx-font-weight: bold; -fx-cursor: hand;" text="TORNA AL MENU" />
+    </HBox>
+</VBox>
