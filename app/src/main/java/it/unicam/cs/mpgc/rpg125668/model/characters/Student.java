@@ -11,7 +11,7 @@ import java.util.List;
 
 public class Student extends Character<IStudentSkill> implements Serializable, IStudent<IStudentSkill> {
     protected int maxPreparation , maxConcentration;
-    private Level level;
+    private final Level level;
     private int preparation;
     private int concentration;
     private final IInventory inventory;
@@ -25,6 +25,7 @@ public class Student extends Character<IStudentSkill> implements Serializable, I
         this.inventory = inventory;
         this.setMaxPreparation();
         this.setMaxConcentration();
+        this.setMaxLife();
     }
 
     @Override
@@ -50,9 +51,12 @@ public class Student extends Character<IStudentSkill> implements Serializable, I
 
     @Override
     public void useItem(IItem item){
-        if(item != null)
-            this.inventory.applyItem(item, this);
+        if(item != null){
+            if(item.use(this))
+                this.inventory.applyItem(item, this);
+        }
     }
+
 
     public IInventory getInventory() {
         return this.inventory;
