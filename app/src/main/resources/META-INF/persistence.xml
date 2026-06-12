@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<persistence xmlns="https://jakarta.ee/xml/ns/persistence"
-             version="3.0">
+<persistence xmlns="https://jakarta.ee/xml/ns/persistence" version="3.0">
 
     <persistence-unit name="rpg-pu" transaction-type="RESOURCE_LOCAL">
         <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
@@ -21,7 +20,7 @@
         <class>it.unicam.cs.mpgc.rpg125668.persistence.entity.room.LootableRoomEntity</class>
         <class>it.unicam.cs.mpgc.rpg125668.persistence.entity.room.ShopRoomEntity</class>
         <class>it.unicam.cs.mpgc.rpg125668.persistence.entity.room.ShopItemEntity</class>
-        <class>it.unicam.cs.mpgc.rpg125668.persistence.entity.GameStateEntity</class>
+        <class>it.unicam.cs.mpgc.rpg125668.persistence.entity.game.GameStateEntity</class>
 
         <properties>
             <!-- H2 database local file -->
@@ -29,12 +28,10 @@
             <property name="jakarta.persistence.jdbc.url" value="jdbc:h2:file:./data/rpgdb"/>
             <property name="jakarta.persistence.jdbc.user" value="sa"/>
             <property name="jakarta.persistence.jdbc.password" value=""/>
-            <!-- Loading Static Data to run the game -->
-            <property name="jakarta.persistence.sql-load-script-source" value="data.sql"/>
 
             <!-- Hibernate settings -->
             <property name="hibernate.dialect" value="org.hibernate.dialect.H2Dialect"/>
-            <property name="hibernate.hbm2ddl.auto" value="create"/>
+            <property name="hibernate.hbm2ddl.auto" value="update"/>
             <property name="hibernate.show_sql" value="true"/>
             <property name="hibernate.format_sql" value="true"/>
         </properties>
