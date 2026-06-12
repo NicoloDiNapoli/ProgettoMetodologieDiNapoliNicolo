@@ -27,6 +27,7 @@ public abstract class Dispenser implements IShop {
     }
 
     @Override
+    //remove item from shop
     public void buyItem(IStudent<IStudentSkill> student, IPurchasable item) {
         if(student == null || item == null)throw new IllegalArgumentException("Illegal arguments: student or item is null");
         if(student.getInventory().seeCoins() < item.getPrice()) return;
@@ -48,6 +49,7 @@ public abstract class Dispenser implements IShop {
             this.items.put(item, this.items.get(item) + quantity);
     }
 
+    //add item to student inventory
     private void addItem(IStudent<IStudentSkill> student, IPurchasable item) {
         student.getInventory().addItem(item);
         student.getInventory().removeCoins(item.getPrice());

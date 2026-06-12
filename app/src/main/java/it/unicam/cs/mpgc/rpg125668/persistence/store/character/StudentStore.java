@@ -48,11 +48,20 @@ public class StudentStore extends BaseStore<StudentEntity> implements IStudentSt
                 .getSingleResult();
     }
 
+    /**
+     * Link the skills and items of the student to the student entity.
+     * @param entity StudentEntity to link the skills and items to
+     */
     private void linkExistingEntities(StudentEntity entity) {
         linkSkills(entity);
         linkInventory(entity);
     }
 
+    /**
+     * Link the items of the inventory to the student entity.
+     * If the item is already in the DB, it is linked to the student entity.
+     * @param entity StudentEntity to link the items to
+     */
     private void linkInventory(StudentEntity entity) {
         if(entity.getInventory() == null || entity.getInventory().getItems()==null) return;
         boolean hasTransientItems = entity.getInventory().getItems().stream()
@@ -77,6 +86,11 @@ public class StudentStore extends BaseStore<StudentEntity> implements IStudentSt
         }
     }
 
+    /**
+     * Link the skills of the student to the student entity.
+     * If the skill is already in the DB, it is linked to the student entity.
+     * @param entity StudentEntity to link the skills to
+     */
     private void linkSkills(StudentEntity entity) {
         if (entity.getSkills() == null) return;
         boolean hasTransientSkills = entity.getSkills().stream().anyMatch(s -> s.getId() == null);
