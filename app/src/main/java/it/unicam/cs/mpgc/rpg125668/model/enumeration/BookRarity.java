@@ -18,10 +18,12 @@ public enum BookRarity {
         this.price = calculatePrice(this.preparation,this.concentrationRequired);
     }
 
+    //return a random integer between min (inclusive) and max (inclusive)
     private static int randInt(int min, int max) {
         return (int)(Math.random() * (max - min + 1)) + min;
     }
 
+    //return the price of the book based on the preparation and concentration required
     private static int calculatePrice(int preparation, int concentrationRequired) {
         return (preparation + concentrationRequired) / 2;
     }
