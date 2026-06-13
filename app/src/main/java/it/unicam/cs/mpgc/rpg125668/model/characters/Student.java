@@ -42,10 +42,7 @@ public class Student extends Character<IStudentSkill> implements Serializable, I
 
     @Override
     public void useItem(IItem item){
-        if(item != null){
-            if(item.use(this))
-                this.inventory.applyItem(item, this);
-        }
+        this.inventory.applyItem(item, this);
     }
 
 
