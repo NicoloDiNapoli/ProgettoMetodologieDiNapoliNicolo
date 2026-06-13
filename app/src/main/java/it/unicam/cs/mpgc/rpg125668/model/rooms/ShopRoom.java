@@ -16,6 +16,7 @@ public class ShopRoom extends Room implements IShopRoom {
         this.dispenser = dispenser;
     }
 
+    @Override
     public IShop getDispenser() {
         return this.dispenser;
     }

@@ -16,6 +16,7 @@ public class GameMap implements IGameMap {
         this.currentRoom = startRoom;
     }
 
+    @Override
     public Map<String, IRoom> getRooms() {return rooms;}
 
 
@@ -25,8 +26,10 @@ public class GameMap implements IGameMap {
         this.currentRoom = this.rooms.get(room);
     }
 
+    @Override
     public IRoom getCurrentRoom() {return currentRoom;}
 
+    @Override
     public List<IRoom> getAvailableExits() {
         return currentRoom.getExits();
     }

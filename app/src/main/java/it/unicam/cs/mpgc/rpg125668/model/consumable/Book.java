@@ -17,6 +17,7 @@ public class Book extends Item implements IPurchasable  {
 
     public int getIncrease() {return rarity.getPreparation();}
 
+    @Override
     public String toString() {return this.getName();}
 
     @Override

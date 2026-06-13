@@ -4,6 +4,7 @@ import it.unicam.cs.mpgc.rpg125668.gui.SceneManager;
 import it.unicam.cs.mpgc.rpg125668.logic.manager.GameActionResult;
 import it.unicam.cs.mpgc.rpg125668.logic.manager.GameManager;
 import it.unicam.cs.mpgc.rpg125668.logic.manager.GameSaveManager;
+import it.unicam.cs.mpgc.rpg125668.logic.manager.interfaces.IGameManager;
 import it.unicam.cs.mpgc.rpg125668.logic.start.Game;
 import it.unicam.cs.mpgc.rpg125668.model.consumable.interfaces.IItem;
 import it.unicam.cs.mpgc.rpg125668.model.consumable.interfaces.IPurchasable;
@@ -48,7 +49,7 @@ public class GamePlayController {
     // Quit button
     @FXML private Button quitBtn;
 
-    private GameManager gm;
+    private IGameManager gm;
 
     @FXML
     public void initialize() {

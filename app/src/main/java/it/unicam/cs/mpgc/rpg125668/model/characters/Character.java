@@ -20,6 +20,7 @@ public abstract class Character<T extends ISkill> implements Serializable, IChar
         this.skills = skills;
     }
 
+    @Override
     public void useSkill(Combatant target, ISkill skill) {
         if(target == null || skill == null) throw new IllegalArgumentException("Illegal arguments: target or skill is null");
         if(skill.isHealing())
@@ -28,23 +29,29 @@ public abstract class Character<T extends ISkill> implements Serializable, IChar
             target.takeDamage(skill.getDamage());
     }
 
+    @Override
     public void addSkill(T skill){
         if(skill == null) throw new IllegalArgumentException("Illegal arguments: skill is null");
         if(skills.contains(skill)) return;
         skills.add(skill);
     }
 
+    @Override
     public boolean isDead(){
         return this.life <= 0;
     }
 
+    @Override
     public List<T> getSkills() {
         return this.skills;
     }
 
     //Getter
+    @Override
     public String getName() {return this.name;}
+    @Override
     public int getLife() {return this.life;}
+    @Override
     public int getMaxLife() {return this.maxLife;}
 
 
@@ -54,6 +61,7 @@ public abstract class Character<T extends ISkill> implements Serializable, IChar
             this.life = maxLife;
         else this.life = Math.max(life, 0);
     }
+
 
     protected abstract void setMaxLife();
 }

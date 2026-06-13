@@ -13,6 +13,7 @@ public class Drink extends Item implements IPurchasable {
         this.increaseConcentration = increaseConcentration;
     }
 
+    @Override
     public int getIncrease() {return increaseConcentration;}
 
     @Override

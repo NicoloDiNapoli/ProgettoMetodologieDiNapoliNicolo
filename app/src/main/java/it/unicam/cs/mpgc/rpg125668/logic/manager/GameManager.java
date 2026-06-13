@@ -1,6 +1,7 @@
 package it.unicam.cs.mpgc.rpg125668.logic.manager;
 
 import it.unicam.cs.mpgc.rpg125668.logic.enumeration.CombatResult;
+import it.unicam.cs.mpgc.rpg125668.logic.manager.interfaces.IGameManager;
 import it.unicam.cs.mpgc.rpg125668.model.characters.interfaces.IEnemy;
 import it.unicam.cs.mpgc.rpg125668.model.characters.interfaces.IStudent;
 import it.unicam.cs.mpgc.rpg125668.model.consumable.Book;
@@ -20,7 +21,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
-public class GameManager {
+public class GameManager implements IGameManager {
     private static final String RESPAWN_ROOM = "Atrio";
     private static final String FIGHTING_ROOM = "Sala Professori";
 
@@ -54,10 +55,7 @@ public class GameManager {
         LootGenerator.restockDispensers(this.gameMap);
     }
 
-    /**
-     * Moves the player to newRoom if it is an available exit.
-     * @return true if the move succeeded, false if the room is not reachable
-     */
+    @Override
     public boolean move(IRoom newRoom) {
         if (newRoom == null) throw new IllegalArgumentException("Illegal arguments: room is null");
         boolean reachable = this.gameMap.getAvailableExits().stream()
@@ -69,32 +67,34 @@ public class GameManager {
         return false;
     }
 
+
     //return true if the player is in a fighting room and there are still enemies alive
+    @Override
     public boolean canAttack() {
         return this.gameMap.getCurrentRoom().getName().equals(FIGHTING_ROOM)
                 && !this.combatManager.allEnemiesDefeated();
     }
 
     //return true if the player is in a shop room
+    @Override
     public boolean canShop(){
         return this.gameMap.getCurrentRoom() instanceof ShopRoom;
     }
 
     //return true if the player is in a lootable room and there is something to loot
+    @Override
     public boolean canLoot(){
         if (!(this.gameMap.getCurrentRoom() instanceof LootableRoom lootableRoom)) return false;
         return lootableRoom.getLootableCoins() > 0 || !lootableRoom.loot().getItems().isEmpty();
     }
 
+    @Override
     public IShop getDispenser() {
         return ((ShopRoom) this.gameMap.getCurrentRoom()).getDispenser();
     }
 
-    /**
-     * execute the player attack action.
-     * @param skill IStudentSkill skill to use
-     * @return GameActionResult with the result of the attack action.
-     */
+
+    @Override
     public GameActionResult executeAttack(IStudentSkill skill) {
         if (player.getPreparation() < skill.getPreparationRequired()) {
             return GameActionResult.failure(
@@ -129,10 +129,7 @@ public class GameManager {
         };
     }
 
-    /**
-     * If there is something to loot in the current room, it is added to the player's inventory.
-     * @return GameActionResult with the result of the loot action and the loot details.
-     */
+    @Override
     public GameActionResult executeLoot() {
         if (!canLoot())
             return GameActionResult.failure("[LOOT] Non c'è nulla da raccogliere in questa stanza.");
@@ -148,11 +145,8 @@ public class GameManager {
                 "[LOOT] Bottino raccolto: " + coins + " monete e " + itemsCount + " oggetti aggiunti allo zaino.");
     }
 
-    /**
-     * Buys an item from the shop.
-     * @param item IPurchasable extends IItem item to buy
-     * @return GameActionResult with the result of the buy action.
-     */
+
+    @Override
     public GameActionResult executeBuy(IPurchasable item) {
         if (!canShop())
             return GameActionResult.failure("[NEGOZIO] Non c'è nessun distributore qui.");
@@ -164,10 +158,7 @@ public class GameManager {
         return GameActionResult.info("[NEGOZIO] Acquistato con successo: " + item.getName());
     }
 
-    /**
-     * Uses an item. If in combat, the enemy immediately takes its turn after.
-     * @return GameActionResult with the result of the use item action.
-     */
+    @Override
     public GameActionResult executeUseItem(IItem item) {
         if (!player.getInventory().getItems().containsKey(item))
             return GameActionResult.failure("[ZAINO] Errore: l'oggetto non è presente nell'inventario.");
@@ -223,19 +214,34 @@ public class GameManager {
     }
 
     //Getters
+    @Override
     public IStudent<IStudentSkill> getPlayer(){return this.player;}
+    @Override
     public IGameMap getGameMap(){return this.gameMap;}
+    @Override
     public int getPlayerMaxLife(){ return this.player.getMaxLife();}
+    @Override
     public int getPlayerConcentration(){ return this.player.getConcentration();}
+    @Override
     public int getPlayerMaxConcentration(){ return this.player.getMaxConcentration();}
+    @Override
     public int getPlayerPreparation(){ return this.player.getPreparation();}
+    @Override
     public int getPlayerMaxPreparation(){ return this.player.getMaxPreparation();}
+    @Override
     public IEnemy<IBossSkill> getCurrentEnemy(){ return this.combatManager.getCurrentEnemy();}
+    @Override
     public List<IStudentSkill> getPlayerSkills(){ return this.player.getSkills();}
+    @Override
     public int getPlayerLife(){ return this.player.getLife();}
+    @Override
     public int getPlayerCoins(){ return this.player.getInventory().seeCoins();}
+    @Override
     public Map<IItem, Integer> getPlayerItems(){ return this.player.getInventory().getItems();}
+    @Override
     public IRoom getCurrentRoom(){ return this.gameMap.getCurrentRoom();}
+    @Override
     public List<IRoom> getAvailableExits(){ return this.gameMap.getAvailableExits();}
+    @Override
     public int getPlayerLevel(){ return this.player.getLevel().getLevel();}
 }

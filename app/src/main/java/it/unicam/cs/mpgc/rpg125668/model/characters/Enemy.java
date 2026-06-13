@@ -16,6 +16,7 @@ public class Enemy extends Character<IBossSkill> implements IEnemy<IBossSkill> {
         this.difficult = difficult;
     }
 
+    @Override
     public EnemyDifficult getDifficult() {
         return difficult;
     }

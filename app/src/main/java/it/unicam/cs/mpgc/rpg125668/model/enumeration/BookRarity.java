@@ -1,4 +1,12 @@
 package it.unicam.cs.mpgc.rpg125668.model.enumeration;
+
+/**
+ * Enum for the rarity of the books of the game
+ * It contains the preparation, concentration required and the probability of the skill
+ * It also contains the price of the book
+ * The values are randomly generated based on the rarity between min and max values
+ * The price is calculated based on the preparation and concentration required
+ */
 public enum BookRarity {
 
     COMMON(randInt(8, 12), randInt(18, 22), 0.10),

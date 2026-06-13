@@ -22,7 +22,10 @@ public class Room implements Serializable, IRoom {
         exits.add(room);
     }
 
+    @Override
     public String getName() {return name;}
+    @Override
     public List<IRoom> getExits() {return exits;}
+    @Override
     public String getDescription() {return description;}
 }

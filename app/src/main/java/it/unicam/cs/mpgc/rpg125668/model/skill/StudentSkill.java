@@ -12,6 +12,7 @@ public class StudentSkill extends Skill implements IStudentSkill {
         if(preparationRequired < 0) throw new IllegalArgumentException("Preparation required cannot be negative");
         this.preparationRequired = preparationRequired;
     }
+    @Override
     public int getPreparationRequired() {return this.preparationRequired;}
 
 }

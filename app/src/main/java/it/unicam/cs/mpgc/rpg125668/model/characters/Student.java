@@ -45,16 +45,17 @@ public class Student extends Character<IStudentSkill> implements Serializable, I
         this.inventory.applyItem(item, this);
     }
 
-
+    @Override
     public IInventory getInventory() {
         return this.inventory;
     }
 
-
+    @Override
     public Level getLevel() {
         return this.level;
     }
 
+    @Override
     public void addExperience(int experienceRewarded){
         if (experienceRewarded < 0) throw new IllegalArgumentException("Experience rewarded is negative");
         this.level.addExperience(experienceRewarded);

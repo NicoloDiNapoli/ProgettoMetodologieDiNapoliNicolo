@@ -33,18 +33,22 @@ public abstract class Skill implements ISkill {
         return this.name.hashCode() + this.rarity.hashCode();
     }
 
+    @Override
     public String getName() {
         return this.name;
     }
 
+    @Override
     public SkillRarity getRarity() {
         return this.rarity;
     }
 
+    @Override
     public int getDamage() {
         return this.damage;
     }
 
+    @Override
     public String getDescription() {
         return this.description;
     }
@@ -54,5 +58,6 @@ public abstract class Skill implements ISkill {
         return this.skillType == SkillType.HEALING;
     }
 
+    @Override
     public SkillType getSkillType() {return this.skillType;}
 }

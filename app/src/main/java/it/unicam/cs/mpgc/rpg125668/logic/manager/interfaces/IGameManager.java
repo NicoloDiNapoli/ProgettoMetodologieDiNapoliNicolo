@@ -48,10 +48,9 @@ public interface IGameManager {
      */
     GameActionResult executeUseItem(IItem item);
 
+
     boolean canAttack();
-
     boolean canShop();
-
     boolean canLoot();
 
 

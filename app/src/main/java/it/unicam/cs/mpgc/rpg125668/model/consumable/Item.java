@@ -15,6 +15,7 @@ public abstract class Item implements IItem {
         this.price = price;
     }
 
+    @Override
     public String getName() {return name;}
     public String getType() {return type;}
 

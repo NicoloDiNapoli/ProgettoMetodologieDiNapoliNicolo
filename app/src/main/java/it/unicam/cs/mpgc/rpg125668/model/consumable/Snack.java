@@ -13,8 +13,10 @@ public class Snack extends Item implements IPurchasable {
         this.increaseLife = increaseLife;
     }
 
+    @Override
     public int getIncrease() {return increaseLife;}
 
+    @Override
     public boolean use(IStudent<IStudentSkill> target) {
         if (target == null)throw new IllegalArgumentException("Target cannot be null");
         target.heal(increaseLife);
