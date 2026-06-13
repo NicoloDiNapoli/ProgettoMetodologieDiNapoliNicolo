@@ -44,6 +44,11 @@ java {
     }
 }
 
+//Define working directory for the run task, so that the application can find the resources and the database
+tasks.run {
+    workingDir = rootProject.projectDir
+}
+
 application {
     // Define the main class for the application.
     mainClass = "it.unicam.cs.mpgc.rpg125668.App"
