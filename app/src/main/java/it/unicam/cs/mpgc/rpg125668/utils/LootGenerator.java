@@ -27,15 +27,16 @@ public class LootGenerator {
         List<IItem> allItems = loadedData.getItems();
         int itemCount = random.nextInt(3) + 1;
         int coins = random.nextInt(51);
-        if (itemCount > 0) {
-            List<IItem> loot = new ArrayList<>();
-            for (int i = 0; i < itemCount; i++)
-                loot.add(allItems.get(random.nextInt(allItems.size())));
-            map.getRooms().values().stream()
-                    .filter(r -> r instanceof LootableRoom)
-                    .map(r -> (LootableRoom) r)
-                    .forEach(r -> r.addGeneratedLoot(loot, coins));
-        }
+
+        List<IItem> loot = new ArrayList<>();
+        for (int i = 0; i < itemCount; i++)
+            loot.add(allItems.get(random.nextInt(allItems.size())));
+
+        map.getRooms().values().stream()
+                .filter(r -> r instanceof LootableRoom)
+                .map(r -> (LootableRoom) r)
+                .forEach(r -> r.addGeneratedLoot(loot, coins));
+
     }
 
     /**
@@ -46,6 +47,6 @@ public class LootGenerator {
         map.getRooms().values().stream()
                 .filter(r -> r instanceof ShopRoom)
                 .map(r -> (ShopRoom) r)
-                .forEach(r -> r.getDispenser().restockItems(1));
+                .forEach(r -> r.getDispenser().restockItems(10));
     }
 }
