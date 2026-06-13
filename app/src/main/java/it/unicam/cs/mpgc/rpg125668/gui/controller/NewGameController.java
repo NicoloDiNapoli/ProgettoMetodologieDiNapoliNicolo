@@ -59,9 +59,8 @@ public class NewGameController {
             return;
         }
 
-        Button bottoneCliccato = (Button) event.getSource();
-        StarterValues data = (StarterValues) bottoneCliccato.getUserData();
-
+        Button buttonClick = (Button) event.getSource();
+        StarterValues data = (StarterValues) buttonClick.getUserData();
 
         NewGame newGame = new NewGame(playerName, data.skillName, data.preparation, data.life);
         FXMLLoader loader = SceneManager.switchScene("gamePlay.fxml");
