@@ -23,14 +23,17 @@ import java.util.Random;
 public class GameManager {
     private static final String RESPAWN_ROOM = "Atrio";
     private static final String FIGHTING_ROOM = "Sala Professori";
-    private IStudent<IStudentSkill> player;
-    private List<IEnemy<IBossSkill>> enemies;
+
+    private final IStudent<IStudentSkill> player;
+    private final List<IEnemy<IBossSkill>> enemies;
     private final IGameMap gameMap;
     private final CombatManager combatManager;
     private final List<IStudentSkill> studentSkillsToUnlock;
 
-    public GameManager(IStudent<IStudentSkill> player, List<IEnemy<IBossSkill>> enemies, IGameMap gameMap, List<IStudentSkill> studentSkillsToUnlock) {
-        if(player == null || enemies == null) throw new IllegalArgumentException("Illegal arguments: player or enemies is null");
+    public GameManager(IStudent<IStudentSkill> player, List<IEnemy<IBossSkill>> enemies,
+                       IGameMap gameMap, List<IStudentSkill> studentSkillsToUnlock) {
+        if (player == null || enemies == null)
+            throw new IllegalArgumentException("Illegal arguments: player or enemies is null");
         this.player = player;
         this.enemies = enemies;
         this.gameMap = gameMap;
@@ -38,7 +41,7 @@ public class GameManager {
         this.combatManager = new CombatManager(player, enemies);
     }
 
-    //if player is dead respawn him in the starting room
+
     public void respawnPlayer() {
         player.heal(100);
         player.setConcentration(0);
@@ -46,119 +49,193 @@ public class GameManager {
         gameMap.setCurrentRoom(RESPAWN_ROOM);
     }
 
-    //if the player wins the game, generate the loot in the lootable rooms and restock the dispensers
     public void restockAll() {
         LootGenerator.generateLoot(this.gameMap);
         LootGenerator.restockDispensers(this.gameMap);
     }
 
-    //move the player to the new room
-    public void move(IRoom newRoom){
-        if(newRoom == null) throw new IllegalArgumentException("Illegal arguments: room is null");
-        this.gameMap.getAvailableExits().stream()
-                .filter(room -> room.getName().equals(newRoom.getName()))
-                .findFirst()
-                .ifPresent(room -> {
-                    this.gameMap.setCurrentRoom(room.getName());
-                });
+    /**
+     * Moves the player to newRoom if it is an available exit.
+     * @return true if the move succeeded, false if the room is not reachable
+     */
+    public boolean move(IRoom newRoom) {
+        if (newRoom == null) throw new IllegalArgumentException("Illegal arguments: room is null");
+        boolean reachable = this.gameMap.getAvailableExits().stream()
+                .anyMatch(room -> room.getName().equals(newRoom.getName()));
+        if (reachable) {
+            this.gameMap.setCurrentRoom(newRoom.getName());
+            return true;
+        }
+        return false;
     }
 
-    //return true if player is in Sala Professori and there are still enemies alive
+    //return true if the player is in a fighting room and there are still enemies alive
     public boolean canAttack() {
         return this.gameMap.getCurrentRoom().getName().equals(FIGHTING_ROOM)
                 && !this.combatManager.allEnemiesDefeated();
     }
 
-    //return true if player is in a shop room
-    public boolean canShop() {
+    //return true if the player is in a shop room
+    public boolean canShop(){
         return this.gameMap.getCurrentRoom() instanceof ShopRoom;
     }
 
-    //return true if player is in a lootable room
-    public boolean canLoot() {
-        if(!(this.gameMap.getCurrentRoom() instanceof LootableRoom lootableRoom)) return false;
+    //return true if the player is in a lootable room and there is something to loot
+    public boolean canLoot(){
+        if (!(this.gameMap.getCurrentRoom() instanceof LootableRoom lootableRoom)) return false;
         return lootableRoom.getLootableCoins() > 0 || !lootableRoom.loot().getItems().isEmpty();
     }
 
-    public CombatResult attack(IStudentSkill skill) {
-        return this.combatManager.fight(skill);
-    }
-
-    //return the dispenser of the current room
     public IShop getDispenser() {
         return ((ShopRoom) this.gameMap.getCurrentRoom()).getDispenser();
     }
 
-    //if the player is in a lootable room, loot it and add the coins and items to the player inventory
-    public void loot() {
+    /**
+     * execute the player attack action.
+     * @param skill IStudentSkill skill to use
+     * @return GameActionResult with the result of the attack action.
+     */
+    public GameActionResult executeAttack(IStudentSkill skill) {
+        if (player.getPreparation() < skill.getPreparationRequired()) {
+            return GameActionResult.failure(
+                    "[COMBAT] Preparazione insufficiente per lanciare " + skill.getName() + "!");
+        }
+
+        IEnemy<IBossSkill> enemy = combatManager.getCurrentEnemy();
+        if (enemy == null) {
+            return GameActionResult.failure("[COMBAT] Nessun nemico da attaccare.");
+        }
+
+        CombatResult result = this.combatManager.fight(skill);
+
+        return switch (result) {
+            case FIGHT -> new GameActionResult(CombatResult.FIGHT,
+                    "[COMBAT] Usato " + skill.getName() + "! Vita " + enemy.getName() + ": " + enemy.getLife(),
+                    true);
+            case WIN -> {
+                this.restockAll();
+                yield new GameActionResult(CombatResult.WIN,
+                        "🎉 [VITTORIA] Sconfitto " + enemy.getName() + "! Livello attuale: " + this.getPlayerLevel()
+                                + "\n[INFO] Le stanze sono state ripopolate.",
+                        true);
+            }
+            case LOSE -> {
+                this.respawnPlayer();
+                yield new GameActionResult(CombatResult.LOSE,
+                        "💀 [SCONFITTA] Sei andato KO sotto i colpi di " + enemy.getName()
+                                + "! Rinasci all'Atrio.",
+                        true);
+            }
+        };
+    }
+
+    /**
+     * If there is something to loot in the current room, it is added to the player's inventory.
+     * @return GameActionResult with the result of the loot action and the loot details.
+     */
+    public GameActionResult executeLoot() {
+        if (!canLoot())
+            return GameActionResult.failure("[LOOT] Non c'è nulla da raccogliere in questa stanza.");
+
         IInventory loot = ((LootableRoom) this.gameMap.getCurrentRoom()).loot();
-        if(loot.seeCoins() == 0 && loot.getItems().isEmpty()) return;
-        this.player.getInventory().addCoins(loot.seeCoins());
+        int coins = loot.seeCoins();
+        int itemsCount = loot.getItems().size();
+
+        this.player.getInventory().addCoins(coins);
         loot.getItems().keySet().forEach(item -> this.player.getInventory().addItem(item));
+
+        return GameActionResult.info(
+                "[LOOT] Bottino raccolto: " + coins + " monete e " + itemsCount + " oggetti aggiunti allo zaino.");
     }
 
-    //buy an item from the shop dispenser
-    public void buy(IPurchasable item) {
-        ((ShopRoom)this.gameMap.getCurrentRoom())
-                .getDispenser()
-                .buyItem(this.player, item);
+    /**
+     * Buys an item from the shop.
+     * @param item IPurchasable extends IItem item to buy
+     * @return GameActionResult with the result of the buy action.
+     */
+    public GameActionResult executeBuy(IPurchasable item) {
+        if (!canShop())
+            return GameActionResult.failure("[NEGOZIO] Non c'è nessun distributore qui.");
+        if (player.getInventory().seeCoins() < item.getPrice())
+            return GameActionResult.failure(
+                    "[NEGOZIO] Monete insufficienti per acquistare " + item.getName());
+
+        ((ShopRoom) this.gameMap.getCurrentRoom()).getDispenser().buyItem(this.player, item);
+        return GameActionResult.info("[NEGOZIO] Acquistato con successo: " + item.getName());
     }
 
-    //use an item
-    public void useItem(IItem item) {
-        if(item instanceof Book book) {
+    /**
+     * Uses an item. If in combat, the enemy immediately takes its turn after.
+     * @return GameActionResult with the result of the use item action.
+     */
+    public GameActionResult executeUseItem(IItem item) {
+        if (!player.getInventory().getItems().containsKey(item))
+            return GameActionResult.failure("[ZAINO] Errore: l'oggetto non è presente nell'inventario.");
+
+        if( item instanceof Book book){
+            if (this.player.getConcentration() < book.getRarity().getConcentrationRequired()) {
+                return GameActionResult.failure("[ZAINO] Non hai abbastanza concentrazione per usare: " + item.getName() +
+                        " (Richiesta: " + book.getRarity().getConcentrationRequired() + ", Attuale: " + this.player.getConcentration() + ")");
+            }
+        }
+
+        if (this.canAttack()) {
+            applyItem(item);
+            CombatResult result = this.combatManager.enemyTurn();
+            if (result == CombatResult.LOSE) {
+                this.respawnPlayer();
+                return new GameActionResult(CombatResult.LOSE,
+                        "[ZAINO] Hai usato: " + item.getName()
+                                + "\n💀 [SCONFITTA] Il contrattacco del Boss ti ha mandato KO! Rinasci all'Atrio.",
+                        true);
+            }
+            return new GameActionResult(CombatResult.FIGHT,
+                    "[ZAINO] Hai usato " + item.getName() + " durante il combattimento. Il Boss risponde al turno!",
+                    true);
+        } else {
+            applyItem(item);
+            return GameActionResult.info("[ZAINO] Hai usato: " + item.getName());
+        }
+    }
+
+
+    private void applyItem(IItem item) {
+        if (item instanceof Book book) {
             this.player.useItem(item);
             IStudentSkill newSkill = this.generateSkill(book, this.studentSkillsToUnlock);
             if (newSkill != null) this.player.addSkill(newSkill);
+        } else {
+            this.player.useItem(item);
         }
-        else this.player.useItem(item);
     }
 
-    /**
-     * Uses an item during combat: applies its effect, then the enemy takes its turn.
-     * @param item the item to use
-     * @return LOSE if the enemy kills the player after the item use, FIGHT otherwise
-     */
-    public CombatResult useItemInCombat(IItem item) {
-        useItem(item);
-        return this.combatManager.enemyTurn();
-    }
-
-    /**
-     * private method that generates a new skill based on the book and the list of skills of the student.
-     * @param book the book to use to generate the new skill
-     * @param skills the list of skills that the student can use
-     * @return the new skill generated or null if the book doesn't generate a new skill
-     */
+    // Generate a skill based on the book's rarity and the available skills.'
     private IStudentSkill generateSkill(Book book, List<IStudentSkill> skills) {
         if (new Random().nextDouble() < book.getRarity().getProbabilitySkill()) return null;
 
-        //availableSkills is a list of skills that the player doesn't have yet and
-        //that have the same rarity or less than the book's rarity
-        List<IStudentSkill> availableSkills = skills.stream()
-                .filter(s -> !this.getPlayer().getSkills().contains(s)) // skill che il player non ha già
+        List<IStudentSkill> available = skills.stream()
+                .filter(s -> !this.player.getSkills().contains(s))
                 .filter(s -> s.getRarity().ordinal() <= book.getRarity().ordinal())
                 .toList();
 
-        if (availableSkills.isEmpty()) return null;
-        //pick a random skill from the list of available skills
-        return availableSkills.get(new Random().nextInt(availableSkills.size()));
+        if (available.isEmpty()) return null;
+        return available.get(new Random().nextInt(available.size()));
     }
 
-    //getters
-    public IStudent<IStudentSkill> getPlayer() { return player; }
-    public IGameMap getGameMap() { return gameMap; }
-    public int getPlayerMaxLife(){ return player.getMaxLife(); }
-    public int getPlayerConcentration(){ return player.getConcentration(); }
-    public int getPlayerMaxConcentration(){ return player.getMaxConcentration(); }
-    public int getPlayerPreparation(){ return player.getPreparation(); }
-    public int getPlayerMaxPreparation(){ return player.getMaxPreparation(); }
-    public IEnemy<IBossSkill> getCurrentEnemy() { return combatManager.getCurrentEnemy(); }
-    public List<IStudentSkill> getPlayerSkills() { return player.getSkills(); }
-    public int getPlayerLife() { return player.getLife(); }
-    public int getPlayerCoins() { return player.getInventory().seeCoins(); }
-    public Map<IItem, Integer> getPlayerItems() { return player.getInventory().getItems(); }
-    public IRoom getCurrentRoom() { return gameMap.getCurrentRoom(); }
-    public List<IRoom> getAvailableExits() { return gameMap.getAvailableExits(); }
-    public int getPlayerLevel() {return this.player.getLevel().getLevel();}
+    //Getters
+    public IStudent<IStudentSkill> getPlayer(){return this.player;}
+    public IGameMap getGameMap(){return this.gameMap;}
+    public int getPlayerMaxLife(){ return this.player.getMaxLife();}
+    public int getPlayerConcentration(){ return this.player.getConcentration();}
+    public int getPlayerMaxConcentration(){ return this.player.getMaxConcentration();}
+    public int getPlayerPreparation(){ return this.player.getPreparation();}
+    public int getPlayerMaxPreparation(){ return this.player.getMaxPreparation();}
+    public IEnemy<IBossSkill> getCurrentEnemy(){ return this.combatManager.getCurrentEnemy();}
+    public List<IStudentSkill> getPlayerSkills(){ return this.player.getSkills();}
+    public int getPlayerLife(){ return this.player.getLife();}
+    public int getPlayerCoins(){ return this.player.getInventory().seeCoins();}
+    public Map<IItem, Integer> getPlayerItems(){ return this.player.getInventory().getItems();}
+    public IRoom getCurrentRoom(){ return this.gameMap.getCurrentRoom();}
+    public List<IRoom> getAvailableExits(){ return this.gameMap.getAvailableExits();}
+    public int getPlayerLevel(){ return this.player.getLevel().getLevel();}
 }
