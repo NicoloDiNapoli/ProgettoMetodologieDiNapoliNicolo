@@ -15,7 +15,7 @@ esplorare aule per raccogliere oggetti, acquistare oggetti e migliorare le propr
 ### Istruzioni
 
 ```bash
-git clone <url-del-repository>
+git clone https://github.com/NicoloDiNapoli/ProgettoMetodologieDiNapoliNicolo.git
 cd ProgettoMetodologieDiNapoliNicolo
 ```
 
