@@ -16,22 +16,27 @@ public class CombatManager implements ICombatManager {
     private final List<IEnemy<IBossSkill>> enemies;
 
     public CombatManager(IStudent<IStudentSkill> player, List<IEnemy<IBossSkill>> enemies) {
-        if(player == null || enemies == null) throw new IllegalArgumentException("Player or enemies cannot be null");
+        if (player == null || enemies == null) throw new IllegalArgumentException("Player or enemies cannot be null");
         this.player = player;
         this.enemies = enemies;
     }
 
+    @Override
     public CombatResult fight(IStudentSkill skill) {
         if (skill == null) throw new IllegalArgumentException("Skill cannot be null");
+        if (enemies.isEmpty()) return CombatResult.WIN;
+
         IEnemy<IBossSkill> enemy = this.enemies.getFirst();
 
+        // Boss strikes first if it's a boss-type enemy
         if (enemy.getDifficult().startBoss()) {
             enemyAttack(enemy);
             if (this.player.isDead()) return CombatResult.LOSE;
         }
 
-        //if player can't attack it returns lose.
+        // Player must still have preparation to attack
         if (!playerCanAttack()) return CombatResult.LOSE;
+
         this.player.useSkill(enemy, skill);
         this.player.setPreparation(this.player.getPreparation() - skill.getPreparationRequired());
 
@@ -41,7 +46,7 @@ public class CombatManager implements ICombatManager {
             return CombatResult.WIN;
         }
 
-        //boss fight
+        // Normal enemy strikes after the player
         if (!enemy.getDifficult().startBoss()) {
             enemyAttack(enemy);
             if (this.player.isDead()) return CombatResult.LOSE;
@@ -51,8 +56,7 @@ public class CombatManager implements ICombatManager {
     }
 
     /**
-     * it defines if the player has a lot of preparation to use any skill.
-     * @return true if a player can attack, false otherwise
+     * Returns true if the player has enough preparation to use at least one skill.
      */
     public boolean playerCanAttack() {
         return this.player.getSkills().stream()
@@ -60,19 +64,13 @@ public class CombatManager implements ICombatManager {
     }
 
     /**
-     * If difficult of the nemy is medium or higer, it generates a random skill to use.
-     * if generate a healing skill, it uses it on himself.
-     * else it uses a random skill to attack the player.
-     * @param enemy boss to fight
+     * Enemy attacks the player (or heals itself if conditions are met).
      */
     private void enemyAttack(IEnemy<IBossSkill> enemy) {
-        //set a random boolean to decide if use a healing skill or not.
         boolean useHealing = (enemy.getDifficult() == EnemyDifficult.MEDIUM || enemy.getDifficult() == EnemyDifficult.HARD)
                 && enemy.getLife() <= 50
                 && new Random().nextBoolean();
 
-        //if it uses a healing skill, use it on himself.
-        //else it uses an attack skill on target
         if (useHealing) {
             enemy.getSkills().stream()
                     .filter(IBossSkill::isHealing)
@@ -87,16 +85,21 @@ public class CombatManager implements ICombatManager {
         }
     }
 
+    /**
+     * Executes only the enemy's turn (used when the player uses an item in combat).
+     */
     @Override
     public CombatResult enemyTurn() {
+        if (enemies.isEmpty()) return CombatResult.WIN;
         IEnemy<IBossSkill> enemy = this.enemies.getFirst();
         enemyAttack(enemy);
         if (this.player.isDead()) return CombatResult.LOSE;
         return CombatResult.FIGHT;
     }
 
+    /** Returns the current enemy, or null if all enemies are defeated. */
     public IEnemy<IBossSkill> getCurrentEnemy() {
-        return this.enemies.getFirst();
+        return this.enemies.isEmpty() ? null : this.enemies.getFirst();
     }
 
     public boolean allEnemiesDefeated() {
