@@ -5,6 +5,7 @@ import it.unicam.cs.mpgc.rpg125668.model.rooms.interfaces.IRoom;
 import it.unicam.cs.mpgc.rpg125668.model.skill.interfaces.IStudentSkill;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 /**
  * Class that represents the data of a game save
@@ -21,6 +22,16 @@ public class GameSaveData {
         this.saveTime = saveTime;
         this.player = player;
         this.currentRoom = currentRoom;
+    }
+
+    /**
+     * Returns a string representation of the save time in the format "dd/MM/yyyy HH:mm".
+     * @return String the formatted save time.
+     */
+    @Override
+    public String toString() {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
+        return saveTime != null ? saveTime.format(formatter) : "Data sconosciuta";
     }
 
     public String getSaveName() { return saveName; }
