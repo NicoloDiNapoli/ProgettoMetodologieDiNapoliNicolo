@@ -1,7 +1,7 @@
 package it.unicam.cs.mpgc.rpg125668.gui.controller;
 
 import it.unicam.cs.mpgc.rpg125668.gui.SceneManager;
-import it.unicam.cs.mpgc.rpg125668.logic.enumeration.CombatResult;
+import it.unicam.cs.mpgc.rpg125668.logic.manager.GameActionResult;
 import it.unicam.cs.mpgc.rpg125668.logic.manager.GameManager;
 import it.unicam.cs.mpgc.rpg125668.logic.manager.GameSaveManager;
 import it.unicam.cs.mpgc.rpg125668.logic.start.Game;
@@ -17,7 +17,7 @@ import java.util.Optional;
 
 public class GamePlayController {
 
-    //Stats player
+    // Stats player
     @FXML private Label roomLabel;
     @FXML private ProgressBar lifeBar;
     @FXML private Label lifeText;
@@ -27,16 +27,16 @@ public class GamePlayController {
     @FXML private Label prepText;
     @FXML private Label coinsLabel;
 
-    //rooms panel
+    // Rooms panel
     @FXML private ListView<String> exitsList;
     @FXML private Button moveBtn;
     @FXML private Button lootBtn;
     @FXML private Button shopBtn;
 
-    //log panel
+    // Log panel
     @FXML private TextArea gameLog;
 
-    //skills panel, inventory panel, combat panel
+    // Combat / skills / inventory panel
     @FXML private VBox combatBox;
     @FXML private Label enemyName;
     @FXML private Label enemyLife;
@@ -45,10 +45,9 @@ public class GamePlayController {
     @FXML private ListView<String> inventoryList;
     @FXML private Button useItemBtn;
 
-    //quit button
+    // Quit button
     @FXML private Button quitBtn;
 
-    //game manager
     private GameManager gm;
 
     @FXML
@@ -68,65 +67,59 @@ public class GamePlayController {
         updateUI();
     }
 
+    /**
+     * Updates the UI with the current game state.
+     */
     private void updateUI() {
-        // Current Room
         roomLabel.setText(gm.getCurrentRoom().getName().toUpperCase());
 
-        // Life
         double lifeProgress = (double) gm.getPlayerLife() / gm.getPlayerMaxLife();
         lifeBar.setProgress(lifeProgress);
         lifeText.setText(gm.getPlayerLife() + "/" + gm.getPlayerMaxLife());
 
-        // Concentration
         double concProgress = (double) gm.getPlayerConcentration() / gm.getPlayerMaxConcentration();
         concentrationBar.setProgress(concProgress);
         concentrationText.setText(gm.getPlayerConcentration() + "/" + gm.getPlayerMaxConcentration());
 
-        // Preparation
         double prepProgress = (double) gm.getPlayerPreparation() / gm.getPlayerMaxPreparation();
         prepBar.setProgress(prepProgress);
         prepText.setText(gm.getPlayerPreparation() + "/" + gm.getPlayerMaxPreparation());
 
-        // Coins
         coinsLabel.setText("MONETE: " + gm.getPlayerCoins());
 
-        // Available exits
         exitsList.getItems().clear();
         gm.getAvailableExits().forEach(room -> exitsList.getItems().add(room.getName()));
 
-        // Button
         lootBtn.setDisable(!gm.canLoot());
         shopBtn.setDisable(!gm.canShop());
         attackBtn.setDisable(!gm.canAttack());
 
-        // Enemy stats
         if (gm.canAttack() && gm.getCurrentEnemy() != null) {
             combatBox.setStyle("-fx-background-color: #e74c3c; -fx-padding: 8; -fx-background-radius: 5;");
             enemyName.setText(gm.getCurrentEnemy().getName());
-            enemyLife.setText("Vita: " + gm.getCurrentEnemy().getLife() + " [Difficoltà: " + gm.getCurrentEnemy().getDifficult() + "]");
+            enemyLife.setText("Vita: " + gm.getCurrentEnemy().getLife()
+                    + " [Difficoltà: " + gm.getCurrentEnemy().getDifficult() + "]");
         } else {
             combatBox.setStyle("-fx-background-color: #7f8c8d; -fx-padding: 8; -fx-background-radius: 5;");
             enemyName.setText("Nessun Nemico Presente");
             enemyLife.setText("Vita: --");
         }
 
-        // Skills player
         skillList.getItems().clear();
         gm.getPlayerSkills().forEach(s ->
                 skillList.getItems().add(s.getName() + " (Danno: " + s.getDamage() + " | Prep: " + s.getPreparationRequired() + ")")
         );
 
-        // Inventory player
         inventoryList.getItems().clear();
         gm.getPlayerItems().forEach((item, qty) ->
                 inventoryList.getItems().add(item.getName() + " x" + qty)
         );
     }
 
+
     /**
-     * Handle the move action.
-     * If the selected room is valid, the player moves to it.
-     * */
+     * Handles the move action by selecting a room from the list and moving to it.
+     */
     private void handleMove() {
         String selectedRoomName = exitsList.getSelectionModel().getSelectedItem();
         if (selectedRoomName == null) {
@@ -138,28 +131,23 @@ public class GamePlayController {
                 .filter(r -> r.getName().equalsIgnoreCase(selectedRoomName))
                 .findFirst().orElse(null);
 
-        if (target != null) {
-            gm.move(target);
+        if (target != null && gm.move(target)) {
             logMessage("Ti sei spostato in: " + target.getName());
             updateUI();
         }
     }
 
     /**
-     * Handle the loot action.
-     * If the player can loot, the player loots.
+     * Handles the loot action by executing the loot action and updating the UI.
      */
     private void handleLoot() {
-        if (gm.canLoot()) {
-            gm.loot();
-            logMessage("[LOOT] Bottino raccolto con successo!");
-            updateUI();
-        }
+        GameActionResult result = gm.executeLoot();
+        logMessage(result.getMessage());
+        if (result.isSuccess()) updateUI();
     }
 
     /**
-     * Handle the shop action.
-     * If the player can shop, the player buys an item from the shop.
+     * Handles the shop action by displaying a dialog to select an item and buying it.
      */
     private void handleShop() {
         if (!gm.canShop()) return;
@@ -169,9 +157,8 @@ public class GamePlayController {
         dialog.setHeaderText("Monete disponibili: " + gm.getPlayerCoins() + "\nScegli un articolo da acquistare:");
 
         gm.getDispenser().getItems().forEach((item, qty) -> {
-            if (qty > 0) {
+            if (qty > 0)
                 dialog.getItems().add(item.getName() + " (Prezzo: " + ((IPurchasable) item).getPrice() + ")");
-            }
         });
 
         if (dialog.getItems().isEmpty()) {
@@ -179,64 +166,45 @@ public class GamePlayController {
             return;
         }
 
-        Optional<String> result = dialog.showAndWait();
-        result.ifPresent(selection -> {
-            String pureItemName = selection.split(" \\(")[0];
+        Optional<String> selection = dialog.showAndWait();
+        selection.ifPresent(choice -> {
+            String pureItemName = choice.split(" \\(")[0];
 
             IPurchasable selectedItem = (IPurchasable) gm.getDispenser().getItems().keySet().stream()
                     .filter(i -> i.getName().equalsIgnoreCase(pureItemName))
                     .findFirst().orElse(null);
 
             if (selectedItem != null) {
-                if (gm.getPlayerCoins() >= selectedItem.getPrice()) {
-                    gm.buy(selectedItem);
-                    logMessage("[NEGOZIO] Acquistato: " + pureItemName);
-                    updateUI();
-                } else {
-                    logMessage("[NEGOZIO] Monete insufficienti per acquistare " + pureItemName);
-                }
+                GameActionResult result = gm.executeBuy(selectedItem);
+                logMessage(result.getMessage());
+                if (result.isSuccess()) updateUI();
             }
         });
     }
 
-
+    /**
+     * Handle the attack action by selecting a skill from the list and executing it.
+     */
     private void handleAttack() {
         int selectedIndex = skillList.getSelectionModel().getSelectedIndex();
         if (selectedIndex == -1) {
             logMessage("[ATTENZIONE] Seleziona una Skill dalla lista prima di attaccare!");
             return;
         }
-
-        IStudentSkill skill = gm.getPlayerSkills().get(selectedIndex);
-
-        if (gm.getPlayerPreparation() < skill.getPreparationRequired()) {
-            logMessage("[COMBAT] Preparazione insufficiente per lanciare " + skill.getName() + "!");
+        //check if the selected index is valid to avoid array out of bounds exception
+        if (selectedIndex >= gm.getPlayerSkills().size()) {
+            logMessage("[ERRORE] Selezione non valida. Riprova.");
             return;
         }
 
-        CombatResult result = gm.attack(skill);
-        switch (result) {
-            case FIGHT -> {
-                logMessage("[COMBAT] Usato " + skill.getName() + "! Vita Boss: " + gm.getCurrentEnemy().getLife());
-                updateUI();
-            }
-            case WIN -> {
-                logMessage("🎉 [VITTORIA] Sconfitto il Boss! Livello attuale: " + gm.getPlayerLevel());
-                logMessage("[INFO] Le stanze sono state ripopolate di nuovi pericoli.");
-                gm.restockAll();
-                updateUI();
-            }
-            case LOSE -> {
-                logMessage("💀 [SCONFITTA] Sei andato KO! Rinasci all'Atrio di partenza.");
-                gm.respawnPlayer();
-                updateUI();
-            }
-        }
+        IStudentSkill skill = gm.getPlayerSkills().get(selectedIndex);
+        GameActionResult result = gm.executeAttack(skill);
+        logMessage(result.getMessage());
+        updateUI();
     }
 
     /**
-     * Handle the use item action.
-     * If the player can use an item, the player uses it.
+     * Handles the use item action by selecting an item from the inventory and using it.
      */
     private void handleUseItem() {
         String selectedItemRow = inventoryList.getSelectionModel().getSelectedItem();
@@ -252,36 +220,47 @@ public class GamePlayController {
                 .findFirst().orElse(null);
 
         if (item != null) {
-            if (gm.canAttack()) {
-                CombatResult result = gm.useItemInCombat(item);
-                logMessage("[ZAINO] Hai usato: " + pureItemName);
-                if (result == CombatResult.LOSE) {
-                    logMessage("💀 [SCONFITTA] Sei andato KO! Rinasci all'Atrio di partenza.");
-                    gm.respawnPlayer();
-                }
-            } else {
-                gm.useItem(item);
-                logMessage("[ZAINO] Hai usato: " + pureItemName);
-            }
+            GameActionResult result = gm.executeUseItem(item);
+            logMessage(result.getMessage());
             updateUI();
         }
     }
 
     /**
-     * Handle the save and quit action.
-     * If the player wants to save the game, a dialog is shown to enter a name for the save.
+     * Handles the save and quit action by asking the player if they want to save their game
+     * and then switching to the setup scene.
+     * There are 3 options: (Save and Quit, Exit and don't save, Go back to game)
      */
     private void handleSaveAndQuit() {
-        TextInputDialog dialog = new TextInputDialog("Salvataggio_1");
-        dialog.setTitle("Salva ed Esci");
-        dialog.setHeaderText("Vuoi salvare lo stato dell'avventura?");
-        dialog.setContentText("Inserisci il nome del salvataggio:");
+        // Ask the player if they want to save before quitting
+        ButtonType btnSave    = new ButtonType("Salva ed Esci");
+        ButtonType btnNoSave  = new ButtonType("Esci senza salvare");
+        ButtonType btnCancel  = new ButtonType("Annulla", ButtonBar.ButtonData.CANCEL_CLOSE);
 
-        Optional<String> result = dialog.showAndWait();
-        result.ifPresent(saveName -> {
-            if (!saveName.trim().isEmpty()) {
-                new GameSaveManager().saveGame(gm.getPlayer(), gm.getGameMap(), saveName.trim());
-                logMessage("Gioco salvato come: " + saveName);
+        Alert choiceAlert = new Alert(Alert.AlertType.CONFIRMATION);
+        choiceAlert.setTitle("Uscita");
+        choiceAlert.setHeaderText("Vuoi salvare prima di uscire?");
+        choiceAlert.getButtonTypes().setAll(btnSave, btnNoSave, btnCancel);
+
+        Optional<ButtonType> choice = choiceAlert.showAndWait();
+        if (choice.isEmpty() || choice.get() == btnCancel) return;
+
+        if (choice.get() == btnNoSave) {
+            SceneManager.switchScene("setup.fxml");
+            return;
+        }
+
+        // If player chooses to save, ask for a save name
+        TextInputDialog nameDialog = new TextInputDialog("Salvataggio_1");
+        nameDialog.setTitle("Salva ed Esci");
+        nameDialog.setHeaderText("Inserisci il nome del salvataggio:");
+        nameDialog.setContentText("Nome:");
+
+        Optional<String> saveName = nameDialog.showAndWait();
+        saveName.ifPresent(name -> {
+            if (!name.trim().isEmpty()) {
+                new GameSaveManager().saveGame(gm.getPlayer(), gm.getGameMap(), name.trim());
+                logMessage("Gioco salvato come: " + name.trim());
                 SceneManager.switchScene("setup.fxml");
             }
         });
