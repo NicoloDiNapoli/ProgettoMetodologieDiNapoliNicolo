@@ -29,7 +29,7 @@ public class SceneManager {
     public static FXMLLoader switchScene(String fxmlFileName) {
         try {
 
-            String resourcePath = "/it/unicam/cs/mpgc/rpg125668/gui/" + fxmlFileName;
+            String resourcePath = "/it/unicam/cs/mpgc/rpg125668/gui/controller/" + fxmlFileName;
 
             FXMLLoader loader = new FXMLLoader(SceneManager.class.getResource(resourcePath));
             Parent root = loader.load();
