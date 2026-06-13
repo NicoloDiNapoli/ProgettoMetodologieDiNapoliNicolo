@@ -12,6 +12,11 @@ import java.util.Map;
 
 public class InventoryMapper {
 
+    /**
+     * Convert an InventoryEntity to an Inventory
+     * @param entity InventoryEntity
+     * @return Inventory
+     */
     public static IInventory toModel(InventoryEntity entity) {
         if (entity == null) throw new IllegalArgumentException("Entity cannot be null");
         Map<IItem, Integer> items = new HashMap<>();
@@ -22,6 +27,11 @@ public class InventoryMapper {
         return new Inventory(entity.getCoins(), items);
     }
 
+    /**
+     * Convert an IInventory to an InventoryEntity
+     * @param model IInventory
+     * @return InventoryEntity
+     */
     public static InventoryEntity toEntity(IInventory model) {
         if (model == null) throw new IllegalArgumentException("Model cannot be null");
         InventoryEntity entity = new InventoryEntity(model.seeCoins());

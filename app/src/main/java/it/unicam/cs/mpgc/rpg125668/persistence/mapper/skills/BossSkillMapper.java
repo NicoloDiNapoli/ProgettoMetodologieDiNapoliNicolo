@@ -6,6 +6,11 @@ import it.unicam.cs.mpgc.rpg125668.persistence.entity.skill.BossSkillEntity;
 
 public class BossSkillMapper {
 
+    /**
+     * Convert a BossSkillEntity to a BossSkill
+     * @param entity BossSkillEntity
+     * @return BossSkill
+     */
     public static IBossSkill toModel(BossSkillEntity entity) {
         if (entity == null) throw new IllegalArgumentException("Entity cannot be null");
         return new BossSkill(
@@ -17,6 +22,11 @@ public class BossSkillMapper {
         );
     }
 
+    /**
+     * Convert a BossSkill to a BossSkillEntity
+     * @param model BossSkill
+     * @return BossSkillEntity
+     */
     public static BossSkillEntity toEntity(IBossSkill model) {
         if (model == null) throw new IllegalArgumentException("Model cannot be null");
         return new BossSkillEntity(

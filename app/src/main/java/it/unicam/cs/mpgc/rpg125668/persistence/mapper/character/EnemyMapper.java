@@ -11,6 +11,11 @@ import java.util.List;
 
 public class EnemyMapper {
 
+    /**
+     * Mapper used to convert the entity to the model
+     * @param entity EnemyEntity to convert
+     * @return Enemy converted
+     */
     public static Enemy toModel(EnemyEntity entity) {
         if (entity == null) throw new IllegalArgumentException("Entity cannot be null");
         List<IBossSkill> skills = new ArrayList<>(entity.getSkills().stream()
@@ -25,6 +30,11 @@ public class EnemyMapper {
         );
     }
 
+    /**
+     * Mapper used to convert the model to the entity
+     * @param model IEnemy<IBossSkill> to convert
+     * @return EnemyEntity converted
+     */
     public static EnemyEntity toEntity(IEnemy<IBossSkill> model) {
         if (model == null) throw new IllegalArgumentException("Model cannot be null");
         return new EnemyEntity(

@@ -12,6 +12,11 @@ import it.unicam.cs.mpgc.rpg125668.persistence.store.item.ItemStore;
 
 public class ItemMapper {
 
+    /**
+     * Convert an ItemEntity to an Item
+     * @param entity ItemEntity
+     * @return Item
+     */
     public static IItem toModel(ItemEntity entity) {
         return switch (entity) {
             case null -> throw new IllegalArgumentException("Entity cannot be null");
@@ -22,6 +27,11 @@ public class ItemMapper {
         };
     }
 
+    /**
+     * Convert an Item to an ItemEntity
+     * @param model Item
+     * @return ItemEntity
+     */
     public static ItemEntity toEntity(IItem model) {
         if (model == null) throw new IllegalArgumentException("Model cannot be null");
         return new ItemStore().findByName(model.getName());

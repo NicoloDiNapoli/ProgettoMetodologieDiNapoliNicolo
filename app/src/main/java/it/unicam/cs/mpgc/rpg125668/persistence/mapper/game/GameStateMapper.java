@@ -11,6 +11,13 @@ import it.unicam.cs.mpgc.rpg125668.persistence.mapper.room.RoomMapper;
 
 public class GameStateMapper {
 
+    /**
+     * Convert a GameStateEntity to a GameState
+     * @param player Student
+     * @param currentRoom Room
+     * @param saveGameName String
+     * @return GameState
+     */
     public static GameStateEntity toEntity(IStudent<IStudentSkill> player, RoomEntity currentRoom, String saveGameName) {
         if (player == null || currentRoom == null) throw new IllegalArgumentException("Arguments cannot be null");
         return new GameStateEntity(

@@ -18,6 +18,11 @@ import java.util.List;
 
 public class StudentMapper {
 
+    /**
+     * Mapper used to convert the entity to the model
+     * @param entity StudentEntity to convert
+     * @return Student converted
+     */
     public static IStudent<IStudentSkill> toModel(StudentEntity entity) {
         if (entity == null) throw new IllegalArgumentException("Entity cannot be null");
         Level level = LevelMapper.toModel(entity.getLevel());
@@ -37,6 +42,11 @@ public class StudentMapper {
         );
     }
 
+    /**
+     * Mapper used to convert the model to the entity
+     * @param model IStudent<IStudentSkill> to convert
+     * @return StudentEntity converted
+     */
     public static StudentEntity toEntity(IStudent<IStudentSkill> model) {
         if (model == null) throw new IllegalArgumentException("Model cannot be null");
         return new StudentEntity(
