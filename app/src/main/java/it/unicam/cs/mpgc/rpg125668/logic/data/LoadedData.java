@@ -46,6 +46,10 @@ public class LoadedData {
         this.saves = new GameStateStore().findAll();
     }
 
+    /**
+     * Returns the list of skills from the database
+     * @return List<StudentSkillEntity> the list of skills
+     */
     public List<IStudentSkill> getStudentSkills() {
         return studentSkills.stream().map(StudentSkillMapper::toModel).collect(Collectors.toList());
     }
@@ -61,6 +65,10 @@ public class LoadedData {
         return enemies.stream().map(EnemyMapper::toModel).collect(Collectors.toList());
     }
 
+    /**
+     * Returns the list of rooms from the database
+     * @return List<RoomEntity> the list of rooms
+     */
     public List<RoomEntity> getRoomEntities() {
         return rooms;
     }
