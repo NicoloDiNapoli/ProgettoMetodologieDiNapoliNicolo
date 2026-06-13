@@ -20,7 +20,7 @@ public class NewGame extends Game {
     public NewGame(String namePlayer, String skillName, int preparation, int startLife) {
         super();
         if(namePlayer == null || skillName == null ) throw new IllegalArgumentException("Name, skillName or inventory cannot be null");
-        this.startLoadEntity(skillName,namePlayer,startLife,new Inventory(0,new HashMap<>()),preparation);
+        this.startLoadEntity(skillName,namePlayer,startLife,new Inventory(100,new HashMap<>()),preparation);
         this.start();
     }
 
