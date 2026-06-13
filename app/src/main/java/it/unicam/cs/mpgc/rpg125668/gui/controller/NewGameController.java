@@ -27,10 +27,10 @@ public class NewGameController {
         backBtn.setOnAction(event -> SceneManager.switchScene("setup.fxml"));
 
 
-        heroOneBtn.setUserData(new StarterValues("Appunti Incantati", 5, 100));
-        heroTwoBtn.setUserData(new StarterValues("Inchiostro Ustionante",  5, 100));
-        heroThreeBtn.setUserData(new StarterValues("Sigillo del Ragionamento", 15, 80));
-        heroFourBtn.setUserData(new StarterValues("Dardi Vettoriali", 15, 80));
+        heroOneBtn.setUserData(new StarterValues("Appunti Incantati", 100, 100));
+        heroTwoBtn.setUserData(new StarterValues("Inchiostro Ustionante",  100, 100));
+        heroThreeBtn.setUserData(new StarterValues("Sigillo del Ragionamento", 85, 80));
+        heroFourBtn.setUserData(new StarterValues("Dardi Vettoriali", 85, 80));
 
         updateButtonText(heroOneBtn);
         updateButtonText(heroTwoBtn);
@@ -65,10 +65,8 @@ public class NewGameController {
 
         NewGame newGame = new NewGame(playerName, data.skillName, data.preparation, data.life);
         FXMLLoader loader = SceneManager.switchScene("gamePlay.fxml");
-        if (loader != null) {
-            GamePlayController gameplayController = loader.getController();
-            gameplayController.initData(newGame);
-        }
+        GamePlayController gameplayController = loader.getController();
+        gameplayController.initData(newGame);
     }
 
     /**
@@ -79,7 +77,7 @@ public class NewGameController {
         StarterValues data = (StarterValues) button.getUserData();
         if (data != null) {
             button.setText(
-                    "Seleziona " + data.skillName + " (Costo skill: " + data.preparation + "/Vita iniziale: " + data.life + ")"
+                    "Seleziona " + data.skillName + " (Preparazione iniziale: " + data.preparation + "/Vita iniziale: " + data.life + ")"
             );
         }
     }
